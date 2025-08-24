@@ -22,7 +22,9 @@ body.light-theme #search,
 body.light-theme table,
 body.light-theme .details,
 body.light-theme #searchDetails,
-body.light-theme .exam-ranklist {
+body.light-theme .exam-ranklist,
+body.light-theme .subject-rank-table,
+body.light-theme .progress-table {
     background-color: #ffffff;
     border-color: #ccc;
 }
@@ -176,6 +178,12 @@ body.light-theme .progress-table .improved {
 
 body.light-theme .progress-table .declined {
     color: #d32f2f;
+}
+
+.sparkline {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
 }
 
 #header {
@@ -428,19 +436,19 @@ tr:hover {
     box-shadow: none;
 }
 
-.exam-ranklist, .subject-rank-table {
+.exam-ranklist, .subject-rank-table, .progress-table {
     background-color: #252525;
     margin: 20px 0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.exam-ranklist th, .subject-rank-table th {
+.exam-ranklist th, .subject-rank-table th, .progress-table th {
     background-color: #333;
     font-weight: 700;
 }
 
-.exam-ranklist td, .subject-rank-table td {
+.exam-ranklist td, .subject-rank-table td, .progress-table td {
     padding: 12px;
     font-weight: 500;
 }
@@ -603,5 +611,10 @@ body.light-theme .chart-container button {
 
     .stats-box {
         padding: 15px;
+    }
+
+    .sparkline {
+        width: 80px !important;
+        height: 25px !important;
     }
 }
