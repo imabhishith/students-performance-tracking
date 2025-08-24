@@ -5,7 +5,7 @@ body {
     font-size: 16px;
     font-weight: 400;
     margin: 0;
-    padding: 20px;
+    padding: 15px;
     max-width: 100%;
     overflow-x: hidden;
     transition: background-color 0.3s, color 0.3s;
@@ -54,17 +54,17 @@ body.light-theme .name:hover {
 
 #themeToggle {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     padding: 8px;
     background: linear-gradient(45deg, #673ab7, #512da8);
     border: none;
     color: #ffffff;
     cursor: pointer;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,10 +90,10 @@ body.light-theme #themeToggle:hover {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #673ab7;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
+    margin: 0 auto 8px;
 }
 
 body.light-theme .spinner {
@@ -140,10 +140,10 @@ body.light-theme .top-performer {
 #subjectDifficultyDetails,
 #examDetails,
 #studentDetails {
-    margin: 20px 0;
-    padding: 15px;
+    margin: 15px 0;
+    padding: 12px;
     background-color: #1e1e1e;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -180,26 +180,20 @@ body.light-theme .progress-table .declined {
     color: #d32f2f;
 }
 
-.sparkline {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 5px;
-}
-
 #header {
     position: relative;
     text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
     background-color: #1e1e1e;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 #logo {
-    width: 120px;
+    width: 100px;
     height: auto;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -210,8 +204,8 @@ h1 {
     text-align: center;
     text-transform: uppercase;
     font-weight: 900;
-    font-size: 2.2em;
-    margin: 10px 0;
+    font-size: 2em;
+    margin: 8px 0;
 }
 
 h2 {
@@ -220,8 +214,8 @@ h2 {
     text-align: center;
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 1.8em;
-    margin: 15px 0;
+    font-size: 1.6em;
+    margin: 12px 0;
 }
 
 h3 {
@@ -229,8 +223,8 @@ h3 {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     text-align: center;
     font-weight: 700;
-    font-size: 1.4em;
-    margin: 15px 0;
+    font-size: 1.3em;
+    margin: 12px 0;
 }
 
 body.light-theme h1,
@@ -243,12 +237,12 @@ body.light-theme h3 {
 #dataFile {
     display: block;
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
+    padding: 10px;
+    margin-bottom: 12px;
     background-color: #1e1e1e;
     border: 1px solid #333;
-    color: #e0e0e0;
-    border-radius: 8px;
+    color: #ffffff;
+    border-radius: 6px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     cursor: pointer;
@@ -257,21 +251,37 @@ body.light-theme h3 {
 
 #search-container {
     display: flex;
-    gap: 10px;
-    margin-bottom: 25px;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 #search {
     flex-grow: 1;
-    padding: 12px;
+    padding: 10px;
     background-color: #1e1e1e;
     border: 1px solid #333;
-    color: #e0e0e0;
-    border-radius: 8px;
+    color: #ffffff;
+    border-radius: 6px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     transition: border-color 0.3s;
     font-weight: 500;
+}
+
+#search::placeholder {
+    color: #888;
+    opacity: 0.8;
+}
+
+body.light-theme #search {
+    background-color: #ffffff;
+    border-color: #ccc;
+    color: #000000;
+}
+
+body.light-theme #search::placeholder {
+    color: #666;
+    opacity: 0.8;
 }
 
 #search:focus {
@@ -284,12 +294,12 @@ body.light-theme #search:focus {
 }
 
 #searchButton, #clearSearchButton {
-    padding: 12px 25px;
+    padding: 10px 20px;
     background: linear-gradient(45deg, #673ab7, #512da8);
     border: none;
     color: #ffffff;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 600;
     transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -314,22 +324,22 @@ body.light-theme #clearSearchButton:hover {
 #tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
 #tabs button {
-    padding: 12px 25px;
+    padding: 10px 20px;
     background: linear-gradient(45deg, #673ab7, #512da8);
     border: none;
     color: #ffffff;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 600;
     transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
     flex: 1 1 auto;
-    min-width: 150px;
+    min-width: 120px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -348,22 +358,28 @@ body.light-theme #tabs button:hover {
 }
 
 .tab {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+}
+
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 
 table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     background-color: #1e1e1e;
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 th, td {
-    padding: 15px;
+    padding: 12px;
     border-bottom: 1px solid #333;
     text-align: center;
     font-weight: 500;
@@ -426,20 +442,20 @@ tr:hover {
 
 .details, #searchDetails {
     background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 15px;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .details table, #searchDetails table {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     box-shadow: none;
 }
 
 .exam-ranklist, .subject-rank-table, .progress-table {
     background-color: #252525;
-    margin: 20px 0;
-    border-radius: 8px;
+    margin: 15px 0;
+    border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -449,15 +465,15 @@ tr:hover {
 }
 
 .exam-ranklist td, .subject-rank-table td, .progress-table td {
-    padding: 12px;
+    padding: 10px;
     font-weight: 500;
 }
 
 .subject-box {
     background-color: #673ab7;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s;
 }
@@ -468,31 +484,38 @@ tr:hover {
 
 .stats-box {
     background-color: #673ab7;
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
 .stats-box p {
-    margin: 12px 0;
+    margin: 10px 0;
     text-align: center;
     font-weight: 500;
 }
 
+.stats-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px 0;
+}
+
 #examDetailsBtn, #studentDetailsBtn, #subjectDifficultyBtn {
-    padding: 10px 20px;
+    padding: 8px 16px;
     background: linear-gradient(45deg, #512da8, #3f51b5);
     border: none;
     color: #ffffff;
     cursor: pointer;
-    border-radius: 8px;
-    margin: 10px auto;
-    display: block;
+    border-radius: 6px;
     font-weight: 600;
     transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    flex: 1;
+    max-width: 200px;
 }
 
 body.light-theme #examDetailsBtn,
@@ -509,9 +532,14 @@ body.light-theme #subjectDifficultyBtn {
 
 .chart-container {
     position: relative;
-    margin-bottom: 20px;
-    max-width: 100%;
+    margin: 0 auto 20px;
+    width: 75vw;
     height: 300px;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .chart-container button {
@@ -520,11 +548,11 @@ body.light-theme #subjectDifficultyBtn {
     border: none;
     color: #ffffff;
     cursor: pointer;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    border-radius: 6px;
+    margin-bottom: 12px;
     width: 100%;
-    max-width: 300px;
-    font-size: 14px;
+    max-width: 250px;
+    font-size: 13px;
     font-weight: 600;
     transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -542,12 +570,12 @@ body.light-theme .chart-container button {
 
 @media (max-width: 600px) {
     body {
-        padding: 10px;
+        padding: 8px;
         font-size: 14px;
     }
 
     #header {
-        padding: 15px;
+        padding: 12px;
     }
 
     #logo {
@@ -555,29 +583,34 @@ body.light-theme .chart-container button {
     }
 
     #themeToggle {
-        top: 10px;
-        right: 10px;
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
+        top: 8px;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
     }
 
     h1 {
-        font-size: 1.8em;
+        font-size: 1.6em;
     }
 
     h2 {
-        font-size: 1.4em;
+        font-size: 1.3em;
     }
 
     h3 {
-        font-size: 1.2em;
+        font-size: 1.1em;
+    }
+
+    #tabs {
+        flex-direction: column;
+        gap: 6px;
     }
 
     #tabs button {
-        padding: 10px 15px;
-        font-size: 0.9em;
-        min-width: 120px;
+        padding: 8px 12px;
+        font-size: 0.85em;
+        min-width: 100%;
     }
 
     #search-container {
@@ -585,22 +618,29 @@ body.light-theme .chart-container button {
     }
 
     #search {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     #searchButton, #clearSearchButton {
-        padding: 10px 20px;
+        padding: 8px 16px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     table {
-        font-size: 0.9em;
+        font-size: 0.85em;
+        min-width: 600px;
     }
 
     th, td {
-        padding: 10px;
+        padding: 8px;
     }
 
     .chart-container {
+        width: 90vw;
         height: 250px;
     }
 
@@ -610,11 +650,19 @@ body.light-theme .chart-container button {
     }
 
     .stats-box {
-        padding: 15px;
+        padding: 12px;
     }
 
-    .sparkline {
-        width: 80px !important;
-        height: 25px !important;
+    .subject-box {
+        margin-bottom: 15px;
+    }
+
+    .stats-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #examDetailsBtn, #studentDetailsBtn, #subjectDifficultyBtn {
+        max-width: 100%;
     }
 }
