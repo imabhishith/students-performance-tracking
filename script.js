@@ -50,7 +50,6 @@ function computeCumulatives(student) {
                 weakSubjects.push(sub);
             }
         });
-        // Sort subjects alphabetically
         strongSubjects.sort((a, b) => subjectNames[a].localeCompare(subjectNames[b]));
         weakSubjects.sort((a, b) => subjectNames[a].localeCompare(subjectNames[b]));
         student.strongSubject = strongSubjects.length > 0 ? strongSubjects : ['N/A'];
@@ -108,9 +107,7 @@ function populateOverall() {
     sorted.forEach((stu, i) => {
         const rank = stu.cumTotal > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
-        if (rank === 1) tr.classList.add('top-1');
-        else if (rank === 2) tr.classList.add('top-2');
-        else if (rank === 3) tr.classList.add('top-3');
+        if (rank >= 1 && rank <= 3) tr.classList.add('top-performer');
         tr.innerHTML = `
             <td>${rank}</td>
             <td>${stu.roll}</td>
@@ -146,9 +143,7 @@ function populateLast3() {
     sorted.forEach((stu, i) => {
         const rank = stu.last3Total > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
-        if (rank === 1) tr.classList.add('top-1');
-        else if (rank === 2) tr.classList.add('top-2');
-        else if (rank === 3) tr.classList.add('top-3');
+        if (rank >= 1 && rank <= 3) tr.classList.add('top-performer');
         tr.innerHTML = `
             <td>${rank}</td>
             <td>${stu.roll}</td>
@@ -169,6 +164,7 @@ function populateSubject(tableId, sub) {
     sorted.forEach((stu, i) => {
         const rank = stu.subjectTotals[sub] > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
+        if (rank >= 1 && rank <= 3) tr.classList.add('top-performer');
         tr.innerHTML = `
             <td>${rank}</td>
             <td>${stu.roll}</td>
@@ -197,12 +193,15 @@ function populateStats() {
     let minAvg = Infinity;
     for (let sub in subjectAverages) {
         subjectAverages[sub] = totalStudents > 0 ? (subjectAverages[sub] / totalStudents).toFixed(2) : 0;
-        document.querySelector(`#${sub}Avg span`).textContent = subjectAverages[sub];
         if (parseFloat(subjectAverages[sub]) < minAvg && parseFloat(subjectAverages[sub]) > 0) {
             minAvg = parseFloat(subjectAverages[sub]);
             mostDifficult = subjectNames[sub];
         }
     }
+    document.querySelector('#chemAvg span').textContent = subjectAverages.chem;
+    document.querySelector('#phyAvg span').textContent = subjectAverages.phy;
+    document.querySelector('#bioAvg span').textContent = subjectAverages.bio;
+    document.querySelector('#mathAvg span').textContent = subjectAverages.math;
     document.querySelector('#mostDifficult span').textContent = mostDifficult;
 
     const examCounts = {};
@@ -301,7 +300,7 @@ function toggleExamDetails(tr, exam) {
     `;
     sorted.forEach((stu, i) => {
         const rank = stu.examTotal > 0 ? i + 1 : '-';
-        const examData = stu.exams10exams.find(ex => ex.exam === exam);
+        const examData = stu.exams.find(ex => ex.exam === exam);
         content += `
             <tr>
                 <td>${rank}</td>
