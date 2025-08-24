@@ -7,34 +7,36 @@ function computeCumulatives(student) {
     let cumMax = 0;
     let subjectTotals = { chem: 0, phy: 0, bio: 0, math: 0 };
     student.exams.forEach(ex => {
-        cumObt += ex.total;
-        cumMax += ex.maxTotal;
-        for (let sub in ex.scores) {
-            subjectTotals[sub] += ex.scores[sub];
+        if (ex.maxTotal > 0) { // Only consider exams with maxTotal > 0
+            cumObt += ex.total;
+            cumMax += ex.maxTotal;
+            for (let sub in ex.scores) {
+                subjectTotals[sub] += ex.scores[sub];
+            }
         }
     });
     student.cumTotal = cumObt;
     student.cumMax = cumMax;
     student.cumPercent = cumMax > 0 ? (cumObt / cumMax * 100).toFixed(2) : 0;
     student.subjectTotals = subjectTotals;
-    student.examsAttempted = student.exams.length;
+    student.examsAttempted = student.exams.filter(ex => ex.maxTotal > 0).length;
 
     const averages = {};
     for (let sub in subjectTotals) {
         averages[sub] = student.examsAttempted > 0 ? (subjectTotals[sub] / student.examsAttempted).toFixed(2) : 0;
     }
     const subjects = ['chem', 'phy', 'bio', 'math'];
-    student.strongSubject = subjects.reduce((a, b) => averages[a] > averages[b] ? a : b, subjects[0]);
-    student.weakSubject = subjects.reduce((a, b) => averages[a] < averages[b] ? a : b, subjects[0]);
+    student.strongSubject = student.examsAttempted > 0 ? subjects.reduce((a, b) => averages[a] > averages[b] ? a : b, subjects[0]) : 'N/A';
+    student.weakSubject = student.examsAttempted > 0 ? subjects.reduce((a, b) => averages[a] < averages[b] ? a : b, subjects[0]) : 'N/A';
     student.subjectAverages = averages;
 }
 
 function populateOverall() {
     const tbody = document.querySelector('#rankTable tbody');
     tbody.innerHTML = '';
-    const sorted = [...students].sort((a, b) => b.cumTotal - a.cumTotal);
+    const sorted = [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll)); // Secondary sort by roll for ties
     sorted.forEach((stu, i) => {
-        const rank = i + 1;
+        const rank = stu.cumTotal > 0 ? i + 1 : '-'; // No rank for non-attendees
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${rank}</td>
@@ -53,7 +55,7 @@ function populateLast3() {
     const tbody = document.querySelector('#last3Table tbody');
     tbody.innerHTML = '';
     const last3Students = students.map(stu => {
-        const last3Exams = stu.exams.slice(-3);
+        const last3Exams = stu.exams.filter(ex => ex.maxTotal > 0).slice(-3); // Only valid exams
         let total = 0;
         let maxTotal = 0;
         last3Exams.forEach(ex => {
@@ -66,10 +68,10 @@ function populateLast3() {
             last3Percent: maxTotal > 0 ? (total / maxTotal * 100).toFixed(2) : 0,
             last3ExamsAttempted: last3Exams.length
         };
-    }).filter(stu => stu.last3ExamsAttempted > 0);
-    const sorted = last3Students.sort((a, b) => b.last3Total - a.last3Total);
+    });
+    const sorted = last3Students.sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)); // Secondary sort by roll
     sorted.forEach((stu, i) => {
-        const rank = i + 1;
+        const rank = stu.last3Total > 0 ? i + 1 : '-'; // No rank for non-attendees
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${rank}</td>
@@ -87,9 +89,9 @@ function populateLast3() {
 function populateSubject(tableId, sub) {
     const tbody = document.querySelector(`#${tableId} tbody`);
     tbody.innerHTML = '';
-    const sorted = [...students].sort((a, b) => b.subjectTotals[sub] - a.subjectTotals[sub]);
+    const sorted = [...students].sort((a, b) => b.subjectTotals[sub] - a.subjectTotals[sub] || a.roll.localeCompare(b.roll)); // Secondary sort by roll
     sorted.forEach((stu, i) => {
-        const rank = i + 1;
+        const rank = stu.subjectTotals[sub] > 0 ? i + 1 : '-'; // No rank for non-attendees
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${rank}</td>
@@ -103,7 +105,7 @@ function populateSubject(tableId, sub) {
 }
 
 function populateStats() {
-    const totalExams = [...new Set(students.flatMap(stu => stu.exams.map(ex => ex.exam)))].length;
+    const totalExams = [...new Set(students.flatMap(stu => stu.exams.filter(ex => ex.maxTotal > 0).map(ex => ex.exam)))].length;
     const totalStudents = students.length;
     document.querySelector('#totalExams span').textContent = totalExams;
     document.querySelector('#totalStudents span').textContent = totalStudents;
@@ -111,12 +113,14 @@ function populateStats() {
     const examCounts = {};
     students.forEach(stu => {
         stu.exams.forEach(ex => {
-            examCounts[ex.exam] = (examCounts[ex.exam] || 0) + 1;
+            if (ex.maxTotal > 0) { // Only count valid exams
+                examCounts[ex.exam] = (examCounts[ex.exam] || 0) + 1;
+            }
         });
     });
     const examTbody = document.querySelector('#examStatsTable tbody');
     examTbody.innerHTML = '';
-    Object.entries(examCounts).forEach(([exam, count]) => {
+    Object.entries(examCounts).sort().forEach(([exam, count]) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `<td>${exam}</td><td>${count}</td>`;
         examTbody.appendChild(tr);
@@ -172,14 +176,15 @@ function toggleDetails(tr, stu) {
     const div = document.createElement('div');
     div.classList.add('details');
 
-    const overallRank = [...students].sort((a, b) => b.cumTotal - a.cumTotal).findIndex(s => s.roll === stu.roll) + 1;
+    const overallRank = stu.cumTotal > 0 ? [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1 : 'N/A';
     const last3Rank = [...students.map(s => {
-        const last3Exams = s.exams.slice(-3);
+        const last3Exams = s.exams.filter(ex => ex.maxTotal > 0).slice(-3);
         let total = 0;
         let maxTotal = 0;
         last3Exams.forEach(ex => { total += ex.total; maxTotal += ex.maxTotal; });
         return { ...s, last3Total: total };
-    })].sort((a, b) => b.last3Total - a.last3Total).findIndex(s => s.roll === stu.roll) + 1;
+    })].sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1;
+    const last3RankDisplay = stu.examsAttempted > 0 ? last3Rank : 'N/A';
 
     let content = `<h3>${stu.name} (ROLL: ${stu.roll})</h3>`;
     content += `<p>OVERALL RANK: ${overallRank}</p>`;
@@ -187,22 +192,33 @@ function toggleDetails(tr, stu) {
     content += `<p>PERCENTAGE: ${stu.cumPercent}%</p>`;
     content += `<p>EXAMS ATTEMPTED: ${stu.examsAttempted}</p>`;
     const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
-    content += `<p><strong>STRONGEST SUBJECT:</strong> ${subjectNames[stu.strongSubject]} (${stu.subjectAverages[stu.strongSubject]})</p>`;
-    content += `<p><strong>WEAKEST SUBJECT:</strong> ${subjectNames[stu.weakSubject]} (${stu.subjectAverages[stu.weakSubject]})</p>`;
-    content += `<p>LAST 3 EXAMS RANK: ${last3Rank}</p>`;
+    content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.strongSubject]} (${stu.subjectAverages[stu.strongSubject]})`}</p>`;
+    content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.weakSubject]} (${stu.subjectAverages[stu.weakSubject]})`}</p>`;
+    content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
-    content += '<h3>ALL PREVIOUS MARKS</h3><table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
-    stu.exams.forEach(ex => {
-        content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
-    });
-    content += '</tbody></table>';
+    const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
+    content += '<h3>ALL PREVIOUS MARKS</h3>';
+    if (validExams.length > 0) {
+        content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
+        validExams.forEach(ex => {
+            content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
+        });
+        content += '</tbody></table>';
+    } else {
+        content += '<p>NO EXAMS ATTENDED.</p>';
+    }
 
-    const last3 = stu.exams.slice(-3);
-    content += '<h3>LAST 3 EXAMS</h3><table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
-    last3.forEach(ex => {
-        content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
-    });
-    content += '</tbody></table>';
+    const last3 = validExams.slice(-3);
+    content += '<h3>LAST 3 EXAMS</h3>';
+    if (last3.length > 0) {
+        content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
+        last3.forEach(ex => {
+            content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
+        });
+        content += '</tbody></table>';
+    } else {
+        content += '<p>NO EXAMS ATTENDED IN LAST 3.</p>';
+    }
 
     content += `<h3>EXAM MARKS LINE CHART</h3>`;
     content += `<div class="chart-container"><button id="chartToggle-${stu.roll}">SHOW SUBJECT-WISE MARKS</button><canvas id="chart-${stu.roll}"></canvas></div>`;
@@ -227,36 +243,49 @@ function searchStudent() {
     const stu = students.find(s => s.roll.toLowerCase() === val || s.name.split(' ')[0].toLowerCase() === val);
     if (stu) {
         showTab('searchResult');
-        const overallRank = [...students].sort((a, b) => b.cumTotal - a.cumTotal).findIndex(s => s.roll === stu.roll) + 1;
+        const overallRank = stu.cumTotal > 0 ? [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1 : 'N/A';
         const last3Rank = [...students.map(s => {
-            const last3Exams = s.exams.slice(-3);
+            const last3Exams = s.exams.filter(ex => ex.maxTotal > 0).slice(-3);
             let total = 0;
             let maxTotal = 0;
             last3Exams.forEach(ex => { total += ex.total; maxTotal += ex.maxTotal; });
             return { ...s, last3Total: total };
-        })].sort((a, b) => b.last3Total - a.last3Total).findIndex(s => s.roll === stu.roll) + 1;
+        })].sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1;
+        const last3RankDisplay = stu.examsAttempted > 0 ? last3Rank : 'N/A';
+
         let content = `<h3>${stu.name} (ROLL: ${stu.roll})</h3>`;
         content += `<p>OVERALL RANK: ${overallRank}</p>`;
         content += `<p>TOTAL SCORE: ${stu.cumTotal}</p>`;
         content += `<p>PERCENTAGE: ${stu.cumPercent}%</p>`;
         content += `<p>EXAMS ATTEMPTED: ${stu.examsAttempted}</p>`;
         const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
-        content += `<p><strong>STRONGEST SUBJECT:</strong> ${subjectNames[stu.strongSubject]} (${stu.subjectAverages[stu.strongSubject]})</p>`;
-        content += `<p><strong>WEAKEST SUBJECT:</strong> ${subjectNames[stu.weakSubject]} (${stu.subjectAverages[stu.weakSubject]})</p>`;
-        content += `<p>LAST 3 EXAMS RANK: ${last3Rank}</p>`;
+        content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.strongSubject]} (${stu.subjectAverages[stu.strongSubject]})`}</p>`;
+        content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.weakSubject]} (${stu.subjectAverages[stu.weakSubject]})`}</p>`;
+        content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
-        content += '<h3>ALL PREVIOUS MARKS</h3><table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
-        stu.exams.forEach(ex => {
-            content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
-        });
-        content += '</tbody></table>';
+        const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
+        content += '<h3>ALL PREVIOUS MARKS</h3>';
+        if (validExams.length > 0) {
+            content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
+            validExams.forEach(ex => {
+                content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
+            });
+            content += '</tbody></table>';
+        } else {
+            content += '<p>NO EXAMS ATTENDED.</p>';
+        }
 
-        const last3 = stu.exams.slice(-3);
-        content += '<h3>LAST 3 EXAMS</h3><table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
-        last3.forEach(ex => {
-            content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
-        });
-        content += '</tbody></table>';
+        const last3 = validExams.slice(-3);
+        content += '<h3>LAST 3 EXAMS</h3>';
+        if (last3.length > 0) {
+            content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
+            last3.forEach(ex => {
+                content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
+            });
+            content += '</tbody></table>';
+        } else {
+            content += '<p>NO EXAMS ATTENDED IN LAST 3.</p>';
+        }
 
         content += `<h3>EXAM MARKS LINE CHART</h3>`;
         content += `<div class="chart-container"><button id="chartToggle-${stu.roll}">SHOW SUBJECT-WISE MARKS</button><canvas id="searchChart-${stu.roll}"></canvas></div>`;
@@ -279,30 +308,39 @@ function createChart(stu, canvasId, mode) {
         chartInstances[canvasId].destroy();
     }
     const ctx = document.getElementById(canvasId);
-    const examLabels = stu.exams.map(ex => ex.exam);
+    const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
+    const examLabels = validExams.map(ex => ex.exam);
     let datasets = [];
     let yAxisMax = mode === 'total' ? 400 : 100;
 
-    if (mode === 'total') {
+    if (validExams.length === 0) {
+        datasets = [{
+            label: 'NO DATA',
+            data: [],
+            borderColor: '#ffeb3b',
+            fill: false
+        }];
+    } else if (mode === 'total') {
         datasets = [{
             label: 'TOTAL MARKS',
-            data: stu.exams.map(ex => ex.total),
+            data: validExams.map(ex => ex.total),
             borderColor: '#ffeb3b',
             fill: false
         }];
     } else {
         datasets = [
-            { label: 'CHEMISTRY', data: stu.exams.map(ex => ex.scores.chem), borderColor: '#f44336', fill: false },
-            { label: 'PHYSICS', data: stu.exams.map(ex => ex.scores.phy), borderColor: '#2196f3', fill: false },
-            { label: 'BIOLOGY', data: stu.exams.map(ex => ex.scores.bio), borderColor: '#4caf50', fill: false },
-            { label: 'MATHS', data: stu.exams.map(ex => ex.scores.math), borderColor: '#ffeb3b', fill: false }
+            { label: 'CHEMISTRY', data: validExams.map(ex => ex.scores.chem), borderColor: '#f44336', fill: false },
+            { label: 'PHYSICS', data: validExams.map(ex => ex.scores.phy), borderColor: '#2196f3', fill: false },
+            { label: 'BIOLOGY', data: validExams.map(ex => ex.scores.bio), borderColor: '#4caf50', fill: false },
+            { label: 'MATHS', data: validExams.map(ex => ex.scores.math), borderColor: '#ffeb3b', fill: false }
         ];
     }
 
     const tooltipFormat = {
-        title: (tooltipItems) => `Exam: ${tooltipItems[0].label}`,
+        title: (tooltipItems) => validExams.length > 0 ? `Exam: ${tooltipItems[0].label}` : 'No Data Available',
         label: (context) => {
-            const exam = stu.exams[context.dataIndex];
+            if (validExams.length === 0) return ['No exams attended.'];
+            const exam = validExams[context.dataIndex];
             return [
                 `Total: ${exam.total}`,
                 `Chemistry: ${exam.scores.chem}`,
@@ -422,6 +460,7 @@ function processCSVData(data) {
             studentMap[roll] = { roll, name, exams: [] };
         }
         studentMap[roll].name = name;
+        const maxTotal = parseFloat(row.maxTotal) || 0;
         const exam = {
             exam: row.exam.trim(),
             scores: {
@@ -432,12 +471,13 @@ function processCSVData(data) {
             },
             total: parseFloat(row.total) || 0,
             percent: parseFloat(row.percent) || 0,
-            maxTotal: parseFloat(row.maxTotal) || 400
+            maxTotal: maxTotal
         };
         studentMap[roll].exams.push(exam);
     });
     students = Object.values(studentMap);
     students.forEach(stu => {
+        stu.exams = stu.exams.filter(ex => ex.maxTotal > 0); // Filter out exams with maxTotal == 0
         stu.exams.sort((a, b) => a.exam.localeCompare(b.exam));
         computeCumulatives(stu);
     });
