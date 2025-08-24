@@ -11,8 +11,13 @@
 </head>
 <body>
     <div id="header">
-        <img id="logo" src="logo.png" alt="INSTITUTE LOGO"> <!-- Add your logo src here, e.g., src="logo.png" -->
+        <img id="logo" src="logo.png" alt="INSTITUTE LOGO">
         <h1>REPEATER'S BATCH 2025-26</h1>
+        <button id="themeToggle">Switch to Light Theme</button>
+    </div>
+    <div id="loader" style="display: none; text-align: center; margin: 20px;">
+        <div class="spinner"></div>
+        <p>Loading data...</p>
     </div>
     <input type="file" id="dataFile" accept=".csv">
     <div id="search-container">
@@ -30,8 +35,17 @@
             <h2>OVERALL STATISTICS</h2>
             <p id="totalExams">TOTAL EXAMS CONDUCTED: <span>0</span></p>
             <p id="totalStudents">TOTAL STUDENTS: <span>0</span></p>
+            <button id="subjectDifficultyBtn">SUBJECT DIFFICULTY ANALYSIS</button>
             <button id="examDetailsBtn">EXAM PARTICIPATION DETAILS</button>
             <button id="studentDetailsBtn">STUDENT DETAILS</button>
+            <div id="subjectDifficultyDetails" style="display: none;">
+                <h3>SUBJECT DIFFICULTY ANALYSIS</h3>
+                <p id="chemAvg">CHEMISTRY AVERAGE: <span>0</span></p>
+                <p id="phyAvg">PHYSICS AVERAGE: <span>0</span></p>
+                <p id="bioAvg">BIOLOGY AVERAGE: <span>0</span></p>
+                <p id="mathAvg">MATHS AVERAGE: <span>0</span></p>
+                <p id="mostDifficult">MOST DIFFICULT SUBJECT: <span>N/A</span></p>
+            </div>
             <div id="examDetails" style="display: none;">
                 <table id="examStatsTable">
                     <thead>
@@ -89,64 +103,72 @@
     </div>
     <div id="subjects" class="tab" style="display: none;">
         <div class="subject-box">
-            <h2>CHEMISTRY</h2>
-            <table id="chemTable">
-                <thead>
-                    <tr>
-                        <th>RANK</th>
-                        <th>ROLL NO</th>
-                        <th>NAME</th>
-                        <th>EXAMS ATTEMPTED</th>
-                        <th>TOTAL SCORE</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <h2 class="subject-header" data-subject="chem">CHEMISTRY</h2>
+            <div class="subject-content" id="chemContent">
+                <table id="chemTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
         <div class="subject-box">
-            <h2>PHYSICS</h2>
-            <table id="phyTable">
-                <thead>
-                    <tr>
-                        <th>RANK</th>
-                        <th>ROLL NO</th>
-                        <th>NAME</th>
-                        <th>EXAMS ATTEMPTED</th>
-                        <th>TOTAL SCORE</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <h2 class="subject-header" data-subject="phy">PHYSICS</h2>
+            <div class="subject-content" id="phyContent">
+                <table id="phyTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
         <div class="subject-box">
-            <h2>BIOLOGY</h2>
-            <table id="bioTable">
-                <thead>
-                    <tr>
-                        <th>RANK</th>
-                        <th>ROLL NO</th>
-                        <th>NAME</th>
-                        <th>EXAMS ATTEMPTED</th>
-                        <th>TOTAL SCORE</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <h2 class="subject-header" data-subject="bio">BIOLOGY</h2>
+            <div class="subject-content" id="bioContent">
+                <table id="bioTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
         <div class="subject-box">
-            <h2>MATHS</h2>
-            <table id="mathTable">
-                <thead>
-                    <tr>
-                        <th>RANK</th>
-                        <th>ROLL NO</th>
-                        <th>NAME</th>
-                        <th>EXAMS ATTEMPTED</th>
-                        <th>TOTAL SCORE</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <h2 class="subject-header" data-subject="math">MATHS</h2>
+            <div class="subject-content" id="mathContent">
+                <table id="mathTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div id="searchResult" class="tab" style="display: none;">
