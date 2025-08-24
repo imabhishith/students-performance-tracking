@@ -99,6 +99,17 @@ function computeProgress(student) {
     return progress;
 }
 
+function getExamRank(student, examName) {
+    const examStudents = students
+        .filter(stu => stu.exams.some(ex => ex.exam === examName && ex.maxTotal > 0))
+        .map(stu => {
+            const examData = stu.exams.find(ex => ex.exam === examName);
+            return { ...stu, examTotal: examData.total };
+        });
+    const sorted = examStudents.sort((a, b) => b.examTotal - a.examTotal || a.roll.localeCompare(b.roll));
+    return sorted.findIndex(s => s.roll === student.roll) + 1;
+}
+
 function getSubjectRanks(student) {
     const subjects = ['chem', 'phy', 'bio', 'math'];
     const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
@@ -109,6 +120,34 @@ function getSubjectRanks(student) {
         ranks[sub] = { rank, total: student.subjectTotals[sub] };
     });
     return { ranks, subjectNames };
+}
+
+function drawSparkline(canvasId, ranks) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || ranks.length < 2) return;
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    const maxRank = Math.max(...ranks);
+    const minRank = Math.min(...ranks);
+    const range = maxRank - minRank || 1;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.beginPath();
+    ctx.strokeStyle = document.body.classList.contains('light-theme') ? '#6200ea' : '#ffeb3b';
+    ctx.lineWidth = 2;
+
+    const step = width / (ranks.length - 1);
+    ranks.forEach((rank, i) => {
+        const x = i * step;
+        const y = ((rank - minRank) / range * (height - 10)) + 5; // Inverted y-axis
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+    ctx.stroke();
 }
 
 function populateOverall() {
@@ -370,15 +409,6 @@ function toggleDetails(tr, stu) {
     div.classList.add('details');
 
     const overallRank = stu.cumTotal > 0 ? [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1 : 'N/A';
-    const last3Rank = [...students.map(s => {
-        const last3Exams = s.exams.filter(ex => ex.maxTotal > 0).slice(-3);
-        let total = 0;
-        let maxTotal = 0;
-        last3Exams.forEach(ex => { total += ex.total; maxTotal += ex.maxTotal; });
-        return { ...s, last3Total: total };
-    })].sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1;
-    const last3RankDisplay = stu.examsAttempted > 0 ? last3Rank : 'N/A';
-
     const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
     let content = `<h3>${stu.name} (ROLL: ${stu.roll})</h3>`;
     content += `<p>OVERALL RANK: ${overallRank}</p>`;
@@ -387,7 +417,6 @@ function toggleDetails(tr, stu) {
     content += `<p>EXAMS ATTEMPTED: ${stu.examsAttempted}</p>`;
     content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject[0] === 'N/A' ? 'N/A' : stu.strongSubject.map(sub => subjectNames[sub]).join(', ')} (${stu.strongSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.strongSubject[0]]})</p>`;
     content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => subjectNames[sub]).join(' & ')} (${stu.weakSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.weakSubject[0]]})</p>`;
-    content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
     const { ranks: subjectRanks, subjectNames: rankSubjectNames } = getSubjectRanks(stu);
     content += '<h3>SUBJECT-WISE RANKS</h3>';
@@ -404,37 +433,26 @@ function toggleDetails(tr, stu) {
     const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
     content += '<h3>ALL PREVIOUS MARKS</h3>';
     if (validExams.length > 0) {
-        content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
+        content += '<table><thead><tr><th>EXAM</th><th>RANK</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
         validExams.forEach(ex => {
-            content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
+            const rank = getExamRank(stu, ex.exam);
+            content += `<tr><td>${ex.exam}</td><td>${rank}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
         });
         content += '</tbody></table>';
     } else {
         content += '<p>NO EXAMS ATTENDED.</p>';
     }
 
-    const last3 = validExams.slice(-3);
-    content += '<h3>LAST 3 EXAMS</h3>';
-    if (last3.length > 0) {
-        content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
-        last3.forEach(ex => {
-            content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
-        });
-        content += '</tbody></table>';
-    } else {
-        content += '<p>NO EXAMS ATTENDED IN LAST 3.</p>';
-    }
-
     content += '<h3>PROGRESS TRACKING</h3>';
     const progress = computeProgress(stu);
     if (progress.length > 0) {
-        content += '<table class="progress-table"><thead><tr><th>EXAM</th><th>RANK</th><th>RANK CHANGE</th><th>TOTAL SCORE</th><th>SCORE CHANGE</th></tr></thead><tbody>';
+        content += '<table class="progress-table"><thead><tr><th>EXAM</th><th>RANK</th><th>RANK CHANGE</th><th>TOTAL SCORE</th><th>SCORE CHANGE</th><th>RANK TREND</th></tr></thead><tbody>';
         progress.forEach(p => {
             const rankChangeText = p.rankChange > 0 ? `+${p.rankChange} (Improved)` : p.rankChange < 0 ? `${p.rankChange} (Declined)` : 'No Change';
             const scoreChangeText = p.scoreChange > 0 ? `+${p.scoreChange} (Improved)` : p.scoreChange < 0 ? `${p.scoreChange} (Declined)` : 'No Change';
             const rankClass = p.rankChange > 0 ? 'improved' : p.rankChange < 0 ? 'declined' : '';
             const scoreClass = p.scoreChange > 0 ? 'improved' : p.scoreChange < 0 ? 'declined' : '';
-            content += `<tr><td>${p.exam}</td><td>${p.rank}</td><td class="${rankClass}">${rankChangeText}</td><td>${p.score}</td><td class="${scoreClass}">${scoreChangeText}</td></tr>`;
+            content += `<tr><td>${p.exam}</td><td>${p.rank}</td><td class="${rankClass}">${rankChangeText}</td><td>${p.score}</td><td class="${scoreClass}">${scoreChangeText}</td><td><canvas class="sparkline" id="sparkline-${p.exam}-${stu.roll}" width="100" height="30"></canvas></td></tr>`;
         });
         content += '</tbody></table>';
     } else {
@@ -455,6 +473,13 @@ function toggleDetails(tr, stu) {
         this.textContent = mode === 'total' ? 'SHOW SUBJECT-WISE MARKS' : 'SHOW TOTAL MARKS';
         createChart(stu, `chart-${stu.roll}`, mode);
     });
+
+    if (progress.length > 0) {
+        const ranks = [getExamRank(stu, validExams[0].exam), ...progress.map(p => p.rank)];
+        progress.forEach(p => {
+            drawSparkline(`sparkline-${p.exam}-${stu.roll}`, ranks);
+        });
+    }
 }
 
 function searchStudent() {
@@ -465,15 +490,6 @@ function searchStudent() {
     if (stu) {
         showTab('searchResult');
         const overallRank = stu.cumTotal > 0 ? [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1 : 'N/A';
-        const last3Rank = [...students.map(s => {
-            const last3Exams = s.exams.filter(ex => ex.maxTotal > 0).slice(-3);
-            let total = 0;
-            let maxTotal = 0;
-            last3Exams.forEach(ex => { total += ex.total; maxTotal += ex.maxTotal; });
-            return { ...s, last3Total: total };
-        })].sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1;
-        const last3RankDisplay = stu.examsAttempted > 0 ? last3Rank : 'N/A';
-
         const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
         let content = `<h3>${stu.name} (ROLL: ${stu.roll})</h3>`;
         content += `<p>OVERALL RANK: ${overallRank}</p>`;
@@ -482,7 +498,6 @@ function searchStudent() {
         content += `<p>EXAMS ATTEMPTED: ${stu.examsAttempted}</p>`;
         content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject[0] === 'N/A' ? 'N/A' : stu.strongSubject.map(sub => subjectNames[sub]).join(', ')} (${stu.strongSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.strongSubject[0]]})</p>`;
         content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => subjectNames[sub]).join(' & ')} (${stu.weakSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.weakSubject[0]]})</p>`;
-        content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
         const { ranks: subjectRanks, subjectNames: rankSubjectNames } = getSubjectRanks(stu);
         content += '<h3>SUBJECT-WISE RANKS</h3>';
@@ -499,37 +514,26 @@ function searchStudent() {
         const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
         content += '<h3>ALL PREVIOUS MARKS</h3>';
         if (validExams.length > 0) {
-            content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
+            content += '<table><thead><tr><th>EXAM</th><th>RANK</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
             validExams.forEach(ex => {
-                content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
+                const rank = getExamRank(stu, ex.exam);
+                content += `<tr><td>${ex.exam}</td><td>${rank}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
             });
             content += '</tbody></table>';
         } else {
             content += '<p>NO EXAMS ATTENDED.</p>';
         }
 
-        const last3 = validExams.slice(-3);
-        content += '<h3>LAST 3 EXAMS</h3>';
-        if (last3.length > 0) {
-            content += '<table><thead><tr><th>EXAM</th><th>CHEM</th><th>PHY</th><th>BIO</th><th>MATH</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
-            last3.forEach(ex => {
-                content += `<tr><td>${ex.exam}</td><td>${ex.scores.chem}</td><td>${ex.scores.phy}</td><td>${ex.scores.bio}</td><td>${ex.scores.math}</td><td>${ex.total}</td><td>${ex.percent}</td></tr>`;
-            });
-            content += '</tbody></table>';
-        } else {
-            content += '<p>NO EXAMS ATTENDED IN LAST 3.</p>';
-        }
-
         content += '<h3>PROGRESS TRACKING</h3>';
         const progress = computeProgress(stu);
         if (progress.length > 0) {
-            content += '<table class="progress-table"><thead><tr><th>EXAM</th><th>RANK</th><th>RANK CHANGE</th><th>TOTAL SCORE</th><th>SCORE CHANGE</th></tr></thead><tbody>';
+            content += '<table class="progress-table"><thead><tr><th>EXAM</th><th>RANK</th><th>RANK CHANGE</th><th>TOTAL SCORE</th><th>SCORE CHANGE</th><th>RANK TREND</th></tr></thead><tbody>';
             progress.forEach(p => {
                 const rankChangeText = p.rankChange > 0 ? `+${p.rankChange} (Improved)` : p.rankChange < 0 ? `${p.rankChange} (Declined)` : 'No Change';
                 const scoreChangeText = p.scoreChange > 0 ? `+${p.scoreChange} (Improved)` : p.scoreChange < 0 ? `${p.scoreChange} (Declined)` : 'No Change';
                 const rankClass = p.rankChange > 0 ? 'improved' : p.rankChange < 0 ? 'declined' : '';
                 const scoreClass = p.scoreChange > 0 ? 'improved' : p.scoreChange < 0 ? 'declined' : '';
-                content += `<tr><td>${p.exam}</td><td>${p.rank}</td><td class="${rankClass}">${rankChangeText}</td><td>${p.score}</td><td class="${scoreClass}">${scoreChangeText}</td></tr>`;
+                content += `<tr><td>${p.exam}</td><td>${p.rank}</td><td class="${rankClass}">${rankChangeText}</td><td>${p.score}</td><td class="${scoreClass}">${scoreChangeText}</td><td><canvas class="sparkline" id="sparkline-${p.exam}-${stu.roll}" width="100" height="30"></canvas></td></tr>`;
             });
             content += '</tbody></table>';
         } else {
@@ -546,6 +550,13 @@ function searchStudent() {
             this.textContent = mode === 'total' ? 'SHOW SUBJECT-WISE MARKS' : 'SHOW TOTAL MARKS';
             createChart(stu, `searchChart-${stu.roll}`, mode);
         });
+
+        if (progress.length > 0) {
+            const ranks = [getExamRank(stu, validExams[0].exam), ...progress.map(p => p.rank)];
+            progress.forEach(p => {
+                drawSparkline(`sparkline-${p.exam}-${stu.roll}`, ranks);
+            });
+        }
     } else {
         searchDetails.innerHTML = '<p>NO STUDENT FOUND.</p>';
         showTab('searchResult');
@@ -653,7 +664,6 @@ function createChart(stu, canvasId, mode) {
 function showTab(tab) {
     document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
     document.getElementById(tab).style.display = 'block';
-    // Ensure all table rows are visible
     const tables = ['rankTable', 'chemTable', 'phyTable', 'bioTable', 'mathTable', 'last3Table', 'studentDetailsTable'];
     tables.forEach(tableId => {
         const rows = document.querySelector(`#${tableId} tbody`)?.querySelectorAll('tr:not(.details-row):not(.exam-details-row)');
@@ -680,6 +690,17 @@ function toggleTheme() {
         chart.options.scales.y.grid.color = isLight ? '#ccc' : '#333';
         chart.update();
     }
+    document.querySelectorAll('.sparkline').forEach(canvas => {
+        const id = canvas.id;
+        const match = id.match(/sparkline-(.*)-.*/);
+        if (match) {
+            const exam = match[1];
+            const stu = students.find(s => id.includes(s.roll));
+            const progress = computeProgress(stu);
+            const ranks = [getExamRank(stu, stu.exams.filter(ex => ex.maxTotal > 0)[0].exam), ...progress.map(p => p.rank)];
+            drawSparkline(id, ranks);
+        }
+    });
 }
 
 document.getElementById('searchButton').addEventListener('click', searchStudent);
