@@ -27,8 +27,35 @@ function computeCumulatives(student) {
         averages[sub] = student.examsAttempted > 0 ? (subjectTotals[sub] / student.examsAttempted).toFixed(2) : 0;
     }
     const subjects = ['chem', 'phy', 'bio', 'math'];
-    student.strongSubject = student.examsAttempted > 0 ? subjects.reduce((a, b) => averages[a] > averages[b] ? a : b, subjects[0]) : 'N/A';
-    student.weakSubject = student.examsAttempted > 0 ? subjects.reduce((a, b) => averages[a] < averages[b] ? a : b, subjects[0]) : 'N/A';
+    const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
+
+    // Find strongest and weakest subjects
+    if (student.examsAttempted > 0) {
+        let maxAvg = -Infinity;
+        let minAvg = Infinity;
+        let strongSub = 'N/A';
+        let weakSub = 'N/A';
+        subjects.forEach(sub => {
+            const avg = parseFloat(averages[sub]);
+            if (avg > maxAvg) {
+                maxAvg = avg;
+                strongSub = sub;
+            } else if (avg === maxAvg && strongSub !== 'N/A') {
+                strongSub = subjectNames[sub].localeCompare(subjectNames[strongSub]) < 0 ? sub : strongSub;
+            }
+            if (avg < minAvg && avg > 0) {
+                minAvg = avg;
+                weakSub = sub;
+            } else if (avg === minAvg && avg > 0 && weakSub !== 'N/A') {
+                weakSub = subjectNames[sub].localeCompare(subjectNames[weakSub]) < 0 ? sub : weakSub;
+            }
+        });
+        student.strongSubject = strongSub !== 'N/A' ? strongSub : 'N/A';
+        student.weakSubject = weakSub !== 'N/A' ? weakSub : 'N/A';
+    } else {
+        student.strongSubject = 'N/A';
+        student.weakSubject = 'N/A';
+    }
     student.subjectAverages = averages;
 }
 
@@ -38,7 +65,7 @@ function computeProgress(student) {
     if (validExams.length < 2) return progress;
 
     validExams.forEach((exam, i) => {
-        if (i === 0) return; // Skip first exam as no previous exam exists
+        if (i === 0) return;
         const prevExam = validExams[i - 1];
         const examStudents = students
             .filter(stu => stu.exams.some(ex => ex.exam === exam.exam && ex.maxTotal > 0))
@@ -58,8 +85,8 @@ function computeProgress(student) {
         const prevSorted = prevExamStudents.sort((a, b) => b.examTotal - a.examTotal || a.roll.localeCompare(b.roll));
         const prevRank = prevSorted.findIndex(s => s.roll === student.roll) + 1;
 
-        const rankChange = prevRank - currRank; // Positive means improved rank
-        const scoreChange = exam.total - prevExam.total; // Positive means improved score
+        const rankChange = prevRank - currRank;
+        const scoreChange = exam.total - prevExam.total;
         progress.push({
             exam: exam.exam,
             rank: currRank,
@@ -156,7 +183,6 @@ function populateStats() {
     document.querySelector('#totalExams span').textContent = totalExams;
     document.querySelector('#totalStudents span').textContent = totalStudents;
 
-    // Subject Difficulty Analysis
     const subjectAverages = { chem: 0, phy: 0, bio: 0, math: 0 };
     students.forEach(stu => {
         for (let sub in stu.subjectAverages) {
@@ -590,7 +616,7 @@ function toggleTheme() {
     const body = document.body;
     const isLight = body.classList.toggle('light-theme');
     const button = document.getElementById('themeToggle');
-    button.textContent = isLight ? 'Switch to Dark Theme' : 'Switch to Light Theme';
+    button.textContent = isLight ? '🌙' : '☀️';
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     for (let canvasId in chartInstances) {
         const chart = chartInstances[canvasId];
@@ -667,7 +693,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
         document.body.classList.add('light-theme');
-        document.getElementById('themeToggle').textContent = 'Switch to Dark Theme';
+        document.getElementById('themeToggle').textContent = '🌙';
+    } else {
+        document.getElementById('themeToggle').textContent = '☀️';
     }
     document.querySelectorAll('.subject-header').forEach(header => {
         header.addEventListener('click', function() {
