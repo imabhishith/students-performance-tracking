@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REPEATER'S BATCH 2025-26</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
@@ -13,7 +13,7 @@
     <div id="header">
         <img id="logo" src="logo.png" alt="INSTITUTE LOGO">
         <h1>REPEATER'S BATCH 2025-26</h1>
-        <button id="themeToggle">Switch to Light Theme</button>
+        <button id="themeToggle">☀️</button>
     </div>
     <div id="loader" style="display: none; text-align: center; margin: 20px;">
         <div class="spinner"></div>
@@ -40,11 +40,21 @@
             <button id="studentDetailsBtn">STUDENT DETAILS</button>
             <div id="subjectDifficultyDetails" style="display: none;">
                 <h3>SUBJECT DIFFICULTY ANALYSIS</h3>
-                <p id="chemAvg">CHEMISTRY AVERAGE: <span>0</span></p>
-                <p id="phyAvg">PHYSICS AVERAGE: <span>0</span></p>
-                <p id="bioAvg">BIOLOGY AVERAGE: <span>0</span></p>
-                <p id="mathAvg">MATHS AVERAGE: <span>0</span></p>
-                <p id="mostDifficult">MOST DIFFICULT SUBJECT: <span>N/A</span></p>
+                <table id="subjectStatsTable">
+                    <thead>
+                        <tr>
+                            <th>SUBJECT</th>
+                            <th>AVERAGE SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>CHEMISTRY</td><td id="chemAvg"><span>0</span></td></tr>
+                        <tr><td>PHYSICS</td><td id="phyAvg"><span>0</span></td></tr>
+                        <tr><td>BIOLOGY</td><td id="bioAvg"><span>0</span></td></tr>
+                        <tr><td>MATHS</td><td id="mathAvg"><span>0</span></td></tr>
+                        <tr><td>MOST DIFFICULT</td><td id="mostDifficult"><span>N/A</span></td></tr>
+                    </tbody>
+                </table>
             </div>
             <div id="examDetails" style="display: none;">
                 <table id="examStatsTable">
