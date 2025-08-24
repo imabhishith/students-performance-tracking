@@ -29,7 +29,6 @@ function computeCumulatives(student) {
     const subjects = ['chem', 'phy', 'bio', 'math'];
     const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
 
-    // Find strongest and weakest subjects
     if (student.examsAttempted > 0) {
         let maxAvg = -Infinity;
         let minAvg = Infinity;
@@ -98,6 +97,18 @@ function computeProgress(student) {
         });
     });
     return progress;
+}
+
+function getSubjectRanks(student) {
+    const subjects = ['chem', 'phy', 'bio', 'math'];
+    const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
+    const ranks = {};
+    subjects.forEach(sub => {
+        const sorted = [...students].sort((a, b) => b.subjectTotals[sub] - a.subjectTotals[sub] || a.roll.localeCompare(b.roll));
+        const rank = student.subjectTotals[sub] > 0 ? sorted.findIndex(s => s.roll === student.roll) + 1 : '-';
+        ranks[sub] = { rank, total: student.subjectTotals[sub] };
+    });
+    return { ranks, subjectNames };
 }
 
 function populateOverall() {
@@ -378,6 +389,18 @@ function toggleDetails(tr, stu) {
     content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => subjectNames[sub]).join(' & ')} (${stu.weakSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.weakSubject[0]]})</p>`;
     content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
+    const { ranks: subjectRanks, subjectNames: rankSubjectNames } = getSubjectRanks(stu);
+    content += '<h3>SUBJECT-WISE RANKS</h3>';
+    if (stu.examsAttempted > 0) {
+        content += '<table class="subject-rank-table"><thead><tr><th>SUBJECT</th><th>RANK</th><th>TOTAL SCORE</th></tr></thead><tbody>';
+        ['chem', 'phy', 'bio', 'math'].forEach(sub => {
+            content += `<tr><td>${rankSubjectNames[sub]}</td><td>${subjectRanks[sub].rank}</td><td>${subjectRanks[sub].total}</td></tr>`;
+        });
+        content += '</tbody></table>';
+    } else {
+        content += '<p>NO SUBJECT RANKS AVAILABLE (NO EXAMS ATTENDED).</p>';
+    }
+
     const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
     content += '<h3>ALL PREVIOUS MARKS</h3>';
     if (validExams.length > 0) {
@@ -461,6 +484,18 @@ function searchStudent() {
         content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => subjectNames[sub]).join(' & ')} (${stu.weakSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.weakSubject[0]]})</p>`;
         content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
+        const { ranks: subjectRanks, subjectNames: rankSubjectNames } = getSubjectRanks(stu);
+        content += '<h3>SUBJECT-WISE RANKS</h3>';
+        if (stu.examsAttempted > 0) {
+            content += '<table class="subject-rank-table"><thead><tr><th>SUBJECT</th><th>RANK</th><th>TOTAL SCORE</th></tr></thead><tbody>';
+            ['chem', 'phy', 'bio', 'math'].forEach(sub => {
+                content += `<tr><td>${rankSubjectNames[sub]}</td><td>${subjectRanks[sub].rank}</td><td>${subjectRanks[sub].total}</td></tr>`;
+            });
+            content += '</tbody></table>';
+        } else {
+            content += '<p>NO SUBJECT RANKS AVAILABLE (NO EXAMS ATTENDED).</p>';
+        }
+
         const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
         content += '<h3>ALL PREVIOUS MARKS</h3>';
         if (validExams.length > 0) {
@@ -515,6 +550,12 @@ function searchStudent() {
         searchDetails.innerHTML = '<p>NO STUDENT FOUND.</p>';
         showTab('searchResult');
     }
+}
+
+function clearSearch() {
+    document.getElementById('search').value = '';
+    document.getElementById('searchDetails').innerHTML = '';
+    showTab('overall');
 }
 
 function createChart(stu, canvasId, mode) {
@@ -612,6 +653,16 @@ function createChart(stu, canvasId, mode) {
 function showTab(tab) {
     document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
     document.getElementById(tab).style.display = 'block';
+    // Ensure all table rows are visible
+    const tables = ['rankTable', 'chemTable', 'phyTable', 'bioTable', 'mathTable', 'last3Table', 'studentDetailsTable'];
+    tables.forEach(tableId => {
+        const rows = document.querySelector(`#${tableId} tbody`)?.querySelectorAll('tr:not(.details-row):not(.exam-details-row)');
+        if (rows) {
+            rows.forEach(row => {
+                row.style.display = '';
+            });
+        }
+    });
 }
 
 function toggleTheme() {
@@ -635,29 +686,7 @@ document.getElementById('searchButton').addEventListener('click', searchStudent)
 document.getElementById('search').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') searchStudent();
 });
-
-document.getElementById('search').addEventListener('keyup', function() {
-    const val = this.value.toLowerCase();
-    const tables = ['rankTable', 'chemTable', 'phyTable', 'bioTable', 'mathTable', 'last3Table', 'studentDetailsTable'];
-    tables.forEach(tableId => {
-        const rows = document.querySelector(`#${tableId} tbody`)?.querySelectorAll('tr:not(.details-row):not(.exam-details-row)');
-        if (rows) {
-            rows.forEach(row => {
-                const rollTd = row.querySelector('td:nth-child(2)');
-                const nameTd = row.querySelector('td:nth-child(3)');
-                if (rollTd && nameTd) {
-                    const roll = rollTd.textContent.toLowerCase();
-                    const firstName = nameTd.textContent.split(' ')[0].toLowerCase();
-                    if (roll.includes(val) || firstName.includes(val)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                }
-            });
-        }
-    });
-});
+document.getElementById('clearSearchButton').addEventListener('click', clearSearch);
 
 document.getElementById('dataFile').addEventListener('change', function(event) {
     const file = event.target.files[0];
