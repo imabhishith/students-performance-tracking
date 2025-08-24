@@ -127,37 +127,28 @@ body.light-theme .subject-header:hover {
     max-height: 0;
 }
 
-.top-1 {
-    background-color: #ffd70030 !important;
+.top-performer {
+    background-color: #512da830 !important;
 }
 
-.top-2 {
-    background-color: #c0c0c030 !important;
+body.light-theme .top-performer {
+    background-color: #bbdefb80 !important;
 }
 
-.top-3 {
-    background-color: #cd7f3230 !important;
-}
-
-body.light-theme .top-1 {
-    background-color: #fffacd80 !important;
-}
-
-body.light-theme .top-2 {
-    background-color: #e6e6fa80 !important;
-}
-
-body.light-theme .top-3 {
-    background-color: #ffe4c480 !important;
-}
-
-#subjectDifficultyDetails {
+#subjectDifficultyDetails,
+#examDetails,
+#studentDetails {
     margin: 20px 0;
+    padding: 15px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-#subjectDifficultyDetails p {
-    margin: 10px 0;
-    font-weight: 500;
+body.light-theme #subjectDifficultyDetails,
+body.light-theme #examDetails,
+body.light-theme #studentDetails {
+    background-color: #ffffff;
 }
 
 #mostDifficult span {
@@ -222,7 +213,7 @@ h2 {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 1.8em;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 h3 {
@@ -231,7 +222,7 @@ h3 {
     text-align: center;
     font-weight: 700;
     font-size: 1.4em;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 body.light-theme h1,
@@ -467,14 +458,15 @@ tr:hover {
 
 .stats-box {
     background-color: #673ab7;
-    padding: 20px;
+    padding: 25px;
     margin-bottom: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
 }
 
 .stats-box p {
-    margin: 10px 0;
+    margin: 12px 0;
     text-align: center;
     font-weight: 500;
 }
@@ -605,5 +597,9 @@ body.light-theme .chart-container button {
     canvas {
         width: 100% !important;
         height: 100% !important;
+    }
+
+    .stats-box {
+        padding: 15px;
     }
 }
