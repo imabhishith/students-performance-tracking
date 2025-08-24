@@ -33,28 +33,31 @@ function computeCumulatives(student) {
     if (student.examsAttempted > 0) {
         let maxAvg = -Infinity;
         let minAvg = Infinity;
-        let strongSub = 'N/A';
-        let weakSub = 'N/A';
+        let strongSubjects = [];
+        let weakSubjects = [];
         subjects.forEach(sub => {
             const avg = parseFloat(averages[sub]);
             if (avg > maxAvg) {
                 maxAvg = avg;
-                strongSub = sub;
-            } else if (avg === maxAvg && strongSub !== 'N/A') {
-                strongSub = subjectNames[sub].localeCompare(subjectNames[strongSub]) < 0 ? sub : strongSub;
+                strongSubjects = [sub];
+            } else if (avg === maxAvg) {
+                strongSubjects.push(sub);
             }
-            if (avg < minAvg && avg > 0) {
+            if (avg < minAvg) {
                 minAvg = avg;
-                weakSub = sub;
-            } else if (avg === minAvg && avg > 0 && weakSub !== 'N/A') {
-                weakSub = subjectNames[sub].localeCompare(subjectNames[weakSub]) < 0 ? sub : weakSub;
+                weakSubjects = [sub];
+            } else if (avg === minAvg) {
+                weakSubjects.push(sub);
             }
         });
-        student.strongSubject = strongSub !== 'N/A' ? strongSub : 'N/A';
-        student.weakSubject = weakSub !== 'N/A' ? weakSub : 'N/A';
+        // Sort subjects alphabetically
+        strongSubjects.sort((a, b) => subjectNames[a].localeCompare(subjectNames[b]));
+        weakSubjects.sort((a, b) => subjectNames[a].localeCompare(subjectNames[b]));
+        student.strongSubject = strongSubjects.length > 0 ? strongSubjects : ['N/A'];
+        student.weakSubject = weakSubjects.length > 0 ? weakSubjects : ['N/A'];
     } else {
-        student.strongSubject = 'N/A';
-        student.weakSubject = 'N/A';
+        student.strongSubject = ['N/A'];
+        student.weakSubject = ['N/A'];
     }
     student.subjectAverages = averages;
 }
@@ -298,7 +301,7 @@ function toggleExamDetails(tr, exam) {
     `;
     sorted.forEach((stu, i) => {
         const rank = stu.examTotal > 0 ? i + 1 : '-';
-        const examData = stu.exams.find(ex => ex.exam === exam);
+        const examData = stu.exams10exams.find(ex => ex.exam === exam);
         content += `
             <tr>
                 <td>${rank}</td>
@@ -366,14 +369,14 @@ function toggleDetails(tr, stu) {
     })].sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1;
     const last3RankDisplay = stu.examsAttempted > 0 ? last3Rank : 'N/A';
 
+    const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
     let content = `<h3>${stu.name} (ROLL: ${stu.roll})</h3>`;
     content += `<p>OVERALL RANK: ${overallRank}</p>`;
     content += `<p>TOTAL SCORE: ${stu.cumTotal}</p>`;
     content += `<p>PERCENTAGE: ${stu.cumPercent}%</p>`;
     content += `<p>EXAMS ATTEMPTED: ${stu.examsAttempted}</p>`;
-    const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
-    content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.strongSubject]} (${stu.subjectAverages[stu.strongSubject]})`}</p>`;
-    content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.weakSubject]} (${stu.subjectAverages[stu.weakSubject]})`}</p>`;
+    content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject[0] === 'N/A' ? 'N/A' : stu.strongSubject.map(sub => subjectNames[sub]).join(', ')} (${stu.strongSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.strongSubject[0]]})</p>`;
+    content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => subjectNames[sub]).join(' & ')} (${stu.weakSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.weakSubject[0]]})</p>`;
     content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
     const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
@@ -449,14 +452,14 @@ function searchStudent() {
         })].sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1;
         const last3RankDisplay = stu.examsAttempted > 0 ? last3Rank : 'N/A';
 
+        const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
         let content = `<h3>${stu.name} (ROLL: ${stu.roll})</h3>`;
         content += `<p>OVERALL RANK: ${overallRank}</p>`;
         content += `<p>TOTAL SCORE: ${stu.cumTotal}</p>`;
         content += `<p>PERCENTAGE: ${stu.cumPercent}%</p>`;
         content += `<p>EXAMS ATTEMPTED: ${stu.examsAttempted}</p>`;
-        const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
-        content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.strongSubject]} (${stu.subjectAverages[stu.strongSubject]})`}</p>`;
-        content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject === 'N/A' ? 'N/A' : `${subjectNames[stu.weakSubject]} (${stu.subjectAverages[stu.weakSubject]})`}</p>`;
+        content += `<p><strong>STRONGEST SUBJECT:</strong> ${stu.strongSubject[0] === 'N/A' ? 'N/A' : stu.strongSubject.map(sub => subjectNames[sub]).join(', ')} (${stu.strongSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.strongSubject[0]]})</p>`;
+        content += `<p><strong>WEAKEST SUBJECT:</strong> ${stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => subjectNames[sub]).join(' & ')} (${stu.weakSubject[0] === 'N/A' ? '' : stu.subjectAverages[stu.weakSubject[0]]})</p>`;
         content += `<p>LAST 3 EXAMS RANK: ${last3RankDisplay}</p>`;
 
         const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
