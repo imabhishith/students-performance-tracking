@@ -1,13 +1,13 @@
 let students = [];
 let currentExpandedRow = null;
-let chartInstances = {};
+let currentExpandedExam = null; // Track the currently expanded exam
 
 function computeCumulatives(student) {
     let cumObt = 0;
     let cumMax = 0;
     let subjectTotals = { chem: 0, phy: 0, bio: 0, math: 0 };
     student.exams.forEach(ex => {
-        if (ex.maxTotal > 0) { // Only consider exams with maxTotal > 0
+        if (ex.maxTotal > 0) {
             cumObt += ex.total;
             cumMax += ex.maxTotal;
             for (let sub in ex.scores) {
@@ -34,9 +34,9 @@ function computeCumulatives(student) {
 function populateOverall() {
     const tbody = document.querySelector('#rankTable tbody');
     tbody.innerHTML = '';
-    const sorted = [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll)); // Secondary sort by roll for ties
+    const sorted = [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll));
     sorted.forEach((stu, i) => {
-        const rank = stu.cumTotal > 0 ? i + 1 : '-'; // No rank for non-attendees
+        const rank = stu.cumTotal > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${rank}</td>
@@ -55,7 +55,7 @@ function populateLast3() {
     const tbody = document.querySelector('#last3Table tbody');
     tbody.innerHTML = '';
     const last3Students = students.map(stu => {
-        const last3Exams = stu.exams.filter(ex => ex.maxTotal > 0).slice(-3); // Only valid exams
+        const last3Exams = stu.exams.filter(ex => ex.maxTotal > 0).slice(-3);
         let total = 0;
         let maxTotal = 0;
         last3Exams.forEach(ex => {
@@ -69,9 +69,9 @@ function populateLast3() {
             last3ExamsAttempted: last3Exams.length
         };
     });
-    const sorted = last3Students.sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll)); // Secondary sort by roll
+    const sorted = last3Students.sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll));
     sorted.forEach((stu, i) => {
-        const rank = stu.last3Total > 0 ? i + 1 : '-'; // No rank for non-attendees
+        const rank = stu.last3Total > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${rank}</td>
@@ -89,9 +89,9 @@ function populateLast3() {
 function populateSubject(tableId, sub) {
     const tbody = document.querySelector(`#${tableId} tbody`);
     tbody.innerHTML = '';
-    const sorted = [...students].sort((a, b) => b.subjectTotals[sub] - a.subjectTotals[sub] || a.roll.localeCompare(b.roll)); // Secondary sort by roll
+    const sorted = [...students].sort((a, b) => b.subjectTotals[sub] - a.subjectTotals[sub] || a.roll.localeCompare(b.roll));
     sorted.forEach((stu, i) => {
-        const rank = stu.subjectTotals[sub] > 0 ? i + 1 : '-'; // No rank for non-attendees
+        const rank = stu.subjectTotals[sub] > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${rank}</td>
@@ -113,7 +113,7 @@ function populateStats() {
     const examCounts = {};
     students.forEach(stu => {
         stu.exams.forEach(ex => {
-            if (ex.maxTotal > 0) { // Only count valid exams
+            if (ex.maxTotal > 0) {
                 examCounts[ex.exam] = (examCounts[ex.exam] || 0) + 1;
             }
         });
@@ -122,8 +122,16 @@ function populateStats() {
     examTbody.innerHTML = '';
     Object.entries(examCounts).sort().forEach(([exam, count]) => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${exam}</td><td>${count}</td>`;
+        tr.innerHTML = `
+            <td class="exam-name" data-exam="${exam}">${exam}</td>
+            <td>${count}</td>
+        `;
         examTbody.appendChild(tr);
+    });
+
+    // Add click listeners for exam names
+    document.querySelectorAll('.exam-name').forEach(name => {
+        name.addEventListener('click', handleExamClick);
     });
 
     const studentTbody = document.querySelector('#studentDetailsTable tbody');
@@ -139,6 +147,89 @@ function populateStats() {
         `;
         studentTbody.appendChild(tr);
     });
+}
+
+function handleExamClick(event) {
+    const exam = event.target.dataset.exam;
+    const tr = event.target.parentNode;
+    if (currentExpandedExam && currentExpandedExam !== exam) {
+        const prevRow = document.querySelector(`tr[data-exam-row="${currentExpandedExam}"]`);
+        if (prevRow) {
+            prevRow.style.display = 'none';
+        }
+    }
+    toggleExamDetails(tr, exam);
+    currentExpandedExam = tr.nextElementSibling && tr.nextElementSibling.classList.contains('exam-details-row') ? exam : null;
+}
+
+function toggleExamDetails(tr, exam) {
+    let next = tr.nextElementSibling;
+    if (next && next.classList.contains('exam-details-row')) {
+        next.style.display = next.style.display === 'none' ? '' : 'none';
+        return;
+    }
+    const detailsTr = document.createElement('tr');
+    detailsTr.classList.add('exam-details-row');
+    detailsTr.dataset.examRow = exam;
+    const td = document.createElement('td');
+    td.colSpan = 2;
+    const div = document.createElement('div');
+    div.classList.add('details');
+
+    // Generate ranklist for the specific exam
+    const examStudents = students
+        .filter(stu => stu.exams.some(ex => ex.exam === exam && ex.maxTotal > 0))
+        .map(stu => {
+            const examData = stu.exams.find(ex => ex.exam === exam);
+            return {
+                ...stu,
+                examTotal: examData.total,
+                examPercent: examData.percent
+            };
+        });
+    const sorted = examStudents.sort((a, b) => b.examTotal - a.examTotal || a.roll.localeCompare(b.roll));
+
+    let content = `<h3>RANKLIST FOR ${exam}</h3>`;
+    content += `
+        <table class="exam-ranklist">
+            <thead>
+                <tr>
+                    <th>RANK</th>
+                    <th>ROLL NO</th>
+                    <th>NAME</th>
+                    <th>CHEM</th>
+                    <th>PHY</th>
+                    <th>BIO</th>
+                    <th>MATH</th>
+                    <th>TOTAL</th>
+                    <th>%</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    sorted.forEach((stu, i) => {
+        const rank = stu.examTotal > 0 ? i + 1 : '-';
+        const examData = stu.exams.find(ex => ex.exam === exam);
+        content += `
+            <tr>
+                <td>${rank}</td>
+                <td>${stu.roll}</td>
+                <td>${stu.name}</td>
+                <td>${examData.scores.chem}</td>
+                <td>${examData.scores.phy}</td>
+                <td>${examData.scores.bio}</td>
+                <td>${examData.scores.math}</td>
+                <td>${stu.examTotal}</td>
+                <td>${stu.examPercent}%</td>
+            </tr>
+        `;
+    });
+    content += '</tbody></table>';
+
+    div.innerHTML = content;
+    td.appendChild(div);
+    detailsTr.appendChild(td);
+    tr.after(detailsTr);
 }
 
 function addClickListeners() {
@@ -409,7 +500,7 @@ document.getElementById('search').addEventListener('keyup', function() {
     const val = this.value.toLowerCase();
     const tables = ['rankTable', 'chemTable', 'phyTable', 'bioTable', 'mathTable', 'last3Table', 'studentDetailsTable'];
     tables.forEach(tableId => {
-        const rows = document.querySelector(`#${tableId} tbody`)?.querySelectorAll('tr:not(.details-row)');
+        const rows = document.querySelector(`#${tableId} tbody`)?.querySelectorAll('tr:not(.details-row):not(.exam-details-row)');
         if (rows) {
             rows.forEach(row => {
                 const rollTd = row.querySelector('td:nth-child(2)');
@@ -477,7 +568,7 @@ function processCSVData(data) {
     });
     students = Object.values(studentMap);
     students.forEach(stu => {
-        stu.exams = stu.exams.filter(ex => ex.maxTotal > 0); // Filter out exams with maxTotal == 0
+        stu.exams = stu.exams.filter(ex => ex.maxTotal > 0);
         stu.exams.sort((a, b) => a.exam.localeCompare(b.exam));
         computeCumulatives(stu);
     });
