@@ -1,6 +1,7 @@
 let students = [];
 let currentExpandedRow = null;
-let currentExpandedExam = null; // Track the currently expanded exam
+let currentExpandedExam = null;
+let chartInstances = {};
 
 function computeCumulatives(student) {
     let cumObt = 0;
@@ -31,6 +32,45 @@ function computeCumulatives(student) {
     student.subjectAverages = averages;
 }
 
+function computeProgress(student) {
+    const validExams = student.exams.filter(ex => ex.maxTotal > 0);
+    const progress = [];
+    if (validExams.length < 2) return progress;
+
+    validExams.forEach((exam, i) => {
+        if (i === 0) return; // Skip first exam as no previous exam exists
+        const prevExam = validExams[i - 1];
+        const examStudents = students
+            .filter(stu => stu.exams.some(ex => ex.exam === exam.exam && ex.maxTotal > 0))
+            .map(stu => {
+                const examData = stu.exams.find(ex => ex.exam === exam.exam);
+                return { ...stu, examTotal: examData.total };
+            });
+        const sorted = examStudents.sort((a, b) => b.examTotal - a.examTotal || a.roll.localeCompare(b.roll));
+        const currRank = sorted.findIndex(s => s.roll === student.roll) + 1;
+
+        const prevExamStudents = students
+            .filter(stu => stu.exams.some(ex => ex.exam === prevExam.exam && ex.maxTotal > 0))
+            .map(stu => {
+                const examData = stu.exams.find(ex => ex.exam === prevExam.exam);
+                return { ...stu, examTotal: examData.total };
+            });
+        const prevSorted = prevExamStudents.sort((a, b) => b.examTotal - a.examTotal || a.roll.localeCompare(b.roll));
+        const prevRank = prevSorted.findIndex(s => s.roll === student.roll) + 1;
+
+        const rankChange = prevRank - currRank; // Positive means improved rank
+        const scoreChange = exam.total - prevExam.total; // Positive means improved score
+        progress.push({
+            exam: exam.exam,
+            rank: currRank,
+            rankChange: rankChange,
+            score: exam.total,
+            scoreChange: scoreChange
+        });
+    });
+    return progress;
+}
+
 function populateOverall() {
     const tbody = document.querySelector('#rankTable tbody');
     tbody.innerHTML = '';
@@ -38,6 +78,9 @@ function populateOverall() {
     sorted.forEach((stu, i) => {
         const rank = stu.cumTotal > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
+        if (rank === 1) tr.classList.add('top-1');
+        else if (rank === 2) tr.classList.add('top-2');
+        else if (rank === 3) tr.classList.add('top-3');
         tr.innerHTML = `
             <td>${rank}</td>
             <td>${stu.roll}</td>
@@ -73,6 +116,9 @@ function populateLast3() {
     sorted.forEach((stu, i) => {
         const rank = stu.last3Total > 0 ? i + 1 : '-';
         const tr = document.createElement('tr');
+        if (rank === 1) tr.classList.add('top-1');
+        else if (rank === 2) tr.classList.add('top-2');
+        else if (rank === 3) tr.classList.add('top-3');
         tr.innerHTML = `
             <td>${rank}</td>
             <td>${stu.roll}</td>
@@ -110,6 +156,26 @@ function populateStats() {
     document.querySelector('#totalExams span').textContent = totalExams;
     document.querySelector('#totalStudents span').textContent = totalStudents;
 
+    // Subject Difficulty Analysis
+    const subjectAverages = { chem: 0, phy: 0, bio: 0, math: 0 };
+    students.forEach(stu => {
+        for (let sub in stu.subjectAverages) {
+            subjectAverages[sub] += parseFloat(stu.subjectAverages[sub]);
+        }
+    });
+    const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
+    let mostDifficult = 'N/A';
+    let minAvg = Infinity;
+    for (let sub in subjectAverages) {
+        subjectAverages[sub] = totalStudents > 0 ? (subjectAverages[sub] / totalStudents).toFixed(2) : 0;
+        document.querySelector(`#${sub}Avg span`).textContent = subjectAverages[sub];
+        if (parseFloat(subjectAverages[sub]) < minAvg && parseFloat(subjectAverages[sub]) > 0) {
+            minAvg = parseFloat(subjectAverages[sub]);
+            mostDifficult = subjectNames[sub];
+        }
+    }
+    document.querySelector('#mostDifficult span').textContent = mostDifficult;
+
     const examCounts = {};
     students.forEach(stu => {
         stu.exams.forEach(ex => {
@@ -128,8 +194,6 @@ function populateStats() {
         `;
         examTbody.appendChild(tr);
     });
-
-    // Add click listeners for exam names
     document.querySelectorAll('.exam-name').forEach(name => {
         name.addEventListener('click', handleExamClick);
     });
@@ -176,7 +240,6 @@ function toggleExamDetails(tr, exam) {
     const div = document.createElement('div');
     div.classList.add('details');
 
-    // Generate ranklist for the specific exam
     const examStudents = students
         .filter(stu => stu.exams.some(ex => ex.exam === exam && ex.maxTotal > 0))
         .map(stu => {
@@ -311,6 +374,22 @@ function toggleDetails(tr, stu) {
         content += '<p>NO EXAMS ATTENDED IN LAST 3.</p>';
     }
 
+    content += '<h3>PROGRESS TRACKING</h3>';
+    const progress = computeProgress(stu);
+    if (progress.length > 0) {
+        content += '<table class="progress-table"><thead><tr><th>EXAM</th><th>RANK</th><th>RANK CHANGE</th><th>TOTAL SCORE</th><th>SCORE CHANGE</th></tr></thead><tbody>';
+        progress.forEach(p => {
+            const rankChangeText = p.rankChange > 0 ? `+${p.rankChange} (Improved)` : p.rankChange < 0 ? `${p.rankChange} (Declined)` : 'No Change';
+            const scoreChangeText = p.scoreChange > 0 ? `+${p.scoreChange} (Improved)` : p.scoreChange < 0 ? `${p.scoreChange} (Declined)` : 'No Change';
+            const rankClass = p.rankChange > 0 ? 'improved' : p.rankChange < 0 ? 'declined' : '';
+            const scoreClass = p.scoreChange > 0 ? 'improved' : p.scoreChange < 0 ? 'declined' : '';
+            content += `<tr><td>${p.exam}</td><td>${p.rank}</td><td class="${rankClass}">${rankChangeText}</td><td>${p.score}</td><td class="${scoreClass}">${scoreChangeText}</td></tr>`;
+        });
+        content += '</tbody></table>';
+    } else {
+        content += '<p>INSUFFICIENT DATA FOR PROGRESS TRACKING (NEEDS AT LEAST 2 EXAMS).</p>';
+    }
+
     content += `<h3>EXAM MARKS LINE CHART</h3>`;
     content += `<div class="chart-container"><button id="chartToggle-${stu.roll}">SHOW SUBJECT-WISE MARKS</button><canvas id="chart-${stu.roll}"></canvas></div>`;
     div.innerHTML = content;
@@ -376,6 +455,22 @@ function searchStudent() {
             content += '</tbody></table>';
         } else {
             content += '<p>NO EXAMS ATTENDED IN LAST 3.</p>';
+        }
+
+        content += '<h3>PROGRESS TRACKING</h3>';
+        const progress = computeProgress(stu);
+        if (progress.length > 0) {
+            content += '<table class="progress-table"><thead><tr><th>EXAM</th><th>RANK</th><th>RANK CHANGE</th><th>TOTAL SCORE</th><th>SCORE CHANGE</th></tr></thead><tbody>';
+            progress.forEach(p => {
+                const rankChangeText = p.rankChange > 0 ? `+${p.rankChange} (Improved)` : p.rankChange < 0 ? `${p.rankChange} (Declined)` : 'No Change';
+                const scoreChangeText = p.scoreChange > 0 ? `+${p.scoreChange} (Improved)` : p.scoreChange < 0 ? `${p.scoreChange} (Declined)` : 'No Change';
+                const rankClass = p.rankChange > 0 ? 'improved' : p.rankChange < 0 ? 'declined' : '';
+                const scoreClass = p.scoreChange > 0 ? 'improved' : p.scoreChange < 0 ? 'declined' : '';
+                content += `<tr><td>${p.exam}</td><td>${p.rank}</td><td class="${rankClass}">${rankChangeText}</td><td>${p.score}</td><td class="${scoreClass}">${scoreChangeText}</td></tr>`;
+            });
+            content += '</tbody></table>';
+        } else {
+            content += '<p>INSUFFICIENT DATA FOR PROGRESS TRACKING (NEEDS AT LEAST 2 EXAMS).</p>';
         }
 
         content += `<h3>EXAM MARKS LINE CHART</h3>`;
@@ -451,7 +546,7 @@ function createChart(stu, canvasId, mode) {
             plugins: {
                 legend: { 
                     labels: { 
-                        color: '#e0e0e0',
+                        color: document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0',
                         font: { size: 10 }
                     } 
                 },
@@ -460,20 +555,20 @@ function createChart(stu, canvasId, mode) {
             scales: {
                 x: { 
                     ticks: { 
-                        color: '#e0e0e0',
+                        color: document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0',
                         font: { size: 10 },
                         maxRotation: 45,
                         minRotation: 45
                     }, 
-                    grid: { color: '#333' } 
+                    grid: { color: document.body.classList.contains('light-theme') ? '#ccc' : '#333' } 
                 },
                 y: { 
                     ticks: { 
-                        color: '#e0e0e0',
+                        color: document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0',
                         font: { size: 10 },
                         stepSize: mode === 'total' ? 50 : 20
                     }, 
-                    grid: { color: '#333' },
+                    grid: { color: document.body.classList.contains('light-theme') ? '#ccc' : '#333' },
                     beginAtZero: true,
                     max: yAxisMax
                 }
@@ -489,6 +584,23 @@ function createChart(stu, canvasId, mode) {
 function showTab(tab) {
     document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
     document.getElementById(tab).style.display = 'block';
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const isLight = body.classList.toggle('light-theme');
+    const button = document.getElementById('themeToggle');
+    button.textContent = isLight ? 'Switch to Dark Theme' : 'Switch to Light Theme';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    for (let canvasId in chartInstances) {
+        const chart = chartInstances[canvasId];
+        chart.options.plugins.legend.labels.color = isLight ? '#333' : '#e0e0e0';
+        chart.options.scales.x.ticks.color = isLight ? '#333' : '#e0e0e0';
+        chart.options.scales.y.ticks.color = isLight ? '#333' : '#e0e0e0';
+        chart.options.scales.x.grid.color = isLight ? '#ccc' : '#333';
+        chart.options.scales.y.grid.color = isLight ? '#ccc' : '#333';
+        chart.update();
+    }
 }
 
 document.getElementById('searchButton').addEventListener('click', searchStudent);
@@ -522,11 +634,13 @@ document.getElementById('search').addEventListener('keyup', function() {
 document.getElementById('dataFile').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
+        document.getElementById('loader').style.display = 'block';
         Papa.parse(file, {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
                 processCSVData(results.data);
+                document.getElementById('loader').style.display = 'none';
             }
         });
     }
@@ -540,6 +654,28 @@ document.getElementById('examDetailsBtn').addEventListener('click', function() {
 document.getElementById('studentDetailsBtn').addEventListener('click', function() {
     const details = document.getElementById('studentDetails');
     details.style.display = details.style.display === 'none' ? 'block' : 'none';
+});
+
+document.getElementById('subjectDifficultyBtn').addEventListener('click', function() {
+    const details = document.getElementById('subjectDifficultyDetails');
+    details.style.display = details.style.display === 'none' ? 'block' : 'none';
+});
+
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        document.getElementById('themeToggle').textContent = 'Switch to Dark Theme';
+    }
+    document.querySelectorAll('.subject-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const subject = this.dataset.subject;
+            const content = document.getElementById(`${subject}Content`);
+            content.classList.toggle('collapsed');
+        });
+    });
 });
 
 function processCSVData(data) {
