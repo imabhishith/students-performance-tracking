@@ -275,7 +275,7 @@ body.light-theme #search:focus {
     border-color: #6200ea;
 }
 
-#searchButton {
+#searchButton, #clearSearchButton {
     padding: 12px 25px;
     background: linear-gradient(45deg, #673ab7, #512da8);
     border: none;
@@ -287,17 +287,19 @@ body.light-theme #search:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-body.light-theme #searchButton {
+body.light-theme #searchButton,
+body.light-theme #clearSearchButton {
     background: linear-gradient(45deg, #6200ea, #3700b3);
 }
 
-#searchButton:hover {
+#searchButton:hover, #clearSearchButton:hover {
     background: linear-gradient(45deg, #512da8, #3f51b5);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-body.light-theme #searchButton:hover {
+body.light-theme #searchButton:hover,
+body.light-theme #clearSearchButton:hover {
     background: linear-gradient(45deg, #3700b3, #3f51b5);
 }
 
@@ -426,19 +428,19 @@ tr:hover {
     box-shadow: none;
 }
 
-.exam-ranklist {
+.exam-ranklist, .subject-rank-table {
     background-color: #252525;
     margin: 20px 0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.exam-ranklist th {
+.exam-ranklist th, .subject-rank-table th {
     background-color: #333;
     font-weight: 700;
 }
 
-.exam-ranklist td {
+.exam-ranklist td, .subject-rank-table td {
     padding: 12px;
     font-weight: 500;
 }
@@ -578,7 +580,7 @@ body.light-theme .chart-container button {
         margin-bottom: 10px;
     }
 
-    #searchButton {
+    #searchButton, #clearSearchButton {
         padding: 10px 20px;
     }
 
