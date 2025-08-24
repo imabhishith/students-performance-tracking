@@ -1,10 +1,11 @@
-/* style.css */
 body {
     background-color: #121212;
     color: #e0e0e0;
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 20px;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 #header {
@@ -27,6 +28,8 @@ body {
 h1, h2, h3 {
     color: #ffffff;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    text-transform: uppercase;
 }
 
 #dataFile {
@@ -43,10 +46,15 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
-#search {
-    width: 100%;
-    padding: 12px;
+#search-container {
+    display: flex;
+    gap: 10px;
     margin-bottom: 25px;
+}
+
+#search {
+    flex-grow: 1;
+    padding: 12px;
     background-color: #1e1e1e;
     border: 1px solid #333;
     color: #e0e0e0;
@@ -61,15 +69,8 @@ h1, h2, h3 {
     outline: none;
 }
 
-#tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 25px;
-}
-
-#tabs button {
+#searchButton {
     padding: 12px 25px;
-    margin: 0 10px;
     background-color: #673ab7;
     border: none;
     color: #ffffff;
@@ -77,6 +78,32 @@ h1, h2, h3 {
     border-radius: 8px;
     font-weight: 500;
     transition: background-color 0.3s, transform 0.2s;
+}
+
+#searchButton:hover {
+    background-color: #512da8;
+    transform: translateY(-2px);
+}
+
+#tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#tabs button {
+    padding: 12px 25px;
+    background-color: #673ab7;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    flex: 1 1 auto;
+    min-width: 150px;
 }
 
 #tabs button:hover {
@@ -101,8 +128,12 @@ table {
 
 th, td {
     padding: 15px;
-    text-align: left;
     border-bottom: 1px solid #333;
+    text-align: center;
+}
+
+th.name, td.name {
+    text-align: left;
 }
 
 th {
@@ -124,6 +155,8 @@ tr:hover {
     cursor: pointer;
     color: #bb86fc;
     transition: color 0.3s;
+    display: block;
+    width: 100%;
 }
 
 .name:hover {
@@ -131,14 +164,14 @@ tr:hover {
     text-decoration: underline;
 }
 
-.details {
+.details, #searchDetails {
     background-color: #1e1e1e;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.details table {
+.details table, #searchDetails table {
     margin-bottom: 20px;
     box-shadow: none;
 }
@@ -156,14 +189,111 @@ tr:hover {
     transform: translateY(-5px);
 }
 
-.subject-box h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
+.stats-box {
+    background-color: #673ab7;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-canvas {
-    background-color: #121212;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.stats-box p {
+    margin: 10px 0;
+    text-align: center;
+}
+
+#examDetailsBtn, #studentDetailsBtn {
+    padding: 10px 20px;
+    background-color: #512da8;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 10px auto;
+    display: block;
+}
+
+#examDetailsBtn:hover, #studentDetailsBtn:hover {
+    background-color: #3f51b5;
+}
+
+.chart-container {
+    position: relative;
+    margin-bottom: 20px;
+    max-width: 100%;
+    height: 300px; /* Increased to ~4/5 screen height for mobile/laptop */
+}
+
+.chart-container button {
+    padding: 8px 16px;
+    background-color: #512da8;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 300px;
+    font-size: 14px;
+}
+
+.chart-container button:hover {
+    background-color: #3f51b5;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    #header {
+        padding: 15px;
+    }
+
+    #logo {
+        width: 80px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    #tabs button {
+        padding: 10px 15px;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+
+    #search-container {
+        flex-direction: column;
+    }
+
+    #search {
+        margin-bottom: 10px;
+    }
+
+    #searchButton {
+        padding: 10px 20px;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .chart-container {
+        height: 250px; /* Adjusted for mobile screens (~4/5 height) */
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
 }
