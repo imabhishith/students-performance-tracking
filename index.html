@@ -1368,7 +1368,7 @@
 
                 if (user.role === 'admin') {
                     // Redirect admin to index.html
-                    window.location.href = 'index.html';
+                    window.location.href = 'admin.html';
                     return;
                 } else if (user.role !== 'student') {
                     this.showError('Unauthorized role.');
@@ -2391,4 +2391,5 @@
         }, 5 * 60 * 1000); // Check every 5 minutes
     </script>
 </body>
+
 </html>
