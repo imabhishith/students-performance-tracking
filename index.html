@@ -42,12 +42,15 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background-image: url('iiser_bg_art.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
             padding: 20px;
         }
 
         .login-card {
-            background: var(--surface);
+            background: var(--bg-dark);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
@@ -61,8 +64,26 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Logo image styles */
+        .logo-image {
+    
+            background-blend-mode: color;
+            height: 70px;
+            width: auto;
+            margin-bottom: 15px;
+            object-fit: var(--bg-dark);
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .logo-image {
+                height: 50px;
+            }
+        }
+
         .login-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background:skyblue;
             color: white;
             padding: 40px 30px;
             text-align: center;
@@ -125,7 +146,7 @@
         .login-btn {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: skyblue;
             border: none;
             border-radius: 8px;
             color: white;
@@ -143,7 +164,7 @@
 
         .login-btn:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(103, 58, 183, 0.4);
+            box-shadow: 0 8px 25px rgba(147, 169, 255, 0.392);
         }
 
         .login-btn:disabled {
@@ -872,7 +893,7 @@
         <div class="login-card">
             <div class="login-header">
                 <div class="logo-container">
-                    <div class="logo-placeholder">📚</div>
+                    <div class="logo-placeholder"><img src="logo.png" alt="CRISPR Logo" class="logo-image"></div>
                     <h1>STUDENT PORTAL</h1>
                     <p>Academic Performance Dashboard</p>
                 </div>
@@ -1383,7 +1404,7 @@
 
                 if (user.role === 'admin') {
                     // Redirect admin to index.html
-                    window.location.href = 'admin.html';
+                    window.location.href = 'index.html';
                     return;
                 } else if (user.role !== 'student') {
                     this.showError('Unauthorized role.');
@@ -1632,7 +1653,7 @@
                     </div>
                     <div class="stat-row performance-description">
                         <span>Analysis:</span>
-                        <span class="performance-text">${performanceDescription}</span>
+                        <span class="performance-text"><strong>${performanceDescription}</strong></span>
                     </div>
                 </div>
             </div>
@@ -2407,4 +2428,3 @@
     </script>
 </body>
 </html>
-
