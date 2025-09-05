@@ -1,3 +1,6 @@
+
+
+<!-- Updated index.html with added columns to studentDetails table -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,210 +8,214 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REPEATER'S BATCH 2025-26</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    
 </head>
 <body>
+
     <div id="header">
         <img id="logo" src="logo.png" alt="INSTITUTE LOGO">
         <h1>REPEATER'S BATCH 2025-26</h1>
         <button id="themeToggle">☀️</button>
+        <button id="logoutBtn">Logout</button>
     </div>
-    <div id="loader" style="display: none; text-align: center; margin: 20px;">
-        <div class="spinner"></div>
-        <p>Loading data...</p>
-    </div>
+
     <input type="file" id="dataFile" accept=".csv">
+
     <div id="search-container">
-        <input type="text" id="search" placeholder="SEARCH BY ROLL NO OR FIRST NAME">
+        <input type="text" id="search" placeholder="Search by Name or Roll No">
         <button id="searchButton">SEARCH</button>
         <button id="clearSearchButton">CLEAR</button>
     </div>
-    <div id="searchLoader" style="display: none; text-align: center; margin: 10px;">
-        <div class="spinner"></div>
-        <p>Searching...</p>
+
+    <div id="searchResults" style="display: none;">
+        <h2>SEARCH RESULTS</h2>
+        <table id="searchTable">
+            <thead>
+                <tr>
+                    <th>RANK</th>
+                    <th>ROLL NO</th>
+                    <th>NAME</th>
+                    <th>EXAMS ATTEMPTED</th>
+                    <th>TOTAL SCORE</th>
+                    <th>% SCORE</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
+
     <div id="tabs">
-        <button onclick="showTab('stats')">OVERALL STATS</button>
-        <button onclick="showTab('overall')">OVERALL RANKLIST</button>
-        <button onclick="showTab('last3')">LAST 3 EXAMS RANKLIST</button>
+        <button onclick="showTab('overall')">OVERALL STATS</button>
+        <button onclick="showTab('overallRank')">OVERALL RANKLIST</button>
+        <button onclick="showTab('last3Rank')">LAST 3 EXAMS RANKLIST</button>
         <button onclick="showTab('subjects')">SUBJECT-WISE RANKLISTS</button>
     </div>
-    <div id="stats" class="tab" style="display: none;">
+
+    <div id="overall" class="tab" style="display: block;">
         <div class="stats-box">
-            <h2>OVERALL STATISTICS</h2>
-            <p id="totalExams">TOTAL EXAMS CONDUCTED: <span>0</span></p>
-            <p id="totalStudents">TOTAL STUDENTS: <span>0</span></p>
+            <p id="totalExams">TOTAL EXAMS CONDUCTED: 0</p>
+            <p id="totalStudents">TOTAL STUDENTS: 0</p>
             <div class="stats-buttons">
                 <button id="subjectDifficultyBtn">SUBJECT DIFFICULTY ANALYSIS</button>
                 <button id="examDetailsBtn">EXAM PARTICIPATION DETAILS</button>
                 <button id="studentDetailsBtn">STUDENT DETAILS</button>
             </div>
-            <div id="subjectDifficultyDetails" style="display: none;">
-                <h3>SUBJECT DIFFICULTY ANALYSIS</h3>
-                <div class="table-container">
-                    <table id="subjectStatsTable">
-                        <thead>
-                            <tr>
-                                <th>SUBJECT</th>
-                                <th>AVERAGE SCORE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>CHEMISTRY</td><td id="chemAvg"><span>0</span></td></tr>
-                            <tr><td>PHYSICS</td><td id="phyAvg"><span>0</span></td></tr>
-                            <tr><td>BIOLOGY</td><td id="bioAvg"><span>0</span></td></tr>
-                            <tr><td>MATHS</td><td id="mathAvg"><span>0</span></td></tr>
-                            <tr><td>MOST DIFFICULT</td><td id="mostDifficult"><span>N/A</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="examDetails" style="display: none;">
-                <div class="table-container">
-                    <table id="examStatsTable">
-                        <thead>
-                            <tr>
-                                <th>EXAM</th>
-                                <th>STUDENTS ATTEMPTED</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="studentDetails" style="display: none;">
-                <div class="table-container">
-                    <table id="studentDetailsTable">
-                        <thead>
-                            <tr>
-                                <th>SERIAL NO</th>
-                                <th>ROLL NO</th>
-                                <th>NAME</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
-    </div>
-    <div id="overall" class="tab">
-        <div class="table-container">
-            <table id="rankTable">
+
+        <div id="subjectDifficultyDetails" style="display: none;">
+            <table>
                 <thead>
                     <tr>
-                        <th>RANK</th>
-                        <th>ROLL NO</th>
-                        <th>NAME</th>
-                        <th>EXAMS ATTEMPTED</th>
-                        <th>TOTAL SCORE</th>
-                        <th>% SCORE</th>
+                        <th>SUBJECT</th>
+                        <th>AVERAGE %</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="examDetails" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>EXAM</th>
+                        <th>STUDENTS ATTEMPTED</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="studentDetails" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SERIAL NO</th>
+                        <th>ROLL NO</th>
+                        <th>NAME</th>
+                        <th>STRONG SUBJECT</th>
+                        <th>WEAK SUBJECT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populated by JS -->
+                </tbody>
             </table>
         </div>
     </div>
-    <div id="last3" class="tab" style="display: none;">
-        <div class="table-container">
-            <table id="last3Table">
-                <thead>
-                    <tr>
-                        <th>RANK</th>
-                        <th>ROLL NO</th>
-                        <th>NAME</th>
-                        <th>EXAMS ATTEMPTED</th>
-                        <th>TOTAL SCORE</th>
-                        <th>% SCORE</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+
+    <div id="overallRank" class="tab" style="display: none;">
+        <table id="rankTable">
+            <thead>
+                <tr>
+                    <th>RANK</th>
+                    <th>ROLL NO</th>
+                    <th>NAME</th>
+                    <th>EXAMS ATTEMPTED</th>
+                    <th>TOTAL SCORE</th>
+                    <th>% SCORE</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
+
+    <div id="last3Rank" class="tab" style="display: none;">
+        <table id="last3Table">
+            <thead>
+                <tr>
+                    <th>RANK</th>
+                    <th>ROLL NO</th>
+                    <th>NAME</th>
+                    <th>EXAMS ATTEMPTED</th>
+                    <th>TOTAL SCORE</th>
+                    <th>% SCORE</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
     <div id="subjects" class="tab" style="display: none;">
         <div class="subject-box">
-            <h2 class="subject-header" data-subject="chem">CHEMISTRY</h2>
-            <div class="subject-content" id="chemContent">
-                <div class="table-container">
-                    <table id="chemTable">
-                        <thead>
-                            <tr>
-                                <th>RANK</th>
-                                <th>ROLL NO</th>
-                                <th>NAME</th>
-                                <th>EXAMS ATTEMPTED</th>
-                                <th>TOTAL SCORE</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+            <h3 class="subject-header">CHEMISTRY</h3>
+            <div class="subject-content">
+                <table id="chemTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
+
         <div class="subject-box">
-            <h2 class="subject-header" data-subject="phy">PHYSICS</h2>
-            <div class="subject-content" id="phyContent">
-                <div class="table-container">
-                    <table id="phyTable">
-                        <thead>
-                            <tr>
-                                <th>RANK</th>
-                                <th>ROLL NO</th>
-                                <th>NAME</th>
-                                <th>EXAMS ATTEMPTED</th>
-                                <th>TOTAL SCORE</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+            <h3 class="subject-header">PHYSICS</h3>
+            <div class="subject-content">
+                <table id="phyTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
+
         <div class="subject-box">
-            <h2 class="subject-header" data-subject="bio">BIOLOGY</h2>
-            <div class="subject-content" id="bioContent">
-                <div class="table-container">
-                    <table id="bioTable">
-                        <thead>
-                            <tr>
-                                <th>RANK</th>
-                                <th>ROLL NO</th>
-                                <th>NAME</th>
-                                <th>EXAMS ATTEMPTED</th>
-                                <th>TOTAL SCORE</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+            <h3 class="subject-header">BIOLOGY</h3>
+            <div class="subject-content">
+                <table id="bioTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
+
         <div class="subject-box">
-            <h2 class="subject-header" data-subject="math">MATHS</h2>
-            <div class="subject-content" id="mathContent">
-                <div class="table-container">
-                    <table id="mathTable">
-                        <thead>
-                            <tr>
-                                <th>RANK</th>
-                                <th>ROLL NO</th>
-                                <th>NAME</th>
-                                <th>EXAMS ATTEMPTED</th>
-                                <th>TOTAL SCORE</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+            <h3 class="subject-header">MATHS</h3>
+            <div class="subject-content">
+                <table id="mathTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>ROLL NO</th>
+                            <th>NAME</th>
+                            <th>EXAMS ATTEMPTED</th>
+                            <th>TOTAL SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
-    <div id="searchResult" class="tab" style="display: none;">
-        <div id="searchDetails"></div>
-    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
