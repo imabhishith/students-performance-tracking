@@ -72,6 +72,32 @@ body.light-theme .name:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+#logoutBtn {
+    position: absolute;
+    top: 15px;
+    right: 60px;
+    padding: 8px;
+    background: linear-gradient(45deg, #e81212, #e40f0f);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 6px;
+    width: 75px;
+    height: 32px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#logoutBtn:hover {
+    background: linear-gradient(45deg,#e40f0f, #e81212);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
 body.light-theme #themeToggle {
     background: linear-gradient(45deg, #6200ea, #3700b3);
 }
@@ -191,11 +217,8 @@ body.light-theme .progress-table .declined {
 }
 
 #logo {
-    width: 100px;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 210px;
+    height: 80px;
 }
 
 h1 {
@@ -665,4 +688,23 @@ body.light-theme .chart-container button {
     #examDetailsBtn, #studentDetailsBtn, #subjectDifficultyBtn {
         max-width: 100%;
     }
+}
+
+/* General improved/declined text coloring (for strong/weak labels) */
+.improved {
+    color: #4caf50;
+    font-weight: 600;
+}
+
+.declined {
+    color: #f44336;
+    font-weight: 600;
+}
+
+body.light-theme .improved {
+    color: #388e3c;
+}
+
+body.light-theme .declined {
+    color: #d32f2f;
 }
