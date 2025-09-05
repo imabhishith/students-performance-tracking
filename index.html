@@ -965,6 +965,12 @@
             <div class="chart-section">
                 <div class="chart-header">
                     <h3>📈 Performance Trend Analysis</h3>
+                    <button id="chartToggleBtn" class="chart-toggle-btn" onclick="toggleChartMode()">
+                        📊 Switch to Subject-wise View
+                    </button>
+                </div>
+                <div id="chartInfo" class="chart-info">
+                    <strong>Total Percentage View:</strong> Shows your overall percentage for each exam
                 </div>
                 <div class="chart-container">
                     <canvas id="performanceChart"></canvas>
@@ -1368,7 +1374,7 @@
 
                 if (user.role === 'admin') {
                     // Redirect admin to index.html
-                    window.location.href = 'admin.html';
+                    window.location.href = 'index.html';
                     return;
                 } else if (user.role !== 'student') {
                     this.showError('Unauthorized role.');
@@ -2391,5 +2397,4 @@
         }, 5 * 60 * 1000); // Check every 5 minutes
     </script>
 </body>
-
 </html>
