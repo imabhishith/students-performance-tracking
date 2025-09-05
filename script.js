@@ -1,710 +1,587 @@
-body {
-    background-color: #121212;
-    color: #e0e0e0;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    margin: 0;
-    padding: 15px;
-    max-width: 100%;
-    overflow-x: hidden;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-body.light-theme {
-    background-color: #f5f5f5;
-    color: #333;
-}
-
-body.light-theme #header,
-body.light-theme #dataFile,
-body.light-theme #search,
-body.light-theme table,
-body.light-theme .details,
-body.light-theme #searchDetails,
-body.light-theme .exam-ranklist,
-body.light-theme .subject-rank-table,
-body.light-theme .progress-table {
-    background-color: #ffffff;
-    border-color: #ccc;
-}
-
-body.light-theme th {
-    background-color: #e0e0e0;
-}
-
-body.light-theme tr:hover {
-    background-color: #f0f0f0;
-}
-
-body.light-theme .stats-box,
-body.light-theme .subject-box {
-    background-color: #bb86fc;
-}
-
-body.light-theme .exam-name,
-body.light-theme .name {
-    color: #6200ea;
-}
-
-body.light-theme .exam-name:hover,
-body.light-theme .name:hover {
-    color: #3700b3;
-}
-
-#themeToggle {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 8px;
-    background: linear-gradient(45deg, #673ab7, #512da8);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-#logoutBtn {
-    position: absolute;
-    top: 15px;
-    right: 60px;
-    padding: 8px;
-    background: linear-gradient(45deg, #e81212, #e40f0f);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 6px;
-    width: 75px;
-    height: 32px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-#logoutBtn:hover {
-    background: linear-gradient(45deg,#e40f0f, #e81212);
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-body.light-theme #themeToggle {
-    background: linear-gradient(45deg, #6200ea, #3700b3);
-}
-
-#themeToggle:hover {
-    background: linear-gradient(45deg, #512da8, #3f51b5);
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-body.light-theme #themeToggle:hover {
-    background: linear-gradient(45deg, #3700b3, #3f51b5);
-}
-
-.spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #673ab7;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 8px;
-}
-
-body.light-theme .spinner {
-    border: 4px solid #ccc;
-    border-top: 4px solid #6200ea;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.subject-header {
-    cursor: pointer;
-    transition: color 0.3s;
-    font-weight: 700;
-}
-
-.subject-header:hover {
-    color: #bb86fc;
-}
-
-body.light-theme .subject-header:hover {
-    color: #6200ea;
-}
-
-.subject-content {
-    transition: max-height 0.3s ease-out;
-    overflow: hidden;
-}
-
-.subject-content.collapsed {
-    max-height: 0;
-}
-
-.top-performer {
-    background-color: #512da830 !important;
-}
-
-body.light-theme .top-performer {
-    background-color: #bbdefb80 !important;
-}
-
-#subjectDifficultyDetails,
-#examDetails,
-#studentDetails {
-    margin: 15px 0;
-    padding: 12px;
-    background-color: #1e1e1e;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-body.light-theme #subjectDifficultyDetails,
-body.light-theme #examDetails,
-body.light-theme #studentDetails {
-    background-color: #ffffff;
-}
-
-#mostDifficult span {
-    color: #f44336;
-    font-weight: 600;
-}
-
-body.light-theme #mostDifficult span {
-    color: #d32f2f;
-}
-
-.progress-table .improved {
-    color: #4caf50;
-    font-weight: 600;
-}
-
-body.light-theme .progress-table .improved {
-    color: #388e3c;
-}
-
-.progress-table .declined {
-    color: #f44336;
-    font-weight: 600;
-}
-
-body.light-theme .progress-table .declined {
-    color: #d32f2f;
-}
-
-#header {
-    position: relative;
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #1e1e1e;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-#logo {
-    width: 210px;
-    height: 80px;
-}
-
-h1 {
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 900;
-    font-size: 2em;
-    margin: 8px 0;
-}
-
-h2 {
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 1.6em;
-    margin: 12px 0;
-}
-
-h3 {
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.3em;
-    margin: 12px 0;
-}
-
-body.light-theme h1,
-body.light-theme h2,
-body.light-theme h3 {
-    color: #333;
-    text-shadow: none;
-}
-
-#dataFile {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-    color: #ffffff;
-    border-radius: 6px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-#search-container {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-#search {
-    flex-grow: 1;
-    padding: 10px;
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-    color: #ffffff;
-    border-radius: 6px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    transition: border-color 0.3s;
-    font-weight: 500;
-}
-
-#search::placeholder {
-    color: #888;
-    opacity: 0.8;
-}
-
-body.light-theme #search {
-    background-color: #ffffff;
-    border-color: #ccc;
-    color: #000000;
-}
-
-body.light-theme #search::placeholder {
-    color: #666;
-    opacity: 0.8;
-}
-
-#search:focus {
-    border-color: #673ab7;
-    outline: none;
-}
-
-body.light-theme #search:focus {
-    border-color: #6200ea;
-}
-
-#searchButton, #clearSearchButton {
-    padding: 10px 20px;
-    background: linear-gradient(45deg, #673ab7, #512da8);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-body.light-theme #searchButton,
-body.light-theme #clearSearchButton {
-    background: linear-gradient(45deg, #6200ea, #3700b3);
-}
-
-#searchButton:hover, #clearSearchButton:hover {
-    background: linear-gradient(45deg, #512da8, #3f51b5);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-body.light-theme #searchButton:hover,
-body.light-theme #clearSearchButton:hover {
-    background: linear-gradient(45deg, #3700b3, #3f51b5);
-}
-
-#tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-#tabs button {
-    padding: 10px 20px;
-    background: linear-gradient(45deg, #673ab7, #512da8);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    flex: 1 1 auto;
-    min-width: 120px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-body.light-theme #tabs button {
-    background: linear-gradient(45deg, #6200ea, #3700b3);
-}
-
-#tabs button:hover {
-    background: linear-gradient(45deg, #512da8, #3f51b5);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-body.light-theme #tabs button:hover {
-    background: linear-gradient(45deg, #3700b3, #3f51b5);
-}
-
-.tab {
-    margin-bottom: 25px;
-}
-
-.table-container {
-    overflow-x: auto;
-    max-width: 100%;
-    -webkit-overflow-scrolling: touch;
-}
-
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-bottom: 25px;
-    background-color: #1e1e1e;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-th, td {
-    padding: 12px;
-    border-bottom: 1px solid #333;
-    text-align: center;
-    font-weight: 500;
-}
-
-body.light-theme th,
-body.light-theme td {
-    border-bottom: 1px solid #ccc;
-}
-
-th.name, td.name {
-    text-align: left;
-    font-weight: 600;
-}
-
-th {
-    background-color: #252525;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-body.light-theme th {
-    color: #333;
-}
-
-tr:last-child td {
-    border-bottom: none;
-}
-
-tr:hover {
-    background-color: #2c2c2c;
-    transition: background-color 0.2s;
-}
-
-.name {
-    cursor: pointer;
-    color: #bb86fc;
-    transition: color 0.3s;
-    display: block;
-    width: 100%;
-    font-weight: 600;
-}
-
-.name:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
-
-.exam-name {
-    cursor: pointer;
-    color: #bb86fc;
-    transition: color 0.3s;
-    font-weight: 600;
-}
-
-.exam-name:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
-
-.details, #searchDetails {
-    background-color: #1e1e1e;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.details table, #searchDetails table {
-    margin-bottom: 15px;
-    box-shadow: none;
-}
-
-.exam-ranklist, .subject-rank-table, .progress-table {
-    background-color: #252525;
-    margin: 15px 0;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.exam-ranklist th, .subject-rank-table th, .progress-table th {
-    background-color: #333;
-    font-weight: 700;
-}
-
-.exam-ranklist td, .subject-rank-table td, .progress-table td {
-    padding: 10px;
-    font-weight: 500;
-}
-
-.subject-box {
-    background-color: #673ab7;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s;
-}
-
-.subject-box:hover {
-    transform: translateY(-5px);
-}
-
-.stats-box {
-    background-color: #673ab7;
-    padding: 20px;
-    margin-bottom: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-align: center;
-}
-
-.stats-box p {
-    margin: 10px 0;
-    text-align: center;
-    font-weight: 500;
-}
-
-.stats-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-#examDetailsBtn, #studentDetailsBtn, #subjectDifficultyBtn {
-    padding: 8px 16px;
-    background: linear-gradient(45deg, #512da8, #3f51b5);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    flex: 1;
-    max-width: 200px;
-}
-
-body.light-theme #examDetailsBtn,
-body.light-theme #studentDetailsBtn,
-body.light-theme #subjectDifficultyBtn {
-    background: linear-gradient(45deg, #3700b3, #3f51b5);
-}
-
-#examDetailsBtn:hover, #studentDetailsBtn:hover, #subjectDifficultyBtn:hover {
-    background: linear-gradient(45deg, #3f51b5, #5c6bc0);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.chart-container {
-    position: relative;
-    margin: 0 auto 20px;
-    width: 75vw;
-    height: 300px;
-}
-
-.chart-container canvas {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-.chart-container button {
-    padding: 8px 16px;
-    background: linear-gradient(45deg, #512da8, #3f51b5);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    width: 100%;
-    max-width: 250px;
-    font-size: 13px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-body.light-theme .chart-container button {
-    background: linear-gradient(45deg, #3700b3, #3f51b5);
-}
-
-.chart-container button:hover {
-    background: linear-gradient(45deg, #3f51b5, #5c6bc0);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 8px;
-        font-size: 14px;
+// Updated script.js with fixes, cleanups, and new features
+let students = [];
+let currentExpandedRow = null;
+let currentExpandedExam = null;
+let chartInstances = {};
+
+const subjectNames = { chem: 'CHEMISTRY', phy: 'PHYSICS', bio: 'BIOLOGY', math: 'MATHS' };
+
+// Compute cumulatives for a student (percentages, strong/weak subjects)
+function computeCumulatives(student) {
+    let cumObt = 0;
+    let cumMax = 0;
+    let subjectTotals = { chem: 0, phy: 0, bio: 0, math: 0 };
+    let subjectMaxTotals = { chem: 0, phy: 0, bio: 0, math: 0 };
+
+    student.exams.forEach(ex => {
+        if (ex.maxTotal > 0) {
+            cumObt += ex.total;
+            cumMax += ex.maxTotal;
+            for (let sub in ex.scores) {
+                subjectTotals[sub] += ex.scores[sub];
+                subjectMaxTotals[sub] += ex.maxScores[sub] || 0;
+            }
+        }
+    });
+
+    student.cumTotal = cumObt;
+    student.cumMax = cumMax;
+    student.cumPercent = cumMax > 0 ? (cumObt / cumMax * 100).toFixed(2) : 0;
+    student.subjectTotals = subjectTotals;
+    student.subjectMaxTotals = subjectMaxTotals;
+    student.examsAttempted = student.exams.filter(ex => ex.maxTotal > 0).length;
+
+    // Average percentage per subject
+    const averages = {};
+    for (let sub in subjectTotals) {
+        averages[sub] = subjectMaxTotals[sub] > 0 ? ((subjectTotals[sub] / subjectMaxTotals[sub]) * 100).toFixed(2) : 0;
     }
+    student.subjectAverages = averages;
 
-    #header {
-        padding: 12px;
-    }
-
-    #logo {
-        width: 80px;
-    }
-
-    #themeToggle {
-        top: 8px;
-        right: 8px;
-        width: 28px;
-        height: 28px;
-        font-size: 14px;
-    }
-
-    h1 {
-        font-size: 1.6em;
-    }
-
-    h2 {
-        font-size: 1.3em;
-    }
-
-    h3 {
-        font-size: 1.1em;
-    }
-
-    #tabs {
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    #tabs button {
-        padding: 8px 12px;
-        font-size: 0.85em;
-        min-width: 100%;
-    }
-
-    #search-container {
-        flex-direction: column;
-    }
-
-    #search {
-        margin-bottom: 8px;
-    }
-
-    #searchButton, #clearSearchButton {
-        padding: 8px 16px;
-    }
-
-    .table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-        font-size: 0.85em;
-        min-width: 600px;
-    }
-
-    th, td {
-        padding: 8px;
-    }
-
-    .chart-container {
-        width: 90vw;
-        height: 250px;
-    }
-
-    canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-
-    .stats-box {
-        padding: 12px;
-    }
-
-    .subject-box {
-        margin-bottom: 15px;
-    }
-
-    .stats-buttons {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    #examDetailsBtn, #studentDetailsBtn, #subjectDifficultyBtn {
-        max-width: 100%;
+    // Determine strong/weak subjects
+    const subjects = ['chem', 'phy', 'bio', 'math'];
+    if (student.examsAttempted > 0) {
+        let maxAvg = -Infinity, minAvg = Infinity;
+        let strongSubjects = [], weakSubjects = [];
+        subjects.forEach(sub => {
+            const avg = parseFloat(averages[sub]);
+            if (avg > maxAvg) { maxAvg = avg; strongSubjects = [sub]; } else if (avg === maxAvg) { strongSubjects.push(sub); }
+            if (avg < minAvg) { minAvg = avg; weakSubjects = [sub]; } else if (avg === minAvg) { weakSubjects.push(sub); }
+        });
+        student.strongSubject = strongSubjects.length > 0 ? strongSubjects : ['N/A'];
+        student.weakSubject = weakSubjects.length > 0 ? weakSubjects : ['N/A'];
+    } else {
+        student.strongSubject = ['N/A'];
+        student.weakSubject = ['N/A'];
     }
 }
 
-/* General improved/declined text coloring (for strong/weak labels) */
-.improved {
-    color: #4caf50;
-    font-weight: 600;
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    // Clear any session storage or localStorage if used for login state
+    sessionStorage.clear();
+    localStorage.removeItem('loggedInUser'); // if used
+    // Redirect to student-login.html
+    window.location.href = 'student-login.html';
+  });
+  
+// Populate overall ranklist
+function populateOverall() {
+    const tbody = document.querySelector('#rankTable tbody');
+    tbody.innerHTML = '';
+    const sorted = [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll));
+    sorted.forEach((stu, i) => {
+        const rank = stu.cumTotal > 0 ? i + 1 : '-';
+        const tr = document.createElement('tr');
+        if (rank >= 1 && rank <= 3) tr.classList.add('top-performer');
+        tr.innerHTML = `
+            <td>${rank}</td>
+            <td>${stu.roll}</td>
+            <td class="name" data-roll="${stu.roll}">${stu.name}</td>
+            <td>${stu.examsAttempted}</td>
+            <td>${stu.cumTotal}</td>
+            <td>${stu.cumPercent}%</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    addClickListeners();
 }
 
-.declined {
-    color: #f44336;
-    font-weight: 600;
+// Populate last 3 exams ranklist (disable clickable names)
+function populateLast3() {
+    const tbody = document.querySelector('#last3Table tbody');
+    tbody.innerHTML = '';
+    const last3Students = students.map(stu => {
+        const last3Exams = stu.exams.filter(ex => ex.maxTotal > 0).slice(-3);
+        let total = 0, maxTotal = 0;
+        last3Exams.forEach(ex => { total += ex.total; maxTotal += ex.maxTotal; });
+        return {
+            ...stu,
+            last3Total: total,
+            last3Percent: maxTotal > 0 ? (total / maxTotal * 100).toFixed(2) : 0,
+            last3ExamsAttempted: last3Exams.length
+        };
+    });
+    const sorted = last3Students.sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll));
+    sorted.forEach((stu, i) => {
+        const rank = stu.last3Total > 0 ? i + 1 : '-';
+        const tr = document.createElement('tr');
+        if (rank >= 1 && rank <= 3) tr.classList.add('top-performer');
+        tr.innerHTML = `
+            <td>${rank}</td>
+            <td>${stu.roll}</td>
+            <td>${stu.name}</td>
+            <td>${stu.last3ExamsAttempted}</td>
+            <td>${stu.last3Total}</td>
+            <td>${stu.last3Percent}%</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    // No addClickListeners() call here to disable clickable names
 }
 
-body.light-theme .improved {
-    color: #388e3c;
+// Populate subject ranklist
+function populateSubject(tableId, sub) {
+    const tbody = document.querySelector(`#${tableId} tbody`);
+    tbody.innerHTML = '';
+    
+    const sorted = [...students]
+        .filter(s => s.subjectTotals[sub] > 0)
+        .sort((a, b) => b.subjectTotals[sub] - a.subjectTotals[sub] || a.roll.localeCompare(b.roll));
+    
+    sorted.forEach((stu, i) => {
+        const rank = i + 1;
+        const tr = document.createElement('tr');
+        if (rank >= 1 && rank <= 3) tr.classList.add('top-performer');
+        
+        tr.innerHTML = `
+            <td>${rank}</td>
+            <td>${stu.roll}</td>
+            <td>${stu.name}</td>
+            <td>${stu.examsAttempted}</td>
+            <td>${stu.subjectTotals[sub]}</td>
+        `;
+        tbody.appendChild(tr);
+    });
 }
 
-body.light-theme .declined {
-    color: #d32f2f;
+// Populate overall stats and details tables
+function populateStats() {
+    // Total exams and students
+    const allExams = [...new Set(students.flatMap(stu => stu.exams.filter(ex => ex.maxTotal > 0).map(ex => ex.exam)))];
+    const totalExams = allExams.length;
+    const totalStudents = students.length;
+    document.querySelector('#totalExams').textContent = `TOTAL EXAMS CONDUCTED: ${totalExams}`;
+    document.querySelector('#totalStudents').textContent = `TOTAL STUDENTS: ${totalStudents}`;
+
+    // Class average % per subject and most difficult (lowest avg %)
+    const subjectAverages = { chem: 0, phy: 0, bio: 0, math: 0 };
+    students.forEach(stu => {
+        for (let sub in stu.subjectAverages) {
+            subjectAverages[sub] += parseFloat(stu.subjectAverages[sub]);
+        }
+    });
+    let mostDifficult = 'N/A';
+    let minAvg = Infinity;
+    for (let sub in subjectAverages) {
+        subjectAverages[sub] = totalStudents > 0 ? (subjectAverages[sub] / totalStudents).toFixed(2) : 0;
+        const avg = parseFloat(subjectAverages[sub]);
+        if (avg < minAvg && avg > 0) {
+            minAvg = avg;
+            mostDifficult = subjectNames[sub];
+        }
+    }
+
+    // Populate subject difficulty table (using % as per request)
+    const subjectTbody = document.querySelector('#subjectDifficultyDetails tbody');
+    subjectTbody.innerHTML = '';
+    ['chem', 'phy', 'bio', 'math'].forEach(sub => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${subjectNames[sub]}</td><td>${subjectAverages[sub]}%</td>`;
+        subjectTbody.appendChild(tr);
+    });
+    const mostTr = document.createElement('tr');
+    mostTr.innerHTML = `<td>MOST DIFFICULT</td><td>${mostDifficult}</td>`;
+    subjectTbody.appendChild(mostTr);
+
+    // Populate exam participation table
+    const examTbody = document.querySelector('#examDetails tbody');
+    examTbody.innerHTML = '';
+    allExams.sort().forEach(exam => {
+        const attempted = students.filter(stu => stu.exams.some(ex => ex.exam === exam && ex.maxTotal > 0)).length;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="exam-name" data-exam="${exam}">${exam}</td>
+            <td>${attempted}</td>
+        `;
+        examTbody.appendChild(tr);
+    });
+    addClickListeners(); // Re-add for exam names
+
+    // Populate student details table with strong and weak subjects
+    const studentTbody = document.querySelector('#studentDetails tbody');
+    studentTbody.innerHTML = '';
+    const sortedStudents = [...students].sort((a, b) => a.roll.localeCompare(b.roll));
+    sortedStudents.forEach((stu, i) => {
+        const strongLabel = stu.strongSubject[0] === 'N/A' ? 'N/A' : stu.strongSubject.map(sub => `${subjectNames[sub]} (${stu.subjectAverages[sub]}%)`).join(', ');
+        const weakLabel = stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => `${subjectNames[sub]} (${stu.subjectAverages[sub]}%)`).join(', ');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${i + 1}</td>
+            <td>${stu.roll}</td>
+            <td class="name" data-roll="${stu.roll}">${stu.name}</td>
+            <td class="improved">${strongLabel}</td>
+            <td class="declined">${weakLabel}</td>
+        `;
+        studentTbody.appendChild(tr);
+    });
+    addClickListeners();
 }
+
+// Add click listeners for names and exams
+function addClickListeners() {
+    document.querySelectorAll('.name').forEach(name => {
+        name.removeEventListener('click', handleNameClick);
+        name.addEventListener('click', handleNameClick);
+    });
+    document.querySelectorAll('.exam-name').forEach(name => {
+        name.removeEventListener('click', handleExamClick);
+        name.addEventListener('click', handleExamClick);
+    });
+}
+
+// Handle student name click (toggle details)
+function handleNameClick(event) {
+    const roll = event.target.dataset.roll;
+    const stu = students.find(s => s.roll === roll);
+    const tr = event.target.parentNode;
+
+    if (currentExpandedRow && currentExpandedRow !== tr.nextElementSibling) {
+        currentExpandedRow.style.display = 'none';
+        const prevCanvasId = currentExpandedRow.querySelector('canvas')?.id;
+        if (prevCanvasId && chartInstances[prevCanvasId]) {
+            chartInstances[prevCanvasId].destroy();
+            delete chartInstances[prevCanvasId];
+        }
+    }
+
+    let next = tr.nextElementSibling;
+    if (next && next.classList.contains('details-row')) {
+        next.style.display = next.style.display === 'none' ? '' : 'none';
+        if (next.style.display === 'none') {
+            const canvasId = `chart-${stu.roll}`;
+            if (chartInstances[canvasId]) {
+                chartInstances[canvasId].destroy();
+                delete chartInstances[canvasId];
+            }
+        }
+        currentExpandedRow = next.style.display !== 'none' ? next : null;
+        return;
+    }
+
+    const detailsTr = document.createElement('tr');
+    detailsTr.classList.add('details-row');
+    const td = document.createElement('td');
+    td.colSpan = tr.children.length;
+    const div = document.createElement('div');
+    div.classList.add('details');
+
+    // Build content (cleaned up)
+    let content = `<h3>${stu.name} (ROLL: ${stu.roll})</h3>`;
+    const overallRank = stu.cumTotal > 0 ? [...students].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll)).findIndex(s => s.roll === stu.roll) + 1 : 'N/A';
+    content += `<p>OVERALL RANK: ${overallRank}</p><p>TOTAL SCORE: ${stu.cumTotal}</p><p>PERCENTAGE: ${stu.cumPercent}%</p><p>EXAMS ATTEMPTED: ${stu.examsAttempted}</p>`;
+
+    const strongLabel = stu.strongSubject[0] === 'N/A' ? 'N/A' : stu.strongSubject.map(sub => `${subjectNames[sub]} (${stu.subjectAverages[sub]}%)`).join(', ');
+    const weakLabel = stu.weakSubject[0] === 'N/A' ? 'N/A' : stu.weakSubject.map(sub => `${subjectNames[sub]} (${stu.subjectAverages[sub]}%)`).join(', ');
+    content += `<p><strong>STRONGEST SUBJECT:</strong> <span class="improved">${strongLabel}</span></p>`;
+    content += `<p><strong>WEAKEST SUBJECT:</strong> <span class="declined">${weakLabel}</span></p>`;
+
+    // Subject ranks
+    const { ranks } = getSubjectRanks(stu);
+    content += '<h3>SUBJECT-WISE RANKS</h3>';
+    if (stu.examsAttempted > 0) {
+        content += '<table class="subject-rank-table"><thead><tr><th>SUBJECT</th><th>RANK</th><th>TOTAL SCORE</th><th>AVG %</th></tr></thead><tbody>';
+        ['chem', 'phy', 'bio', 'math'].forEach(sub => {
+            const avgPct = stu.subjectAverages[sub];
+            const rowClass = stu.strongSubject.includes(sub) ? 'improved' : stu.weakSubject.includes(sub) ? 'declined' : '';
+            content += `<tr class="${rowClass}"><td>${subjectNames[sub]}</td><td>${ranks[sub].rank}</td><td>${ranks[sub].total}</td><td>${avgPct}%</td></tr>`;
+        });
+        content += '</tbody></table>';
+    } else {
+        content += '<p>NO SUBJECT RANKS AVAILABLE (NO EXAMS ATTENDED).</p>';
+    }
+
+    // Previous marks
+    const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
+    content += '<h3>ALL PREVIOUS MARKS</h3>';
+    if (validExams.length > 0) {
+        content += '<table><thead><tr><th>EXAM</th><th>RANK</th><th>CHEM (raw | %)</th><th>PHY (raw | %)</th><th>BIO (raw | %)</th><th>MATH (raw | %)</th><th>TOTAL</th><th>%</th></tr></thead><tbody>';
+        validExams.forEach(ex => {
+            const rank = getExamRank(stu, ex.exam);
+            const cPct = ex.maxScores.chem ? (ex.scores.chem / ex.maxScores.chem * 100).toFixed(2) : '0.00';
+            const pPct = ex.maxScores.phy ? (ex.scores.phy / ex.maxScores.phy * 100).toFixed(2) : '0.00';
+            const bPct = ex.maxScores.bio ? (ex.scores.bio / ex.maxScores.bio * 100).toFixed(2) : '0.00';
+            const mPct = ex.maxScores.math ? (ex.scores.math / ex.maxScores.math * 100).toFixed(2) : '0.00';
+            content += `<tr><td>${ex.exam}</td><td>${rank}</td><td>${ex.scores.chem} | ${cPct}%</td><td>${ex.scores.phy} | ${pPct}%</td><td>${ex.scores.bio} | ${bPct}%</td><td>${ex.scores.math} | ${mPct}%</td><td>${ex.total}</td><td>${(ex.total / ex.maxTotal * 100).toFixed(2)}%</td></tr>`;
+        });
+        content += '</tbody></table>';
+    } else {
+        content += '<p>NO EXAMS ATTENDED.</p>';
+    }
+
+    // Progress
+    content += '<h3>PROGRESS TRACKING</h3>';
+    const progress = computeProgress(stu);
+    if (progress.length > 0) {
+        content += '<table class="progress-table"><thead><tr><th>EXAM</th><th>RANK</th><th>RANK CHANGE</th><th>TOTAL SCORE</th><th>SCORE CHANGE</th></tr></thead><tbody>';
+        progress.forEach(p => {
+            const rankChangeText = p.rankChange > 0 ? `+${p.rankChange} (Improved)` : p.rankChange < 0 ? `${p.rankChange} (Declined)` : 'No Change';
+            const scoreChangeText = p.scoreChange > 0 ? `+${p.scoreChange} (Improved)` : p.scoreChange < 0 ? `${p.scoreChange} (Declined)` : 'No Change';
+            const rankClass = p.rankChange > 0 ? 'improved' : p.rankChange < 0 ? 'declined' : '';
+            const scoreClass = p.scoreChange > 0 ? 'improved' : p.scoreChange < 0 ? 'declined' : '';
+            content += `<tr><td>${p.exam}</td><td>${p.rank}</td><td class="${rankClass}">${rankChangeText}</td><td>${p.score}</td><td class="${scoreClass}">${scoreChangeText}</td></tr>`;
+        });
+        content += '</tbody></table>';
+    } else {
+        content += '<p>INSUFFICIENT DATA FOR PROGRESS TRACKING (NEEDS AT LEAST 2 EXAMS).</p>';
+    }
+
+    // Chart
+    content += `<h3>EXAM MARKS LINE CHART</h3><div class="chart-container"><button id="chartToggle-${stu.roll}">SHOW SUBJECT-WISE %</button><canvas id="chart-${stu.roll}"></canvas></div>`;
+    div.innerHTML = content;
+    td.appendChild(div);
+    detailsTr.appendChild(td);
+    tr.after(detailsTr);
+    currentExpandedRow = detailsTr;
+
+    createChart(stu, `chart-${stu.roll}`, 'total');
+    document.getElementById(`chartToggle-${stu.roll}`).addEventListener('click', function () {
+        const mode = this.textContent.includes('SUBJECT-WISE') ? 'subjects' : 'total';
+        this.textContent = mode === 'total' ? 'SHOW SUBJECT-WISE %' : 'SHOW TOTAL %';
+        createChart(stu, `chart-${stu.roll}`, mode);
+    });
+}
+
+// Handle exam click (toggle ranklist)
+function handleExamClick(event) {
+    const exam = event.target.dataset.exam;
+    const tr = event.target.parentNode;
+
+    if (currentExpandedExam && currentExpandedExam !== tr.nextElementSibling) {
+        currentExpandedExam.style.display = 'none';
+    }
+
+    let next = tr.nextElementSibling;
+    if (next && next.classList.contains('exam-details-row')) {
+        next.style.display = next.style.display === 'none' ? '' : 'none';
+        currentExpandedExam = next.style.display !== 'none' ? next : null;
+        return;
+    }
+
+    const detailsTr = document.createElement('tr');
+    detailsTr.classList.add('exam-details-row');
+    const td = document.createElement('td');
+    td.colSpan = tr.children.length;
+    const div = document.createElement('div');
+    div.classList.add('details');
+
+    const examStudents = students
+        .filter(stu => stu.exams.some(ex => ex.exam === exam && ex.maxTotal > 0))
+        .map(stu => {
+            const examData = stu.exams.find(ex => ex.exam === exam);
+            return { ...stu, examTotal: examData.total, examPercent: (examData.total / examData.maxTotal * 100).toFixed(2), examData };
+        })
+        .sort((a, b) => b.examTotal - a.examTotal || a.roll.localeCompare(b.roll));
+
+    let content = `<h3>RANKLIST FOR ${exam}</h3><table class="exam-ranklist"><thead><tr><th>RANK</th><th>ROLL NO</th><th>NAME</th><th>CHEM (raw | %)</th><th>PHY (raw | %)</th><th>BIO (raw | %)</th><th>MATH (raw | %)</th><th>TOTAL</th><th>%</th></tr></thead><tbody>`;
+    examStudents.forEach((stu, i) => {
+        const rank = stu.examTotal > 0 ? i + 1 : '-';
+        const ex = stu.examData;
+        const cPct = ex.maxScores.chem ? (ex.scores.chem / ex.maxScores.chem * 100).toFixed(2) : '0.00';
+        const pPct = ex.maxScores.phy ? (ex.scores.phy / ex.maxScores.phy * 100).toFixed(2) : '0.00';
+        const bPct = ex.maxScores.bio ? (ex.scores.bio / ex.maxScores.bio * 100).toFixed(2) : '0.00';
+        const mPct = ex.maxScores.math ? (ex.scores.math / ex.maxScores.math * 100).toFixed(2) : '0.00';
+        content += `<tr${rank <= 3 ? ' class="top-performer"' : ''}><td>${rank}</td><td>${stu.roll}</td><td>${stu.name}</td><td>${ex.scores.chem} | ${cPct}%</td><td>${ex.scores.phy} | ${pPct}%</td><td>${ex.scores.bio} | ${bPct}%</td><td>${ex.scores.math} | ${mPct}%</td><td>${stu.examTotal}</td><td>${stu.examPercent}%</td></tr>`;
+    });
+    content += '</tbody></table>';
+    div.innerHTML = content;
+    td.appendChild(div);
+    detailsTr.appendChild(td);
+    tr.after(detailsTr);
+    currentExpandedExam = detailsTr;
+}
+
+// Compute progress
+function computeProgress(student) {
+    const validExams = student.exams.filter(ex => ex.maxTotal > 0);
+    const progress = [];
+    if (validExams.length < 2) return progress;
+
+    for (let i = 1; i < validExams.length; i++) {
+        const exam = validExams[i];
+        const prevExam = validExams[i - 1];
+
+        const currRank = getExamRank(student, exam.exam);
+        const prevRank = getExamRank(student, prevExam.exam);
+        const rankChange = prevRank - currRank;
+        const scoreChange = exam.total - prevExam.total;
+
+        progress.push({ exam: exam.exam, rank: currRank, rankChange, score: exam.total, scoreChange });
+    }
+    return progress;
+}
+
+// Get exam rank
+function getExamRank(student, examName) {
+    const examStudents = students
+        .filter(stu => stu.exams.some(ex => ex.exam === examName && ex.maxTotal > 0))
+        .map(stu => ({ ...stu, examTotal: stu.exams.find(ex => ex.exam === examName).total }))
+        .sort((a, b) => b.examTotal - a.examTotal || a.roll.localeCompare(b.roll));
+    return examStudents.findIndex(s => s.roll === student.roll) + 1;
+}
+
+// Get subject ranks
+function getSubjectRanks(student) {
+    const ranks = {};
+    ['chem', 'phy', 'bio', 'math'].forEach(sub => {
+        const sorted = [...students].sort((a, b) => {
+            const percB = b.subjectMaxTotals[sub] > 0 ? b.subjectTotals[sub] / b.subjectMaxTotals[sub] : 0;
+            const percA = a.subjectMaxTotals[sub] > 0 ? a.subjectTotals[sub] / a.subjectMaxTotals[sub] : 0;
+            return percB - percA || a.roll.localeCompare(b.roll);
+        });
+        ranks[sub] = {
+            rank: student.subjectMaxTotals[sub] > 0 ? sorted.findIndex(s => s.roll === student.roll) + 1 : '-',
+            total: student.subjectTotals[sub]
+        };
+    });
+    return { ranks };
+}
+
+// Create chart
+function createChart(stu, canvasId, mode) {
+    if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    const validExams = stu.exams.filter(ex => ex.maxTotal > 0);
+    const labels = validExams.map(ex => ex.exam);
+    let datasets = [];
+
+    if (validExams.length === 0) {
+        datasets = [{ label: 'NO DATA', data: [], borderColor: '#ffeb3b', fill: false }];
+    } else if (mode === 'total') {
+        datasets = [{ label: 'TOTAL %', data: validExams.map(ex => (ex.total / ex.maxTotal * 100).toFixed(2)), borderColor: '#ffeb3b', fill: false }];
+    } else {
+        datasets = [
+            { label: 'CHEMISTRY %', data: validExams.map(ex => (ex.scores.chem / ex.maxScores.chem * 100).toFixed(2) || 0), borderColor: '#f44336', fill: false },
+            { label: 'PHYSICS %', data: validExams.map(ex => (ex.scores.phy / ex.maxScores.phy * 100).toFixed(2) || 0), borderColor: '#2196f3', fill: false },
+            { label: 'BIOLOGY %', data: validExams.map(ex => (ex.scores.bio / ex.maxScores.bio * 100).toFixed(2) || 0), borderColor: '#4caf50', fill: false },
+            { label: 'MATHS %', data: validExams.map(ex => (ex.scores.math / ex.maxScores.math * 100).toFixed(2) || 0), borderColor: '#ffeb3b', fill: false }
+        ];
+    }
+
+    chartInstances[canvasId] = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0', font: { size: 10 } } } },
+            scales: {
+                x: { ticks: { color: document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0', font: { size: 10 }, maxRotation: 45, minRotation: 45 }, grid: { color: document.body.classList.contains('light-theme') ? '#ccc' : '#333' } },
+                y: { beginAtZero: true, max: 100, ticks: { color: document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0', font: { size: 10 }, stepSize: 10 }, grid: { color: document.body.classList.contains('light-theme') ? '#ccc' : '#333' } }
+            }
+        }
+    });
+}
+
+// Show tab
+function showTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
+    document.getElementById(tab).style.display = 'block';
+}
+
+// Process CSV
+function processCSVData(data) {
+    if (!data.every(row => row.roll && row.name && row.exam && 'chem' in row && 'phy' in row && 'bio' in row && 'math' in row && 'total' in row && 'percent' in row && 'maxTotal' in row && 'maxChem' in row && 'maxPhy' in row && 'maxBio' in row && 'maxMath' in row)) {
+        throw new Error('Invalid CSV format. Missing required fields.');
+    }
+
+    const studentMap = {};
+    data.forEach(row => {
+        const roll = row.roll.trim();
+        const name = row.name.trim();
+        if (!studentMap[roll]) studentMap[roll] = { roll, name, exams: [] };
+        studentMap[roll].name = name;
+        studentMap[roll].exams.push({
+            exam: row.exam.trim(),
+            scores: { chem: parseFloat(row.chem) || 0, phy: parseFloat(row.phy) || 0, bio: parseFloat(row.bio) || 0, math: parseFloat(row.math) || 0 },
+            maxScores: { chem: parseFloat(row.maxChem) || 0, phy: parseFloat(row.maxPhy) || 0, bio: parseFloat(row.maxBio) || 0, math: parseFloat(row.maxMath) || 0 },
+            total: parseFloat(row.total) || 0,
+            percent: parseFloat(row.percent) || 0,
+            maxTotal: parseFloat(row.maxTotal) || 0
+        });
+    });
+
+    students = Object.values(studentMap);
+    students.forEach(computeCumulatives);
+    populateOverall();
+    populateLast3();
+    ['chem', 'phy', 'bio', 'math'].forEach(sub => populateSubject(`${sub}Table`, sub));
+    populateStats();
+    showTab('overall');
+}
+
+// Toggle theme
+function toggleTheme() {
+    document.body.classList.toggle('light-theme');
+    localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+    document.getElementById('themeToggle').textContent = document.body.classList.contains('light-theme') ? '🌙' : '☀️';
+    Object.values(chartInstances).forEach(chart => {
+        chart.options.plugins.legend.labels.color = document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0';
+        chart.options.scales.x.ticks.color = document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0';
+        chart.options.scales.y.ticks.color = document.body.classList.contains('light-theme') ? '#333' : '#e0e0e0';
+        chart.options.scales.x.grid.color = document.body.classList.contains('light-theme') ? '#ccc' : '#333';
+        chart.options.scales.y.grid.color = document.body.classList.contains('light-theme') ? '#ccc' : '#333';
+        chart.update();
+    });
+}
+
+// Implement search
+function performSearch() {
+    const query = document.getElementById('search').value.trim().toLowerCase();
+    if (!query) return clearSearch();
+
+    const results = students.filter(stu => stu.name.toLowerCase().includes(query) || stu.roll.toLowerCase().includes(query));
+    const tbody = document.querySelector('#searchTable tbody');
+    tbody.innerHTML = '';
+    const sorted = [...results].sort((a, b) => b.cumTotal - a.cumTotal || a.roll.localeCompare(b.roll));
+    sorted.forEach((stu, i) => {
+        const rank = stu.cumTotal > 0 ? i + 1 : '-';
+        const tr = document.createElement('tr');
+        if (rank >= 1 && rank <= 3) tr.classList.add('top-performer');
+        tr.innerHTML = `
+            <td>${rank}</td>
+            <td>${stu.roll}</td>
+            <td class="name" data-roll="${stu.roll}">${stu.name}</td>
+            <td>${stu.examsAttempted}</td>
+            <td>${stu.cumTotal}</td>
+            <td>${stu.cumPercent}%</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    addClickListeners();
+    document.getElementById('searchResults').style.display = 'block';
+}
+
+function clearSearch() {
+    document.getElementById('search').value = '';
+    document.getElementById('searchResults').style.display = 'none';
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') toggleTheme();
+
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    document.getElementById('dataFile').addEventListener('change', event => {
+        const file = event.target.files[0];
+        if (file) Papa.parse(file, { header: true, skipEmptyLines: true, complete: results => { try { processCSVData(results.data); } catch (e) { alert(e.message); } } });
+    });
+
+    // Stats buttons
+    document.getElementById('subjectDifficultyBtn').addEventListener('click', () => {
+        document.getElementById('subjectDifficultyDetails').style.display = document.getElementById('subjectDifficultyDetails').style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('examDetailsBtn').addEventListener('click', () => {
+        document.getElementById('examDetails').style.display = document.getElementById('examDetails').style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('studentDetailsBtn').addEventListener('click', () => {
+        document.getElementById('studentDetails').style.display = document.getElementById('studentDetails').style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Search
+    document.getElementById('searchButton').addEventListener('click', performSearch);
+    document.getElementById('clearSearchButton').addEventListener('click', clearSearch);
+    document.getElementById('search').addEventListener('keypress', e => { if (e.key === 'Enter') performSearch(); });
+});
+
+processCSVData([]);
