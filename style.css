@@ -966,7 +966,7 @@ body.light-theme .loading-overlay {
 
 /* Control Buttons */
 #themeToggle, #logoutBtn {
-  position: absolute;
+  position: fixed;
   top: var(--space-20);
   padding: var(--space-8);
   border: none;
