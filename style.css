@@ -1584,7 +1584,7 @@ tr:hover {
 .subject-section {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow: auto;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--color-card-border);
 }
@@ -1818,3 +1818,4 @@ tr:hover {
   src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
     format('woff2');
 }
+
