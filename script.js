@@ -1,4 +1,3 @@
-// Enhanced script.js for JSON data input with improved UI/UX - Original Color Scheme
 let students = [];
 let currentExpandedRow = null;
 let currentExpandedExam = null;
@@ -1310,4 +1309,5 @@ document.addEventListener('DOMContentLoaded', () => {
     processJsonData([]);
     showTab('overall');
 });
+
 
