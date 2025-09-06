@@ -1,6 +1,3 @@
-
-
-<!-- Updated index.html with added columns to studentDetails table -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,210 +5,395 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REPEATER'S BATCH 2025-26</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Processing data...</p>
+        </div>
+    </div>
 
     <div id="header">
-        <img id="logo" src="logo.png" alt="INSTITUTE LOGO">
-        <h1>REPEATER'S BATCH 2025-26</h1>
-        <button id="themeToggle">☀️</button>
+        <button id="themeToggle" title="Toggle Theme">☀️</button>
         <button id="logoutBtn">Logout</button>
+        <div class="header-content">
+            <img id="logo" src="logo.png" alt="INSTITUTE LOGO">
+            <h1>REPEATER'S BATCH 2025-26</h1>
+            <div class="header-subtitle">Student Performance Analytics Portal</div>
+        </div>
     </div>
 
-    <input type="file" id="dataFile" accept=".csv">
-
-    <div id="search-container">
-        <input type="text" id="search" placeholder="Search by Name or Roll No">
-        <button id="searchButton">SEARCH</button>
-        <button id="clearSearchButton">CLEAR</button>
-    </div>
-
-    <div id="searchResults" style="display: none;">
-        <h2>SEARCH RESULTS</h2>
-        <table id="searchTable">
-            <thead>
-                <tr>
-                    <th>RANK</th>
-                    <th>ROLL NO</th>
-                    <th>NAME</th>
-                    <th>EXAMS ATTEMPTED</th>
-                    <th>TOTAL SCORE</th>
-                    <th>% SCORE</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div id="tabs">
-        <button onclick="showTab('overall')">OVERALL STATS</button>
-        <button onclick="showTab('overallRank')">OVERALL RANKLIST</button>
-        <button onclick="showTab('last3Rank')">LAST 3 EXAMS RANKLIST</button>
-        <button onclick="showTab('subjects')">SUBJECT-WISE RANKLISTS</button>
-    </div>
-
-    <div id="overall" class="tab" style="display: block;">
-        <div class="stats-box">
-            <p id="totalExams">TOTAL EXAMS CONDUCTED: 0</p>
-            <p id="totalStudents">TOTAL STUDENTS: 0</p>
-            <div class="stats-buttons">
-                <button id="subjectDifficultyBtn">SUBJECT DIFFICULTY ANALYSIS</button>
-                <button id="examDetailsBtn">EXAM PARTICIPATION DETAILS</button>
-                <button id="studentDetailsBtn">STUDENT DETAILS</button>
+    <!-- Data Input Section -->
+    <div id="dataInputSection" class="input-section">
+        <div class="section-header">
+            <h2>📚 Data Management</h2>
+        </div>
+        
+        <div class="input-actions">
+            <button id="sampleDataBtn" class="btn primary-btn">
+                <span class="btn-icon">📝</span>
+                Load Data
+            </button>
+            <button id="customDataBtn" class="btn secondary-btn">
+                <span class="btn-icon">📋</span>
+                Input Custom Data
+            </button>
+            <button id="clearDataBtn" class="btn tertiary-btn">
+                <span class="btn-icon">🗑️</span>
+                Clear All Data
+            </button>
+        </div>
+        
+        <!-- Hidden textarea for custom data input -->
+        <div id="customDataContainer" class="custom-data-container" style="display: none;">
+            <div class="input-wrapper">
+                <textarea 
+                    id="dataInput" 
+                    placeholder='Paste your JSON data here:
+[
+    {"roll": "CYL12", "name": "STUDENT NAME", "exam": "WE 1", "chem": 10, "phy": 15, "bio": 20, "math": 12, "total": 57, "percent": 35.63, "maxTotal": 160, "maxChem": 40, "maxPhy": 40, "maxBio": 40, "maxMath": 40},
+    {"roll": "CYL07", "name": "ANOTHER STUDENT", "exam": "WE 1", "chem": 5, "phy": 12, "bio": 18, "math": 8, "total": 43, "percent": 26.88, "maxTotal": 160, "maxChem": 40, "maxPhy": 40, "maxBio": 40, "maxMath": 40}
+]'></textarea>
+                <div class="textarea-actions">
+                    <button id="loadDataBtn" class="btn primary-btn">
+                        <span class="btn-icon">🚀</span>
+                        Load Data
+                    </button>
+                    <button id="validateDataBtn" class="btn secondary-btn">
+                        <span class="btn-icon">✅</span>
+                        Validate
+                    </button>
+                    <button id="cancelInputBtn" class="btn tertiary-btn">
+                        <span class="btn-icon">❌</span>
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
-
-        <div id="subjectDifficultyDetails" style="display: none;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>SUBJECT</th>
-                        <th>AVERAGE %</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Populated by JS -->
-                </tbody>
-            </table>
-        </div>
-
-        <div id="examDetails" style="display: none;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>EXAM</th>
-                        <th>STUDENTS ATTEMPTED</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Populated by JS -->
-                </tbody>
-            </table>
-        </div>
-
-        <div id="studentDetails" style="display: none;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>SERIAL NO</th>
-                        <th>ROLL NO</th>
-                        <th>NAME</th>
-                        <th>STRONG SUBJECT</th>
-                        <th>WEAK SUBJECT</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Populated by JS -->
-                </tbody>
-            </table>
-        </div>
+        
+        <div id="dataStatus" class="status-message"></div>
     </div>
 
-    <div id="overallRank" class="tab" style="display: none;">
-        <table id="rankTable">
-            <thead>
-                <tr>
-                    <th>RANK</th>
-                    <th>ROLL NO</th>
-                    <th>NAME</th>
-                    <th>EXAMS ATTEMPTED</th>
-                    <th>TOTAL SCORE</th>
-                    <th>% SCORE</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div id="last3Rank" class="tab" style="display: none;">
-        <table id="last3Table">
-            <thead>
-                <tr>
-                    <th>RANK</th>
-                    <th>ROLL NO</th>
-                    <th>NAME</th>
-                    <th>EXAMS ATTEMPTED</th>
-                    <th>TOTAL SCORE</th>
-                    <th>% SCORE</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div id="subjects" class="tab" style="display: none;">
-        <div class="subject-box">
-            <h3 class="subject-header">CHEMISTRY</h3>
-            <div class="subject-content">
-                <table id="chemTable">
+    <!-- Search Section -->
+    <div id="searchSection" class="search-section">
+        <div class="search-container">
+            <div class="search-wrapper">
+                <div class="search-input-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search" placeholder="Search by Name or Roll No">
+                </div>
+                <button id="searchButton" class="btn search-btn">Search</button>
+                <button id="clearSearchButton" class="btn clear-btn">Clear</button>
+            </div>
+        </div>
+        
+        <div id="searchResults" class="search-results">
+            <div class="results-header">
+                <h3>🔍 Search Results</h3>
+                <span id="searchCount" class="count-badge">0 results</span>
+            </div>
+            <div class="table-container">
+                <table id="searchTable">
                     <thead>
                         <tr>
-                            <th>RANK</th>
-                            <th>ROLL NO</th>
-                            <th>NAME</th>
-                            <th>EXAMS ATTEMPTED</th>
-                            <th>TOTAL SCORE</th>
+                            <th>Rank</th>
+                            <th>Roll No</th>
+                            <th class="name-col">Name</th>
+                            <th>Exams</th>
+                            <th>Total Score</th>
+                            <th>% Score</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
             </div>
         </div>
+    </div>
 
-        <div class="subject-box">
-            <h3 class="subject-header">PHYSICS</h3>
-            <div class="subject-content">
-                <table id="phyTable">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>ROLL NO</th>
-                            <th>NAME</th>
-                            <th>EXAMS ATTEMPTED</th>
-                            <th>TOTAL SCORE</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+    <!-- Main Navigation -->
+    <div id="tabs" class="tabs-section">
+        <button class="tab-btn active" onclick="showTab('overall')" data-tab="overall">
+            <span class="tab-icon">📊</span>
+            <span class="tab-text">Overall Stats</span>
+        </button>
+        <button class="tab-btn" onclick="showTab('overallRank')" data-tab="overallRank">
+            <span class="tab-icon">🏆</span>
+            <span class="tab-text">Overall Ranklist</span>
+        </button>
+        <button class="tab-btn" onclick="showTab('last3Rank')" data-tab="last3Rank">
+            <span class="tab-icon">📅</span>
+            <span class="tab-text">Last 3 Exams</span>
+        </button>
+        <button class="tab-btn" onclick="showTab('subjects')" data-tab="subjects">
+            <span class="tab-icon">📚</span>
+            <span class="tab-text">Subject-wise</span>
+        </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="tabContent" class="tab-content-wrapper">
+        
+        <!-- Overall Stats Tab -->
+        <div id="overall" class="tab-content active">
+            <div class="stats-overview">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-value" id="totalExams">0</div>
+                        <div class="stat-label">Total Exams</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value" id="totalStudents">0</div>
+                        <div class="stat-label">Total Students</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value" id="avgScore">0%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="subjectDifficultyBtn" class="btn action-btn">
+                        <span class="btn-icon">📚</span>
+                        Subject Analysis
+                    </button>
+                    <button id="examDetailsBtn" class="btn action-btn">
+                        <span class="btn-icon">📋</span>
+                        Exam Details
+                    </button>
+                    <button id="studentDetailsBtn" class="btn action-btn">
+                        <span class="btn-icon">👤</span>
+                        Student Analysis
+                    </button>
+                </div>
+            </div>
+
+            <!-- Expandable Details -->
+            <div id="subjectDifficultyDetails" class="detail-panel">
+                <div class="panel-header">
+                    <h3>📚 Subject Difficulty Analysis</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Average %</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="examDetails" class="detail-panel">
+                <div class="panel-header">
+                    <h3>📋 Exam Participation Details</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Students Attempted</th>
+                                <th>Participation %</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="studentDetails" class="detail-panel">
+                <div class="panel-header">
+                    <h3>👤 Student Performance Analysis</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Roll No</th>
+                                <th class="name-col">Name</th>
+                                <th>Strong Subject</th>
+                                <th>Weak Subject</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="subject-box">
-            <h3 class="subject-header">BIOLOGY</h3>
-            <div class="subject-content">
-                <table id="bioTable">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>ROLL NO</th>
-                            <th>NAME</th>
-                            <th>EXAMS ATTEMPTED</th>
-                            <th>TOTAL SCORE</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+        <!-- Overall Ranking Tab -->
+        <div id="overallRank" class="tab-content">
+            <div class="table-section">
+                <div class="section-header">
+                    <h2>🏆 Overall Ranking</h2>
+                    <span id="overallCount" class="count-badge">0 students</span>
+                </div>
+                <div class="table-container">
+                    <table id="rankTable">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Roll No</th>
+                                <th class="name-col">Name</th>
+                                <th>Exams</th>
+                                <th>Total Score</th>
+                                <th>% Score</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="subject-box">
-            <h3 class="subject-header">MATHS</h3>
-            <div class="subject-content">
-                <table id="mathTable">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>ROLL NO</th>
-                            <th>NAME</th>
-                            <th>EXAMS ATTEMPTED</th>
-                            <th>TOTAL SCORE</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+        <!-- Last 3 Exams Tab -->
+        <div id="last3Rank" class="tab-content">
+            <div class="table-section">
+                <div class="section-header">
+                    <h2>📅 Last 3 Exams Ranking</h2>
+                    <span id="last3Count" class="count-badge">0 students</span>
+                </div>
+                <div class="table-container">
+                    <table id="last3Table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Roll No</th>
+                                <th class="name-col">Name</th>
+                                <th>Exams</th>
+                                <th>Total Score</th>
+                                <th>% Score</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subject-wise Tab -->
+        <div id="subjects" class="tab-content">
+            <div class="subjects-container">
+                <div class="subject-section">
+                    <div class="subject-header" onclick="toggleSubject('chem')">
+                        <div class="subject-title">
+                            <span class="subject-icon">🧪</span>
+                            <h3>Chemistry</h3>
+                        </div>
+                        <span class="toggle-arrow">▼</span>
+                    </div>
+                    <div id="chem" class="subject-content">
+                        <div class="table-container">
+                            <table id="chemTable">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Roll No</th>
+                                        <th class="name-col">Name</th>
+                                        <th>Exams</th>
+                                        <th>Total Score</th>
+                                        <th>Avg %</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-section">
+                    <div class="subject-header" onclick="toggleSubject('phy')">
+                        <div class="subject-title">
+                            <span class="subject-icon">⚛️</span>
+                            <h3>Physics</h3>
+                        </div>
+                        <span class="toggle-arrow">▼</span>
+                    </div>
+                    <div id="phy" class="subject-content">
+                        <div class="table-container">
+                            <table id="phyTable">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Roll No</th>
+                                        <th class="name-col">Name</th>
+                                        <th>Exams</th>
+                                        <th>Total Score</th>
+                                        <th>Avg %</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-section">
+                    <div class="subject-header" onclick="toggleSubject('bio')">
+                        <div class="subject-title">
+                            <span class="subject-icon">🧬</span>
+                            <h3>Biology</h3>
+                        </div>
+                        <span class="toggle-arrow">▼</span>
+                    </div>
+                    <div id="bio" class="subject-content">
+                        <div class="table-container">
+                            <table id="bioTable">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Roll No</th>
+                                        <th class="name-col">Name</th>
+                                        <th>Exams</th>
+                                        <th>Total Score</th>
+                                        <th>Avg %</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-section">
+                    <div class="subject-header" onclick="toggleSubject('math')">
+                        <div class="subject-title">
+                            <span class="subject-icon">📐</span>
+                            <h3>Mathematics</h3>
+                        </div>
+                        <span class="toggle-arrow">▼</span>
+                    </div>
+                    <div id="math" class="subject-content">
+                        <div class="table-container">
+                            <table id="mathTable">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Roll No</th>
+                                        <th class="name-col">Name</th>
+                                        <th>Exams</th>
+                                        <th>Total Score</th>
+                                        <th>Avg %</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -219,4 +401,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
