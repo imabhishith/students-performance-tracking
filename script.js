@@ -13,7 +13,7 @@ const subjectNames = {
 
 // Sample data for testing
 const sampleData = [
-    {"roll": "CYL12", "name": "FARHAN M", "exam": "WE 1", "chem": -5, "phy": 5, "bio": 15, "math": 5, "total": 20, "percent": 12.5, "maxTotal": 160, "maxChem": 40, "maxPhy": 40, "maxBio": 40, "maxMath": 40},
+                        {"roll": "CYL12", "name": "FARHAN M", "exam": "WE 1", "chem": -5, "phy": 5, "bio": 15, "math": 5, "total": 20, "percent": 12.5, "maxTotal": 160, "maxChem": 40, "maxPhy": 40, "maxBio": 40, "maxMath": 40},
                         {"roll": "CYL07", "name": "ASJAN LAHAR", "exam": "WE 1", "chem": -2, "phy": 4, "bio": 16, "math": 0, "total": 18, "percent": 11.25, "maxTotal": 160, "maxChem": 40, "maxPhy": 40, "maxBio": 40, "maxMath": 40},
                         {"roll": "CYL10", "name": "DAKSHA PILLAI", "exam": "WE 1", "chem": 10, "phy": -10, "bio": 30, "math": 10, "total": 40, "percent": 25, "maxTotal": 160, "maxChem": 40, "maxPhy": 40, "maxBio": 40, "maxMath": 40},
                         {"roll": "CYL32", "name": "VYDEHI NAIR", "exam": "WE 1", "chem": 4, "phy": 15, "bio": 40, "math": 28, "total": 87, "percent": 54.38, "maxTotal": 160, "maxChem": 40, "maxPhy": 40, "maxBio": 40, "maxMath": 40},
@@ -1310,3 +1310,4 @@ document.addEventListener('DOMContentLoaded', () => {
     processJsonData([]);
     showTab('overall');
 });
+
