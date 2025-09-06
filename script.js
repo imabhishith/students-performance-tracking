@@ -194,7 +194,6 @@ function processJsonData(data) {
         populateStats();
         
         showTab('overall');
-        showStatus(`Successfully loaded ${students.length} students with ${data.length} exam records`, 'success');
         
     } catch (error) {
         showStatus(`Error processing data: ${error.message}`, 'error');
@@ -353,9 +352,9 @@ function populateSubject(tableId, sub) {
     const sorted = [...students]
         .filter(s => s.subjectMaxTotals[sub] > 0)
         .sort((a, b) => {
-            const percB = b.subjectMaxTotals[sub] > 0 ? (b.subjectTotals[sub] / b.subjectMaxTotals[sub]) * 100 : 0;
-            const percA = a.subjectMaxTotals[sub] > 0 ? (a.subjectTotals[sub] / a.subjectMaxTotals[sub]) * 100 : 0;
-            return percB - percA || a.roll.localeCompare(b.roll);
+            const totalB = b.subjectTotals[sub] || 0;
+            const totalA = a.subjectTotals[sub] || 0;
+            return totalB - totalA || a.roll.localeCompare(b.roll);
         });
     
     sorted.forEach((stu, i) => {
@@ -963,8 +962,8 @@ function createChart(stu, canvasId, mode) {
     }
 
     const isDarkTheme = !document.body.classList.contains('light-theme');
-    const textColor = isDarkTheme ? '#e0e0e0' : '#333';
-    const gridColor = isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(204, 204, 204, 0.5)';
+    const textColor = isDarkTheme ? '#e0e0e0' : '#000000ff';
+    const gridColor = isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(105, 105, 105, 0.5)';
 
     chartInstances[canvasId] = new Chart(ctx, {
         type: 'line',
@@ -1192,64 +1191,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'index.html';
     });
 
-    // Data input buttons
-    document.getElementById('sampleDataBtn').addEventListener('click', () => {
-        processJsonData(sampleData);
-    });
-
-    document.getElementById('customDataBtn').addEventListener('click', () => {
-        const container = document.getElementById('customDataContainer');
-        container.style.display = container.style.display === 'none' ? 'block' : 'none';
-    });
-
-    document.getElementById('clearDataBtn').addEventListener('click', () => {
-        students = [];
-        populateOverall();
-        populateLast3();
-        ['chem', 'phy', 'bio', 'math'].forEach(sub => populateSubject(`${sub}Table`, sub));
-        populateStats();
-        showStatus('All data cleared', 'success');
-    });
-
-    document.getElementById('loadDataBtn').addEventListener('click', () => {
-        const input = document.getElementById('dataInput').value.trim();
-        
-        if (!input) {
-            showStatus('Please enter JSON data first', 'error');
-            return;
-        }
-
-        try {
-            const data = JSON.parse(input);
-            processJsonData(data);
-            document.getElementById('customDataContainer').style.display = 'none';
-        } catch (error) {
-            showStatus(`Invalid JSON format: ${error.message}`, 'error');
-        }
-    });
-
-    document.getElementById('validateDataBtn').addEventListener('click', () => {
-        const input = document.getElementById('dataInput').value.trim();
-        
-        if (!input) {
-            showStatus('Please enter JSON data first', 'error');
-            return;
-        }
-
-        try {
-            const data = JSON.parse(input);
-            validateJsonData(data);
-            showStatus(`Valid JSON format! Found ${data.length} records`, 'success');
-        } catch (error) {
-            showStatus(`Validation failed: ${error.message}`, 'error');
-        }
-    });
-
-    document.getElementById('cancelInputBtn').addEventListener('click', () => {
-        document.getElementById('customDataContainer').style.display = 'none';
-        document.getElementById('dataInput').value = '';
-    });
-
     // Stats buttons
     document.getElementById('subjectDifficultyBtn').addEventListener('click', () => {
         const panel = document.getElementById('subjectDifficultyDetails');
@@ -1279,9 +1220,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     });
     
-    // Initialize with empty data
-    processJsonData([]);
-    showTab('overall');
 });
-
-
