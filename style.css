@@ -1,18 +1,17 @@
-/* END PERPLEXITY DESIGN SYSTEM */
 :root {
   --color-white: rgb(255, 255, 255);          /* Soft cool light gray-blue */
   --color-black: rgb(0, 0, 0);                /* Solid black background */
-  --color-cream-50: rgb(241, 241, 255);          /* Dark muted cream (grayish blue) */
-  --color-cream-100: rgb(233, 233, 254);        /* Darker pale cream with blue tint */
-  --color-gray-200: rgb(232, 229, 229);          /* Dark slate gray */
-  --color-gray-300: rgb(239, 239, 239);       /* Medium-dark bluish gray */
-  --color-gray-400: rgb(211, 211, 211);       /* Muted violet-gray */
+  --color-cream-50: #ffffff;          /* Dark muted cream (grayish blue) */
+  --color-cream-100: rgb(220, 210, 229);        /* Darker pale cream with blue tint */
+  --color-gray-200: rgb(173, 169, 169);          /* Dark slate gray */
+  --color-gray-300: rgb(141, 139, 139);       /* Medium-dark bluish gray */
+  --color-gray-400: rgb(130, 130, 130);       /* Muted violet-gray */
   --color-slate-500: rgb(114, 83, 73);        /* Deep violet slate */
   --color-brown-600: rgb(110, 73, 70);       /* Dark purple brown */
-  --color-charcoal-700: rgba(35, 30, 55, 1);      /* Deep dark charcoal */
-  --color-charcoal-800: rgba(25, 20, 40, 1);      /* Very dark charcoal */
+  --color-charcoal-700: rgb(39, 39, 43);      /* Deep dark charcoal */
+  --color-charcoal-800: rgb(18, 18, 20);      /* Very dark charcoal */
   --color-slate-900: rgba(15, 15, 35, 1);         /* Almost black midnight violet */
-  --color-teal-300: rgb(255, 249, 62);             /* Strong blue violet */
+  --color-teal-300: rgb(204, 238, 253);             /* Strong blue violet */
   --color-teal-400: rgb(80, 60, 130);
   --color-teal-500: rgb(69, 44, 128);
   --color-teal-600: rgb(62, 44, 98);
@@ -20,10 +19,8 @@
   --color-teal-800: rgb(80, 55, 173);
   --color-red-400: rgb(255, 0, 0);              /* Deep violet-red */
   --color-red-500: rgba(230, 0, 0, 0.8);
-  --color-orange-400: rgb(139, 0, 190);           /* Dark violet-orange */
-  --color-orange-500: rgb(150, 86, 229);
-
-
+  --color-orange-400: rgb(0, 162, 255);           /* Dark violet-orange */
+  --color-orange-500: rgb(166, 0, 255);
 
   /* RGB versions for opacity control */
   --color-brown-600-rgb: 94, 82, 64;
@@ -966,7 +963,7 @@ body.light-theme .loading-overlay {
 
 /* Control Buttons */
 #themeToggle, #logoutBtn {
-  position: fixed;
+  position: absolute;
   top: var(--space-20);
   padding: var(--space-8);
   border: none;
@@ -1011,93 +1008,6 @@ body.light-theme .loading-overlay {
 
 #logoutBtn:hover {
   background: var(--color-red-500);
-}
-
-/* Input Section */
-.input-section {
-  margin: var(--space-20) 0;
-  background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--color-card-border);
-}
-
-.section-header h2 {
-  background: linear-gradient(135deg, var(--color-text), var(--color-primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-3xl);
-  margin: var(--space-16) 0;
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.section-header p {
-  color: var(--color-accent);
-  margin-bottom: var(--space-24);
-  text-align: center;
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-lg);
-}
-
-.input-actions, .textarea-actions {
-  display: flex;
-  gap: var(--space-12);
-  justify-content: center;
-  margin: var(--space-20) 0;
-  flex-wrap: wrap;
-}
-
-.custom-data-container {
-  margin-top: var(--space-24);
-  animation: slideDown var(--duration-slow) var(--ease-out);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-}
-
-#dataInput {
-  width: 100%;
-  min-height: 200px;
-  padding: var(--space-16);
-  background-color: var(--color-surface);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-base);
-  color: var(--color-text);
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
-  resize: vertical;
-  transition: all var(--duration-normal) var(--ease-standard);
-}
-
-#dataInput:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: var(--focus-ring);
-}
-
-#dataInput::placeholder {
-  color: var(--color-text-secondary);
-  opacity: 0.7;
 }
 
 /* Button Styles */
