@@ -1,3 +1,4 @@
+// Enhanced script.js for JSON data input with improved UI/UX - Original Color Scheme
 let students = [];
 let currentExpandedRow = null;
 let currentExpandedExam = null;
@@ -144,47 +145,14 @@ function showStatus(message, type) {
     }
 }
 
-// JSON Data Processing
-function validateJsonData(data) {
-    if (!Array.isArray(data)) {
-        throw new Error('Data must be an array');
-    }
-    
-    const requiredFields = ['roll', 'name', 'exam', 'chem', 'phy', 'bio', 'math', 'total', 'percent', 'maxTotal', 'maxChem', 'maxPhy', 'maxBio', 'maxMath'];
-    
-    for (let i = 0; i < data.length; i++) {
-        const row = data[i];
-        for (const field of requiredFields) {
-            if (!(field in row)) {
-                throw new Error(`Missing required field '${field}' in row ${i + 1}`);
-            }
-        }
-        
-        // Type validation
-        const numericFields = ['chem', 'phy', 'bio', 'math', 'total', 'percent', 'maxTotal', 'maxChem', 'maxPhy', 'maxBio', 'maxMath'];
-        for (const field of numericFields) {
-            if (typeof row[field] !== 'number') {
-                throw new Error(`Field '${field}' must be a number in row ${i + 1}`);
-            }
-        }
-        
-        const stringFields = ['roll', 'name', 'exam'];
-        for (const field of stringFields) {
-            if (typeof row[field] !== 'string' || row[field].trim() === '') {
-                throw new Error(`Field '${field}' must be a non-empty string in row ${i + 1}`);
-            }
-        }
-    }
-    
-    return true;
-}
+document.addEventListener('DOMContentLoaded', () => {
+  processJsonData(sampleData);
+});
 
 function processJsonData(data) {
     showLoading();
     
     try {
-        validateJsonData(data);
-        
         const studentMap = {};
         
         data.forEach(row => {
@@ -1221,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('logoutBtn').addEventListener('click', function() {
         sessionStorage.clear();
         localStorage.removeItem('loggedInUser');
-        window.location.href = 'index.html';
+        window.location.href = 'student-login.html';
     });
 
     // Data input buttons
@@ -1305,10 +1273,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') performSearch();
     });
 
+    window.addEventListener('resize', () => {
+    Object.values(chartInstances).forEach(chart => {
+        chart.resize(); // if using Chart.js or similar
+    });
+    });
+    
     // Initialize with empty data
     processJsonData([]);
     showTab('overall');
 });
-
-
 
