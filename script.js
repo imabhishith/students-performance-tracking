@@ -121,6 +121,42 @@ const sampleData = [
                         {"roll": "CYL09", "name": "ATUL RAJESH K", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0},
                         {"roll": "CYL07", "name": "ASJAN LAHAR", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0},
                         {"roll": "CYL05", "name": "ANJANA PRASAD", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0}
+                        {"roll":"CYL01","name":"ABHI A","exam":"RT 1","chem":0,"phy":0,"bio":20,"math":0,"total":20,"percent":8.47,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL03","name":"AISHA SHARAF S","exam":"RT 1","chem":24,"phy":11,"bio":34,"math":6,"total":75,"percent":31.78,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"RT 1","chem":33,"phy":21,"bio":46,"math":24,"total":124,"percent":52.54,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL06","name":"ARAVIND R CHANDRAN","exam":"RT 1","chem":48,"phy":44,"bio":51,"math":28,"total":171,"percent":72.46,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL08","name":"ASWITHA C K","exam":"RT 1","chem":48,"phy":32,"bio":50,"math":18,"total":148,"percent":62.71,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL09","name":"ATUL RAJESH K","exam":"RT 1","chem":30,"phy":15,"bio":47,"math":20,"total":112,"percent":47.46,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL10","name":"DAKSHA PILLAI","exam":"RT 1","chem":-5,"phy":-3,"bio":15,"math":11,"total":18,"percent":7.63,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL11","name":"EESHA NAIR","exam":"RT 1","chem":40,"phy":31,"bio":23,"math":36,"total":130,"percent":55.08,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL12","name":"FARHAN M","exam":"RT 1","chem":5,"phy":-5,"bio":20,"math":21,"total":41,"percent":17.37,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL13","name":"GAURAV S KRISHNAN","exam":"RT 1","chem":27,"phy":24,"bio":39,"math":15,"total":105,"percent":44.49,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL14","name":"GOWRI KRISHNAN M","exam":"RT 1","chem":15,"phy":2,"bio":28,"math":13,"total":58,"percent":24.58,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL15","name":"IHSAN HUSSAIN","exam":"RT 1","chem":47,"phy":13,"bio":40,"math":27,"total":127,"percent":53.81,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"RT 1","chem":43,"phy":15,"bio":31,"math":4,"total":93,"percent":39.41,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"RT 1","chem":35,"phy":32,"bio":46,"math":36,"total":149,"percent":63.14,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL19","name":"MIDHUN P","exam":"RT 1","chem":23,"phy":21,"bio":20,"math":9,"total":73,"percent":30.93,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"RT 1","chem":15,"phy":9,"bio":30,"math":0,"total":54,"percent":22.88,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"RT 1","chem":10,"phy":10,"bio":25,"math":1,"total":46,"percent":19.49,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL22","name":"NIDHA T P","exam":"RT 1","chem":41,"phy":28,"bio":40,"math":40,"total":149,"percent":63.14,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL23","name":"NIMITHA K J","exam":"RT 1","chem":20,"phy":17,"bio":13,"math":18,"total":68,"percent":28.81,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"RT 1","chem":45,"phy":25,"bio":40,"math":21,"total":131,"percent":55.51,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL26","name":"PRAJUL KRISHNA","exam":"RT 1","chem":26,"phy":32,"bio":45,"math":11,"total":114,"percent":48.31,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL27","name":"RAFA HANOON K","exam":"RT 1","chem":46,"phy":19,"bio":36,"math":38,"total":139,"percent":58.9,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL28","name":"RHIDHI","exam":"RT 1","chem":15,"phy":26,"bio":8,"math":34,"total":83,"percent":35.17,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL29","name":"SHAZA FATHIMA P V","exam":"RT 1","chem":52,"phy":34,"bio":45,"math":39,"total":170,"percent":72.03,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL30","name":"SUKANYA V S","exam":"RT 1","chem":40,"phy":41,"bio":55,"math":52,"total":188,"percent":79.66,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL31","name":"VIDHU NAMBIAR A V","exam":"RT 1","chem":22,"phy":36,"bio":32,"math":44,"total":134,"percent":56.78,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL32","name":"VYDEHI NAIR","exam":"RT 1","chem":40,"phy":2,"bio":42,"math":19,"total":103,"percent":43.64,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL33","name":"RIDHA FATHIMA","exam":"RT 1","chem":33,"phy":0,"bio":41,"math":8,"total":82,"percent":34.75,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL34","name":"THAHSEEN THAJUDHEEN","exam":"RT 1","chem":7,"phy":20,"bio":9,"math":-1,"total":35,"percent":14.83,"maxTotal":236,"maxChem":60,"maxPhy":60,"maxBio":60,"maxMath":56},
+                        {"roll":"CYL02","name":"ABHIRAMI K M","exam":"RT 1","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL05","name":"ANJANA PRASAD","exam":"RT 1","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL07","name":"ASJAN LAHAR","exam":"RT 1","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL16","name":"KAILAS","exam":"RT 1","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL25","name":"PARVATHY N P","exam":"RT 1","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL35","name":"G VRINDA","exam":"RT 1","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL36","name":"SREYA K SUNIL","exam":"RT 1","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
 ];
 
 // Utility functions
@@ -1221,3 +1257,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
