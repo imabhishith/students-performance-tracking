@@ -120,7 +120,7 @@ const sampleData = [
                         {"roll": "CYL16", "name": "KAILAS", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0},
                         {"roll": "CYL09", "name": "ATUL RAJESH K", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0},
                         {"roll": "CYL07", "name": "ASJAN LAHAR", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0},
-                        {"roll": "CYL05", "name": "ANJANA PRASAD", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0}
+                        {"roll": "CYL05", "name": "ANJANA PRASAD", "exam": "WE 3", "chem": 0, "phy": 0, "bio": 0, "math": 0, "total": 0, "percent": 0, "maxTotal": 0, "maxChem": 0, "maxPhy": 0, "maxBio": 0, "maxMath": 0},
   {"roll":"CYL01","name":"ABHI A","exam":"RT 1","chem":0,"phy":0,"bio":20,"math":0,"total":20,"percent":8.77,"maxTotal":228,"maxChem":60,"maxPhy":56,"maxBio":60,"maxMath":52},
   {"roll":"CYL03","name":"AISHA SHARAF S","exam":"RT 1","chem":24,"phy":11,"bio":34,"math":6,"total":75,"percent":32.89,"maxTotal":228,"maxChem":60,"maxPhy":56,"maxBio":60,"maxMath":52},
   {"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"RT 1","chem":33,"phy":21,"bio":46,"math":20,"total":120,"percent":52.63,"maxTotal":228,"maxChem":60,"maxPhy":56,"maxBio":60,"maxMath":52},
@@ -1257,5 +1257,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
