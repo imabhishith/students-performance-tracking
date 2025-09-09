@@ -1784,10 +1784,7 @@
             }
 
             generateExamDetailsTableHTML(stats) {
-                const validExams = stats.validExams.sort((a, b) => {
-                    const aNum = parseInt(a.exam.match(/\d+/)?.[0] || '0');
-                    const bNum = parseInt(b.exam.match(/\d+/)?.[0] || '0');
-                    return aNum - bNum;
+                const validExams = stats.validExams;
                 });
 
                 // Calculate which exam was the best and worst performance
@@ -2463,6 +2460,7 @@
     </script>
 </body>
 </html>
+
 
 
 
