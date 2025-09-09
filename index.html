@@ -1905,11 +1905,7 @@
                     this.chartInstance.destroy();
                 }
 
-                const validExams = this.studentStats.validExams.sort((a, b) => {
-                    // Sort by exam name to maintain chronological order
-                    const aNum = parseInt(a.exam.match(/\d+/)?.[0] || '0');
-                    const bNum = parseInt(b.exam.match(/\d+/)?.[0] || '0');
-                    return aNum - bNum;
+                const validExams = this.studentStats.validExams;
                 });
                 
                 const labels = validExams.map(exam => exam.exam);
@@ -1994,7 +1990,7 @@
                             tension: 0.4
                         },
                         {
-                            label: 'Mathematics %',
+                            label: 'Maths %',
                             data: validExams.map(exam => {
                                 const pct = exam.maxMath > 0 ? ((exam.math / exam.maxMath) * 100) : 0;
                                 return parseFloat(pct.toFixed(2));
@@ -2460,6 +2456,7 @@
     </script>
 </body>
 </html>
+
 
 
 
