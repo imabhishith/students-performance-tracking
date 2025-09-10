@@ -1208,7 +1208,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize other functionality
     initializeApp();
-
 });
 
 // Event listeners
@@ -1225,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('logoutBtn').addEventListener('click', function() {
         sessionStorage.clear();
         localStorage.removeItem('loggedInUser');
-        window.location.href = 'index.html';
+        window.location.href = 'student-login.html';
     });
 
     // Stats buttons
