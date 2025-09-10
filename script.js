@@ -1224,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('logoutBtn').addEventListener('click', function() {
         sessionStorage.clear();
         localStorage.removeItem('loggedInUser');
-        window.location.href = 'student-login.html';
+        window.location.href = 'index.html';
     });
 
     // Stats buttons
@@ -1257,6 +1257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
