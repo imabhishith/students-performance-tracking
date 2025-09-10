@@ -1784,11 +1784,7 @@
             }
 
             generateExamDetailsTableHTML(stats) {
-                const validExams = stats.validExams.sort((a, b) => {
-                    const aNum = parseInt(a.exam.match(/\d+/)?.[0] || '0');
-                    const bNum = parseInt(b.exam.match(/\d+/)?.[0] || '0');
-                    return aNum - bNum;
-                });
+                const validExams = stats.validExams;
 
                 // Calculate which exam was the best and worst performance
                 let bestPerformance = null;
@@ -1908,12 +1904,7 @@
                     this.chartInstance.destroy();
                 }
 
-                const validExams = this.studentStats.validExams.sort((a, b) => {
-                    // Sort by exam name to maintain chronological order
-                    const aNum = parseInt(a.exam.match(/\d+/)?.[0] || '0');
-                    const bNum = parseInt(b.exam.match(/\d+/)?.[0] || '0');
-                    return aNum - bNum;
-                });
+                const validExams = this.studentStats.validExams;
                 
                 const labels = validExams.map(exam => exam.exam);
                 let datasets = [];
@@ -2463,3 +2454,4 @@
     </script>
 </body>
 </html>
+
