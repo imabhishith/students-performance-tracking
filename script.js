@@ -500,7 +500,7 @@ function populateStats() {
     const examTbody = document.querySelector('#examDetails tbody');
     examTbody.innerHTML = '';
     
-    allExams.sort().forEach(exam => {
+    allExams.forEach(exam => {
         const attempted = students.filter(stu => stu.exams.some(ex => ex.exam === exam && ex.maxTotal > 0)).length;
         const participationRate = totalStudents > 0 ? ((attempted / totalStudents) * 100).toFixed(1) : 0;
         
@@ -1257,6 +1257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
