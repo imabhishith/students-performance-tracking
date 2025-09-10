@@ -239,8 +239,6 @@ function processJsonData(data) {
     }
 }
 
-initializeExamDifficulty();
-
 // Compute cumulatives for a student (percentages, strong/weak subjects)
 function computeCumulatives(student) {
     let cumObt = 0;
@@ -1260,6 +1258,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
