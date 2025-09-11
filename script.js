@@ -1228,18 +1228,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Stats buttons
     document.getElementById('subjectDifficultyBtn').addEventListener('click', () => {
-        const panel = document.getElementById('subjectDifficultyDetails');
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    const panel = document.getElementById('subjectDifficultyDetails');
+    const isHidden = window.getComputedStyle(panel).display === 'none';
+    panel.style.display = isHidden ? 'block' : 'none';
     });
 
     document.getElementById('examDetailsBtn').addEventListener('click', () => {
-        const panel = document.getElementById('examDetails');
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    const panel = document.getElementById('examDetails');
+    const isHidden = window.getComputedStyle(panel).display === 'none';
+    panel.style.display = isHidden ? 'block' : 'none';
     });
 
     document.getElementById('studentDetailsBtn').addEventListener('click', () => {
-        const panel = document.getElementById('studentDetails');
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    const panel = document.getElementById('studentDetails');
+    const isHidden = window.getComputedStyle(panel).display === 'none';
+    panel.style.display = isHidden ? 'block' : 'none';
     });
 
     // Search functionality
@@ -1256,5 +1259,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
