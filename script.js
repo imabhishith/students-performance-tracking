@@ -1235,15 +1235,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('examDetailsBtn').addEventListener('click', () => {
     const panel = document.getElementById('examDetails');
-    const isHidden = window.getComputedStyle(panel).display === 'none';
-    panel.style.display = isHidden ? 'block' : 'none';
+    const currentDisplay = window.getComputedStyle(panel).display;
+    panel.style.display = currentDisplay === 'none' ? 'block' : 'none';
     });
 
     document.getElementById('studentDetailsBtn').addEventListener('click', () => {
     const panel = document.getElementById('studentDetails');
-    const isHidden = window.getComputedStyle(panel).display === 'none';
-    panel.style.display = isHidden ? 'block' : 'none';
+    const currentDisplay = window.getComputedStyle(panel).display;
+    panel.style.display = currentDisplay === 'none' ? 'block' : 'none';
     });
+
 
     // Search functionality
     document.getElementById('searchButton').addEventListener('click', performSearch);
@@ -1259,6 +1260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
