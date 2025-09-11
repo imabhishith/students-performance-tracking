@@ -496,7 +496,7 @@ function populateStats() {
     subjectTbody.appendChild(mostTr);
 
     // Populate exam participation table
-    const examTbody = document.querySelector('examDetails tbody');
+    const examTbody = document.querySelector('#examDetails tbody');
     examTbody.innerHTML = '';
     
     allExams.localeCompare().forEach(exam => {
@@ -513,7 +513,7 @@ function populateStats() {
     });
 
     // Populate student details table
-    const studentTbody = document.querySelector('studentDetails tbody');
+    const studentTbody = document.querySelector('#studentDetails tbody');
     studentTbody.innerHTML = '';
     
     const sortedStudents = [...students].sort((a, b) => a.roll.localeCompare(b.roll));
@@ -1256,4 +1256,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
