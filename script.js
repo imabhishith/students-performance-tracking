@@ -194,8 +194,6 @@ const sampleData = [
                         {"roll":"CYL25","name":"PARVATHY N P","exam":"WE 4","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
 ];
 
-if (sessionStorage.getItem('isAdmin')!=='true'){
-    window.location.href="index.html";}
 // Utility functions
 function showLoading() {
     document.getElementById('loadingOverlay').style.display = 'flex';
@@ -1300,6 +1298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
