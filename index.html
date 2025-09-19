@@ -1492,7 +1492,7 @@
                     // Store session data
                     sessionStorage.setItem('loggedInUser', JSON.stringify(user));
                     sessionStorage.setItem('loginTime', Date.now().toString());
-                    sessionstorage.setItem('isAdmin','true');
+    
 
                     // Get student exam data
                     const studentExams = this.data.exams.filter(exam => exam.roll === user.roll);
@@ -2491,6 +2491,7 @@
     </script>
 </body>
 </html>
+
 
 
 
