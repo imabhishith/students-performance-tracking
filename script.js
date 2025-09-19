@@ -1253,6 +1253,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') performSearch();
     });
 
+    document.addEventListener("DOMContentLoaded", function() {
+    processJsonData(sampleData);
+});
     window.addEventListener('resize', () => {
     Object.values(chartInstances).forEach(chart => {
         chart.resize(); // if using Chart.js or similar
@@ -1260,6 +1263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
