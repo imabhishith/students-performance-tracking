@@ -1257,7 +1257,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('themeToggle').addEventListener('click', toggleTheme);
     
     document.getElementById('logoutBtn').addEventListener('click', function() {
-        sessionStorage.removeItem('isAdmin');
+        sessionStorage.clear();
+        localStorage.removeItem('loggedInUser');
         window.location.href = 'index.html';
     });
 
@@ -1290,7 +1291,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener("DOMContentLoaded", function() {
     processJsonData(sampleData);
-});
+    });
+    
     window.addEventListener('resize', () => {
     Object.values(chartInstances).forEach(chart => {
         chart.resize(); // if using Chart.js or similar
@@ -1298,6 +1300,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
