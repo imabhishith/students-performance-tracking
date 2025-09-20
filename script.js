@@ -191,7 +191,43 @@ const sampleData = [
                         {"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 4","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
                         {"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"WE 4","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
                         {"roll":"CYL22","name":"NIDHA T P","exam":"WE 4","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-                        {"roll":"CYL25","name":"PARVATHY N P","exam":"WE 4","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
+                        {"roll":"CYL25","name":"PARVATHY N P","exam":"WE 4","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL01","name":"ABHI A","exam":"WE 5","chem":0,"phy":0,"bio":11,"math":0,"total":11,"percent":6.88,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL03","name":"AISHA SHARAF S","exam":"WE 5","chem":4,"phy":16,"bio":25,"math":-1,"total":44,"percent":27.5,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"WE 5","chem":16,"phy":8,"bio":40,"math":23,"total":87,"percent":54.38,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL06","name":"ARAVIND R CHANDRAN","exam":"WE 5","chem":32,"phy":36,"bio":36,"math":16,"total":120,"percent":75,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL08","name":"ASWITHA C K","exam":"WE 5","chem":22,"phy":24,"bio":40,"math":11,"total":97,"percent":60.63,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL10","name":"DAKSHA PILLAI","exam":"WE 5","chem":20,"phy":20,"bio":30,"math":10,"total":80,"percent":50,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL12","name":"FARHAN M","exam":"WE 5","chem":10,"phy":0,"bio":10,"math":15,"total":35,"percent":21.88,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL13","name":"GAURAV S KRISHNAN","exam":"WE 5","chem":15,"phy":13,"bio":36,"math":20,"total":84,"percent":52.5,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL14","name":"GOWRI KRISHNAN M","exam":"WE 5","chem":2,"phy":4,"bio":32,"math":0,"total":38,"percent":23.75,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL15","name":"IHSAN HUSSAIN","exam":"WE 5","chem":22,"phy":22,"bio":30,"math":2,"total":76,"percent":47.5,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"WE 5","chem":22,"phy":7,"bio":30,"math":0,"total":59,"percent":36.88,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"WE 5","chem":28,"phy":28,"bio":40,"math":8,"total":104,"percent":65,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL19","name":"MIDHUN P","exam":"WE 5","chem":6,"phy":19,"bio":22,"math":1,"total":48,"percent":30,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL22","name":"NIDHA T P","exam":"WE 5","chem":27,"phy":32,"bio":40,"math":15,"total":114,"percent":71.25,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL23","name":"NIMITHA K J","exam":"WE 5","chem":14,"phy":24,"bio":26,"math":7,"total":71,"percent":44.38,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"WE 5","chem":22,"phy":27,"bio":40,"math":12,"total":101,"percent":63.13,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL27","name":"RAFA HANOON K","exam":"WE 5","chem":32,"phy":27,"bio":40,"math":10,"total":109,"percent":68.13,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL28","name":"RHIDHI","exam":"WE 5","chem":28,"phy":31,"bio":31,"math":4,"total":94,"percent":58.75,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL29","name":"SHAZA FATHIMA P V","exam":"WE 5","chem":35,"phy":22,"bio":40,"math":3,"total":100,"percent":62.5,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL30","name":"SUKANYA V S","exam":"WE 5","chem":31,"phy":22,"bio":40,"math":31,"total":124,"percent":77.5,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL31","name":"VIDHU NAMBIAR A V","exam":"WE 5","chem":14,"phy":32,"bio":35,"math":32,"total":113,"percent":70.63,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL32","name":"VYDEHI NAIR","exam":"WE 5","chem":18,"phy":28,"bio":36,"math":15,"total":97,"percent":60.63,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL33","name":"RIDHA FATHIMA","exam":"WE 5","chem":16,"phy":-1,"bio":35,"math":0,"total":50,"percent":31.25,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL35","name":"G VRINDA","exam":"WE 5","chem":0,"phy":8,"bio":36,"math":4,"total":48,"percent":30,"maxTotal":160,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":40},
+                        {"roll":"CYL02","name":"ABHIRAMI K M","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL05","name":"ANJANA PRASAD","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL07","name":"ASJAN LAHAR","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL09","name":"ATUL RAJESH K","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL11","name":"EESHA NAIR","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL16","name":"KAILAS","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL25","name":"PARVATHY N P","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL26","name":"PRAJUL KRISHNA","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL34","name":"THAHSEEN THAJUDHEEN","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+                        {"roll":"CYL36","name":"SREYA K SUNIL","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
 ];
 
 // Utility functions
@@ -1300,6 +1336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
 
 
