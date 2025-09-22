@@ -230,6 +230,9 @@ const sampleData = [
                         {"roll":"CYL36","name":"SREYA K SUNIL","exam":"WE 5","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
 ];
 
+        const last3Exams = ['RT 1', 'WE 4', 'WE 5'];
+        const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5'];
+
 // Utility functions
 function showLoading() {
     document.getElementById('loadingOverlay').style.display = 'flex';
@@ -404,53 +407,6 @@ function populateOverall() {
     addClickListeners();
 }
 
-// Populate last 3 exams ranklist
-function populateLast3() {
-    const tbody = document.querySelector('#last3Table tbody');
-    tbody.innerHTML = '';
-    
-    const last3Students = students.map(stu => {
-        const last3Exams = stu.exams.filter(ex => ex.maxTotal > 0).slice(-3);
-        let total = 0, maxTotal = 0;
-        
-        last3Exams.forEach(ex => { 
-            total += ex.total; 
-            maxTotal += ex.maxTotal; 
-        });
-        
-        return {
-            ...stu,
-            last3Total: total,
-            last3Percent: maxTotal > 0 ? (total / maxTotal * 100).toFixed(2) : 0,
-            last3ExamsAttempted: last3Exams.length
-        };
-    });
-    
-    const sorted = last3Students.sort((a, b) => b.last3Total - a.last3Total || a.roll.localeCompare(b.roll));
-    
-    sorted.forEach((stu, i) => {
-        const rank = stu.last3Total > 0 ? i + 1 : '-';
-        const tr = document.createElement('tr');
-        
-        if (rank >= 1 && rank <= 3 && stu.last3Total > 0) {
-            tr.classList.add('top-performer');
-        }
-        
-        tr.innerHTML = `
-            <td>${rank}</td>
-            <td>${stu.roll}</td>
-            <td>${stu.name}</td>
-            <td>${stu.last3ExamsAttempted}</td>
-            <td>${stu.last3Total}</td>
-            <td>${stu.last3Percent}%</td>
-        `;
-        
-        tbody.appendChild(tr);
-    });
-    
-    document.getElementById('last3Count').textContent = `${students.length} students`;
-}
-
 // Populate subject ranklist
 function populateSubject(tableId, sub) {
     const tbody = document.querySelector(`#${tableId} tbody`);
@@ -571,7 +527,7 @@ function populateStats() {
     const examTbody = document.querySelector('#examDetails tbody');
     examTbody.innerHTML = '';
     
-    allExams.sort().forEach(exam => {
+    examOrder.forEach(exam => {
         const attempted = students.filter(stu => stu.exams.some(ex => ex.exam === exam && ex.maxTotal > 0)).length;
         const participationRate = totalStudents > 0 ? ((attempted / totalStudents) * 100).toFixed(1) : 0;
         
@@ -1219,17 +1175,42 @@ function initializeTheme() {
 
 function setTheme(theme) {
     const html = document.documentElement;
-    
-    // Set the data-color-scheme attribute
+
+    // Set the data-color-scheme attribute for CSS targeting
     html.setAttribute('data-color-scheme', theme);
-    
+
     // Also set a class for additional styling if needed
-    document.body.className = document.body.className.replace(/\b(light|dark)-theme\b/g, '');
+    document.body.className = document.body.className.replace(/light|dark-theme/g, '');
     document.body.classList.add(`${theme}-theme`);
-    
+
     // Save to localStorage
     localStorage.setItem('theme', theme);
-    
+
+    // Force re-render of dynamic elements for the last 2 buttons
+    setTimeout(() => {
+        // Trigger re-styling of Student Categorization if it's visible
+        const studentCat = document.getElementById('studentCategorization');
+        if (studentCat && studentCat.style.display !== 'none') {
+            const content = studentCat.querySelector('.categorization-content');
+            if (content) {
+                content.style.display = 'none';
+                content.offsetHeight; // Force reflow
+                content.style.display = 'block';
+            }
+        }
+
+        // Trigger re-styling of Performance Alerts if it's visible
+        const perfAlerts = document.getElementById('performanceAlerts');
+        if (perfAlerts && perfAlerts.style.display !== 'none') {
+            const content = perfAlerts.querySelector('.alerts-content');
+            if (content) {
+                content.style.display = 'none';
+                content.offsetHeight; // Force reflow
+                content.style.display = 'block';
+            }
+        }
+    }, 50);
+
     console.log(`Theme set to: ${theme}`);
 }
 
@@ -1255,14 +1236,20 @@ function toggleTheme() {
 function updateThemeToggleButton(theme) {
     const toggleBtn = document.getElementById('themeToggle');
     if (toggleBtn) {
-        // Update button content based on theme
+        // Update button content based on theme with proper icons
         if (theme === 'light') {
-            toggleBtn.innerHTML = '🌙'; // Moon icon for dark mode
+            toggleBtn.innerHTML = '🌙'; // Moon icon for switching to dark mode
             toggleBtn.title = 'Switch to dark mode';
         } else {
-            toggleBtn.innerHTML = '☀️'; // Sun icon for light mode
+            toggleBtn.innerHTML = '☀️'; // Sun icon for switching to light mode  
             toggleBtn.title = 'Switch to light mode';
         }
+
+        // Add visual feedback
+        toggleBtn.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            toggleBtn.style.transform = 'scale(1)';
+        }, 150);
     }
 }
 
@@ -1337,17 +1324,775 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
+// ===============================================================================
+// ENHANCED ADMIN PORTAL WITH COLOR-CODED DIFFICULTY SCORES AND IMPROVED UI/UX
+// ===============================================================================
+
+// Override populateLast3 to use RT 1, WE 4, WE 5 specifically
+function populateLast3() {
+    const tbody = document.querySelector('#last3Table tbody');
+    tbody.innerHTML = '';
+
+    // Define the last 3 exams that occurred (as specified by user)
+
+    const last3Students = students.map(stu => {
+        let total = 0, maxTotal = 0, examsAttempted = 0;
+
+        last3Exams.forEach(examName => {
+            const examData = stu.exams.find(ex => ex.exam === examName && ex.maxTotal > 0);
+            if (examData) {
+                total += examData.total;
+                maxTotal += examData.maxTotal;
+                examsAttempted++;
+            }
+        });
+
+        return {
+            ...stu,
+            last3Total: total,
+            last3Percent: maxTotal > 0 ? (total / maxTotal * 100).toFixed(2) : '0.00',
+            last3ExamsAttempted: examsAttempted,
+            last3MaxTotal: maxTotal
+        };
+    });
+
+    const sorted = last3Students.sort((a, b) => {
+        if (b.last3Total !== a.last3Total) {
+            return b.last3Total - a.last3Total;
+        }
+        return a.roll.localeCompare(b.roll);
+    });
+
+    sorted.forEach((stu, i) => {
+        const rank = stu.last3Total > 0 ? i + 1 : '-';
+        const tr = document.createElement('tr');
+
+        if (rank <= 3 && rank !== '-') {
+            tr.classList.add('top-performer');
+        }
+
+        tr.innerHTML = `
+            <td>${rank}</td>
+            <td>${stu.roll}</td>
+            <td class="name" data-roll="${stu.roll}">${stu.name}</td>
+            <td>${stu.last3ExamsAttempted}</td>
+            <td>${stu.last3Total}</td>
+            <td>${stu.last3Percent}%</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('last3Count').textContent = `${students.length} students`;
+}
+
+// EXAM DIFFICULTY ANALYSIS WITH COLOR CODING
+function toggleExamDifficultyAnalysis() {
+    const detailsDiv = document.getElementById('examDifficultyDetails');
+    const isVisible = detailsDiv && detailsDiv.style.display === 'block';
+
+    hideAllDetailPanels();
+
+    if (!isVisible) {
+        detailsDiv.style.display = 'block';
+        populateExamDifficultyAnalysis();
+    }
+}
+
+function populateExamDifficultyAnalysis() {
+    const tbody = document.getElementById('examDifficultyTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    const examAnalysis = calculateExamDifficulty();
+
+    examAnalysis.forEach((exam) => {
+        const tr = document.createElement('tr');
+
+        // Use original table row styling with enhanced colors
+        if (exam.difficultyScore >= 8) {
+            tr.classList.add('low-performer'); // Reuse existing class
+        } else if (exam.difficultyScore <= 3) {
+            tr.classList.add('top-performer'); // Reuse existing class
+        }
+
+        // Get colors based on existing theme
+        const difficultyColor = getDifficultyScoreColor(exam.difficultyScore);
+        const remarkColor = getRemarkColor(exam.remark);
+
+        tr.innerHTML = `
+            <td style="font-weight: 600;">${exam.name}</td>
+            <td>${exam.chemPercent}%</td>
+            <td>${exam.phyPercent}%</td>
+            <td>${exam.bioPercent}%</td>
+            <td>${exam.mathPercent}%</td>
+            <td style="font-weight: 700; color: ${difficultyColor}; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
+                <span style="display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(from ${difficultyColor} r g b / 0.1); border: 1px solid rgba(from ${difficultyColor} r g b / 0.3);">
+                    ${exam.difficultyScore}/10
+                </span>
+            </td>
+            <td style="font-weight: 700; color: ${remarkColor}; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
+                <span style="display: inline-block; padding: 4px 12px; border-radius: 6px; background: rgba(from ${remarkColor} r g b / 0.1); border: 1px solid rgba(from ${remarkColor} r g b / 0.3);">
+                    ${exam.remark}
+                </span>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+function getDifficultyScoreColor(score) {
+    // Use existing theme colors for difficulty scoring
+    if (score >= 9) return '#dc3545';        // Toughest - Deep Red
+    else if (score >= 8) return '#fd7e14';   // Tough - Orange Red
+    else if (score >= 7) return '#ffc107';   // Above Average - Yellow
+    else if (score >= 6) return '#6f42c1';   // Above Average - Purple
+    else if (score >= 5) return '#6c757d';   // Moderate - Gray
+    else if (score >= 4) return '#0d6efd';   // Moderate - Blue
+    else if (score >= 3) return '#20c997';   // Easy - Teal
+    else return '#198754';                   // Very Easy - Green
+}
+
+function getRemarkColor(remark) {
+    // Use existing theme colors for remarks
+    switch (remark) {
+        case 'Toughest':
+            return '#dc3545'; // Red
+        case 'Tough':
+            return '#fd7e14'; // Orange Red
+        case 'Above Average':
+            return '#ffc107'; // Yellow
+        case 'Moderate':
+            return '#6c757d'; // Gray
+        case 'Easy':
+            return '#20c997'; // Teal
+        case 'Very Easy':
+            return '#198754'; // Green
+        default:
+            return 'var(--color-text)';
+    }
+}
+
+function calculateExamDifficulty() {
+    const examStats = {};
+
+    students.forEach(student => {
+        student.exams.forEach(exam => {
+            if (exam.maxTotal > 0) {
+                if (!examStats[exam.exam]) {
+                    examStats[exam.exam] = {
+                        name: exam.exam,
+                        chemScores: [],
+                        phyScores: [],
+                        bioScores: [],
+                        mathScores: [],
+                        totalStudents: 0,
+                        maxScores: exam.maxScores || { chem: 40, phy: 40, bio: 40, math: 40 }
+                    };
+                }
+
+                examStats[exam.exam].chemScores.push(exam.scores ? exam.scores.chem || 0 : 0);
+                examStats[exam.exam].phyScores.push(exam.scores ? exam.scores.phy || 0 : 0);
+                examStats[exam.exam].bioScores.push(exam.scores ? exam.scores.bio || 0 : 0);
+                examStats[exam.exam].mathScores.push(exam.scores ? exam.scores.math || 0 : 0);
+                examStats[exam.exam].totalStudents++;
+            }
+        });
+    });
+
+    const examAnalysis = [];
+    Object.values(examStats).forEach(examStat => {
+        if (examStat.totalStudents > 0) {
+            const chemAvg = examStat.chemScores.reduce((sum, score) => sum + score, 0) / examStat.chemScores.length;
+            const phyAvg = examStat.phyScores.reduce((sum, score) => sum + score, 0) / examStat.phyScores.length;
+            const bioAvg = examStat.bioScores.reduce((sum, score) => sum + score, 0) / examStat.bioScores.length;
+            const mathAvg = examStat.mathScores.reduce((sum, score) => sum + score, 0) / examStat.mathScores.length;
+
+            const chemPercent = ((chemAvg / examStat.maxScores.chem) * 100).toFixed(1);
+            const phyPercent = ((phyAvg / examStat.maxScores.phy) * 100).toFixed(1);
+            const bioPercent = ((bioAvg / examStat.maxScores.bio) * 100).toFixed(1);
+            const mathPercent = ((mathAvg / examStat.maxScores.math) * 100).toFixed(1);
+
+            const overallAvg = (parseFloat(chemPercent) + parseFloat(phyPercent) + parseFloat(bioPercent) + parseFloat(mathPercent)) / 4;
+
+            let difficultyScore = 10;
+            if (overallAvg >= 80) difficultyScore = 1;
+            else if (overallAvg >= 70) difficultyScore = 2;
+            else if (overallAvg >= 60) difficultyScore = 3;
+            else if (overallAvg >= 50) difficultyScore = 4;
+            else if (overallAvg >= 40) difficultyScore = 5;
+            else if (overallAvg >= 30) difficultyScore = 6;
+            else if (overallAvg >= 25) difficultyScore = 7;
+            else if (overallAvg >= 20) difficultyScore = 8;
+            else if (overallAvg >= 15) difficultyScore = 9;
+
+            let remark = "Toughest";
+            if (difficultyScore <= 2) remark = "Very Easy";
+            else if (difficultyScore <= 3) remark = "Easy";
+            else if (difficultyScore <= 5) remark = "Moderate";
+            else if (difficultyScore <= 7) remark = "Above Average";
+            else if (difficultyScore <= 8) remark = "Tough";
+
+            examAnalysis.push({
+                name: examStat.name,
+                chemPercent,
+                phyPercent,
+                bioPercent,
+                mathPercent,
+                difficultyScore,
+                remark
+            });
+        }
+    });
+
+    // Sort by exam order
+    examAnalysis.sort((a, b) => {
+        const indexA = examOrder.indexOf(a.name);
+        const indexB = examOrder.indexOf(b.name);
+
+        if (indexA !== -1 && indexB !== -1) {
+            return indexA - indexB;
+        }
+        if (indexA !== -1 && indexB === -1) return -1;
+        if (indexA === -1 && indexB !== -1) return 1;
+        return a.name.localeCompare(b.name);
+    });
+
+    return examAnalysis;
+}
+
+// ENHANCED STUDENT CATEGORIZATION WITH IMPROVED UI/UX
+function toggleStudentCategorization() {
+    const detailsDiv = document.getElementById('studentCategorization');
+    const isVisible = detailsDiv && detailsDiv.style.display === 'block';
+
+    hideAllDetailPanels();
+
+    if (!isVisible) {
+        detailsDiv.style.display = 'block';
+        showLoadingAnimation('studentCategorization');
+        setTimeout(() => {
+            populateStudentCategorization();
+        }, 500);
+    }
+}
+
+function populateStudentCategorization() {
+    const categorization = performStudentCategorization();
+    const container = document.querySelector('#studentCategorization .categorization-content');
+
+    if (!container) return;
+
+    // Enhanced UI with stats and animations
+    container.innerHTML = `
+        <div class="category-stats">
+            <div class="stats-summary">
+                <div class="stat-box high-performers">
+                    <div class="stat-number">${categorization.highPerformers.length}</div>
+                    <div class="stat-label">High Performers</div>
+                    <div class="stat-icon">🏆</div>
+                </div>
+                <div class="stat-box at-risk">
+                    <div class="stat-number">${categorization.atRiskStudents.length}</div>
+                    <div class="stat-label">At Risk</div>
+                    <div class="stat-icon">⚠️</div>
+                </div>
+                <div class="stat-box improving">
+                    <div class="stat-number">${categorization.improvingStudents.length}</div>
+                    <div class="stat-label">Improving</div>
+                    <div class="stat-icon">📈</div>
+                </div>
+                <div class="stat-box declining">
+                    <div class="stat-number">${categorization.decliningStudents.length}</div>
+                    <div class="stat-label">Declining</div>
+                    <div class="stat-icon">📉</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <h4 class="category-title">🏆 High Performers (${categorization.highPerformers.length})</h4>
+            <div class="category-list">
+                ${categorization.highPerformers.length === 0 ? 
+                    '<div class="empty-state">No high performers found. Target: ≥70% overall average</div>' :
+                    categorization.highPerformers.map((student, index) => 
+                        `<div class="category-item high-performer" style="animation-delay: ${index * 0.1}s;">
+                            <div class="student-info">
+                                <strong class="student-name">${student.name}</strong>
+                                <span class="student-roll">(${student.roll})</span>
+                            </div>
+                            <div class="performance-badge high">${student.score.toFixed(1)}%</div>
+                            <span class="category-reason">${student.reason}</span>
+                        </div>`
+                    ).join('')}
+            </div>
+        </div>
+
+        <div class="category-section">
+            <h4 class="category-title">⚠️ Students at Risk (${categorization.atRiskStudents.length})</h4>
+            <div class="category-list">
+                ${categorization.atRiskStudents.length === 0 ? 
+                    '<div class="empty-state">No students at risk. Keep monitoring!</div>' :
+                    categorization.atRiskStudents.map((student, index) => 
+                        `<div class="category-item at-risk" style="animation-delay: ${index * 0.1}s;">
+                            <div class="student-info">
+                                <strong class="student-name">${student.name}</strong>
+                                <span class="student-roll">(${student.roll})</span>
+                            </div>
+                            <div class="performance-badge risk">${student.score.toFixed(1)}%</div>
+                            <span class="category-reason">${student.reason}</span>
+                        </div>`
+                    ).join('')}
+            </div>
+        </div>
+
+        <div class="category-section">
+            <h4 class="category-title">📈 Improving Students (${categorization.improvingStudents.length})</h4>
+            <div class="category-list">
+                ${categorization.improvingStudents.length === 0 ? 
+                    '<div class="empty-state">No significant improvements detected</div>' :
+                    categorization.improvingStudents.map((student, index) => 
+                        `<div class="category-item improving" style="animation-delay: ${index * 0.1}s;">
+                            <div class="student-info">
+                                <strong class="student-name">${student.name}</strong>
+                                <span class="student-roll">(${student.roll})</span>
+                            </div>
+                            <div class="performance-badge improving">↗️ +${student.improvement?.toFixed(1) || 'N/A'}%</div>
+                            <span class="category-reason">${student.reason}</span>
+                        </div>`
+                    ).join('')}
+            </div>
+        </div>
+
+        <div class="category-section">
+            <h4 class="category-title">📉 Declining Students (${categorization.decliningStudents.length})</h4>
+            <div class="category-list">
+                ${categorization.decliningStudents.length === 0 ? 
+                    '<div class="empty-state">No significant declines detected</div>' :
+                    categorization.decliningStudents.map((student, index) => 
+                        `<div class="category-item declining" style="animation-delay: ${index * 0.1}s;">
+                            <div class="student-info">
+                                <strong class="student-name">${student.name}</strong>
+                                <span class="student-roll">(${student.roll})</span>
+                            </div>
+                            <div class="performance-badge declining">↘️ -${student.decline?.toFixed(1) || 'N/A'}%</div>
+                            <span class="category-reason">${student.reason}</span>
+                        </div>`
+                    ).join('')}
+            </div>
+        </div>
+    `;
+}
+
+// ENHANCED PERFORMANCE ALERTS WITH IMPROVED UI/UX
+function togglePerformanceAlerts() {
+    const detailsDiv = document.getElementById('performanceAlerts');
+    const isVisible = detailsDiv && detailsDiv.style.display === 'block';
+
+    hideAllDetailPanels();
+
+    if (!isVisible) {
+        detailsDiv.style.display = 'block';
+        showLoadingAnimation('performanceAlerts');
+        setTimeout(() => {
+            populatePerformanceAlerts();
+        }, 500);
+    }
+}
+
+function populatePerformanceAlerts() {
+    const alerts = generatePerformanceAlerts();
+    const container = document.querySelector('#performanceAlerts .alerts-content');
+    const totalAlerts = Object.values(alerts).flat().length;
+
+    if (!container) return;
+
+    // Update header with enhanced styling
+    const header = document.querySelector('#performanceAlerts .panel-header h3');
+    if (header) {
+        header.innerHTML = `🚨 Performance Alert System <span class="alert-count">(${totalAlerts} alerts)</span>`;
+    }
+
+    container.innerHTML = `
+        <div class="alerts-summary">
+            <div class="alert-stats">
+                <div class="alert-stat high-alerts">
+                    <div class="alert-count-number">${alerts.lowPerformance.length + alerts.suddenDrop.length}</div>
+                    <div class="alert-count-label">Critical</div>
+                </div>
+                <div class="alert-stat medium-alerts">
+                    <div class="alert-count-number">${alerts.missingExam.length}</div>
+                    <div class="alert-count-label">Medium</div>
+                </div>
+                <div class="alert-stat positive-alerts">
+                    <div class="alert-count-number">${alerts.improvementRecognition.length}</div>
+                    <div class="alert-count-label">Positive</div>
+                </div>
+            </div>
+        </div>
+
+        ${Object.entries(alerts).map(([type, alertList]) => 
+            alertList.length > 0 ? `
+            <div class="alert-section">
+                <h4 class="alert-type-title">${getAlertTypeTitle(type)} <span class="count-badge">${alertList.length}</span></h4>
+                <div class="alert-list">
+                    ${alertList.map((alert, index) => 
+                        `<div class="alert-item ${alert.severity.toLowerCase()}" style="animation-delay: ${index * 0.1}s;">
+                            <div class="alert-header">
+                                <span class="severity-badge ${alert.severity.toLowerCase()}">${alert.severity}</span>
+                                <div class="alert-priority ${alert.severity.toLowerCase()}">
+                                    ${getSeverityIcon(alert.severity)}
+                                </div>
+                            </div>
+                            <div class="alert-message">
+                                ${alert.message}
+                            </div>
+                            <div class="alert-action">
+                                <strong>Action Required:</strong> ${alert.action}
+                            </div>
+                            <div class="alert-timestamp">
+                                Generated: ${new Date().toLocaleString()}
+                            </div>
+                        </div>`
+                    ).join('')}
+                </div>
+            </div>` : ''
+        ).join('')}
+
+        ${totalAlerts === 0 ? 
+            '<div class="no-alerts"><div class="success-icon">✅</div><h3>All Clear!</h3><p>No performance alerts detected. Students are performing well.</p></div>' : ''}
+    `;
+}
+
+function getSeverityIcon(severity) {
+    switch (severity) {
+        case 'HIGH': return '🚨';
+        case 'MEDIUM': return '⚠️';
+        case 'POSITIVE': return '🎉';
+        default: return 'ℹ️';
+    }
+}
+
+function showLoadingAnimation(containerId) {
+    const container = document.querySelector(`#${containerId} .${containerId === 'studentCategorization' ? 'categorization-content' : 'alerts-content'}`);
+    if (container) {
+        container.innerHTML = `
+            <div class="loading-animation">
+                <div class="spinner"></div>
+                <p>Analyzing student data...</p>
+            </div>
+        `;
+    }
+}
+
+// Enhanced calculation functions (keeping original logic but adding more detailed metrics)
+function performStudentCategorization() {
+    const categorization = {
+        highPerformers: [],
+        atRiskStudents: [],
+        improvingStudents: [],
+        decliningStudents: []
+    };
+
+    students.forEach(student => {
+        const overallPercentage = parseFloat(student.cumPercent) || 0;
+        const validExams = student.exams.filter(ex => ex.maxTotal > 0);
+
+        // Calculate improvement rate
+        let improvementRate = 0;
+        if (validExams.length >= 2) {
+            const midPoint = Math.floor(validExams.length / 2);
+            const firstHalf = validExams.slice(0, midPoint);
+            const secondHalf = validExams.slice(midPoint);
+
+            const firstHalfAvg = firstHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / firstHalf.length;
+            const secondHalfAvg = secondHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / secondHalf.length;
+
+            improvementRate = secondHalfAvg - firstHalfAvg;
+        }
+
+        // High Performers (>= 70%)
+        if (overallPercentage >= 70) {
+            categorization.highPerformers.push({
+                ...student,
+                score: overallPercentage,
+                reason: `Excellent overall performance: ${overallPercentage.toFixed(1)}%`
+            });
+        }
+
+        // At-risk students (< 35% or declining > 15%)
+        if (overallPercentage < 35 || improvementRate < -15) {
+            categorization.atRiskStudents.push({
+                ...student,
+                score: overallPercentage,
+                reason: overallPercentage < 35 ? 
+                    `Critical performance level: ${overallPercentage.toFixed(1)}%` : 
+                    `Significant performance decline: ${Math.abs(improvementRate).toFixed(1)}% drop`
+            });
+        }
+
+        // Improving students (> 10% improvement)
+        if (improvementRate > 10) {
+            categorization.improvingStudents.push({
+                ...student,
+                improvement: improvementRate,
+                reason: `Strong upward trend: ${improvementRate.toFixed(1)}% improvement`
+            });
+        }
+
+        // Declining students (< -10% but not at-risk)
+        if (improvementRate < -10 && overallPercentage >= 35) {
+            categorization.decliningStudents.push({
+                ...student,
+                decline: Math.abs(improvementRate),
+                reason: `Performance declining: ${Math.abs(improvementRate).toFixed(1)}% drop`
+            });
+        }
+    });
+
+    return categorization;
+}
+
+function generatePerformanceAlerts() {
+    const alerts = {
+        lowPerformance: [],
+        suddenDrop: [],
+        improvementRecognition: [],
+        missingExam: []
+    };
+
+    students.forEach(student => {
+        const overallPercentage = parseFloat(student.cumPercent) || 0;
+        const validExams = student.exams.filter(ex => ex.maxTotal > 0);
+        const attemptedExams = validExams.map(ex => ex.exam);
+        const missedExams = examOrder.filter(exam => !attemptedExams.includes(exam));
+
+        // Calculate recent decline
+        let recentDecline = 0;
+        if (validExams.length >= 2) {
+            const midPoint = Math.floor(validExams.length / 2);
+            const firstHalf = validExams.slice(0, midPoint);
+            const secondHalf = validExams.slice(midPoint);
+
+            const firstHalfAvg = firstHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / firstHalf.length;
+            const secondHalfAvg = secondHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / secondHalf.length;
+
+            recentDecline = firstHalfAvg - secondHalfAvg;
+        }
+
+        // Low performance warnings
+        if (overallPercentage < 40 && overallPercentage > 0) {
+            alerts.lowPerformance.push({
+                student,
+                severity: overallPercentage < 25 ? 'HIGH' : 'MEDIUM',
+                message: `${student.name} (${student.roll}) has critically low performance at ${overallPercentage.toFixed(1)}%`,
+                action: overallPercentage < 25 ? 
+                    'Immediate intervention required - schedule parent meeting and create recovery plan' :
+                    'Monitor closely and provide additional support resources'
+            });
+        }
+
+        // Sudden drop alerts
+        if (recentDecline > 20) {
+            alerts.suddenDrop.push({
+                student,
+                severity: 'HIGH',
+                message: `${student.name} (${student.roll}) has experienced a significant performance drop of ${recentDecline.toFixed(1)}%`,
+                action: 'Investigate underlying causes, check attendance, and provide counseling support'
+            });
+        }
+
+        // Improvement recognition
+        const improvementRate = -recentDecline; // Flip the sign
+        if (improvementRate > 15) {
+            alerts.improvementRecognition.push({
+                student,
+                severity: 'POSITIVE',
+                message: `${student.name} (${student.roll}) has shown excellent improvement of ${improvementRate.toFixed(1)}%`,
+                action: 'Acknowledge achievement publicly and maintain current support strategies'
+            });
+        }
+
+        // Missing exam alerts
+        if (missedExams.length >= 2) {
+            alerts.missingExam.push({
+                student,
+                severity: 'MEDIUM',
+                message: `${student.name} (${student.roll}) has missed ${missedExams.length} exams: ${missedExams.join(', ')}`,
+                action: 'Contact student/parents immediately and arrange makeup exams if possible'
+            });
+        }
+    });
+
+    return alerts;
+}
+
+function getAlertTypeTitle(type) {
+    const titles = {
+        lowPerformance: '📉 Critical Performance Warnings',
+        suddenDrop: '⬇️ Sudden Performance Drop',
+        improvementRecognition: '🎉 Outstanding Improvements',
+        missingExam: '❌ Attendance Issues'
+    };
+    return titles[type] || type;
+}
+
+function hideAllDetailPanels() {
+    const panels = [
+        'subjectDifficultyDetails', 
+        'examDetails', 
+        'studentDetails', 
+        'examDifficultyDetails',
+        'studentCategorization',
+        'performanceAlerts'
+    ];
+
+    panels.forEach(panelId => {
+        const panel = document.getElementById(panelId);
+        if (panel) panel.style.display = 'none';
+    });
+}
+
+// Initialize after DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        // Re-populate last3 with corrected logic
+        if (typeof populateStats === 'function') {
+            populateStats();
+        }
+    }, 100);
+});
 
 
+// ====================================
+// ICON MANAGEMENT ENHANCEMENTS
+// Handles theme toggle and other icons
+// ====================================
 
+// Enhanced theme toggle with proper icon switching
+document.addEventListener('DOMContentLoaded', function() {
+    setupIconManagement();
+});
 
+function setupIconManagement() {
+    // Theme toggle icon management
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-theme');
+            const icon = this.querySelector('i');
+            const isDark = document.body.classList.contains('dark-theme');
 
+            if (isDark) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+        });
 
+        // Load saved theme and set correct icon
+        const savedTheme = localStorage.getItem('theme');
+        const icon = themeToggle.querySelector('i');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            if (icon) icon.className = 'fas fa-sun';
+        } else {
+            if (icon) icon.className = 'fas fa-moon';
+        }
+    }
 
+    // Subject toggle arrows
+    setupSubjectToggles();
 
+    // Button hover effects
+    setupButtonEffects();
+}
 
+function setupSubjectToggles() {
+    const subjectHeaders = document.querySelectorAll('.subject-header');
+    subjectHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const arrow = this.querySelector('.toggle-arrow');
+            if (arrow) {
+                const isExpanded = this.parentElement.querySelector('.subject-content').style.display !== 'none';
+                if (isExpanded) {
+                    arrow.className = 'fas fa-chevron-right toggle-arrow';
+                } else {
+                    arrow.className = 'fas fa-chevron-down toggle-arrow';
+                }
+            }
+        });
+    });
+}
 
+function setupButtonEffects() {
+    // Add subtle animations to buttons with icons
+    const buttonsWithIcons = document.querySelectorAll('button i, .btn i');
+    buttonsWithIcons.forEach(icon => {
+        const button = icon.closest('button');
+        if (button) {
+            button.addEventListener('mouseenter', function() {
+                icon.style.transform = 'scale(1.1)';
+                icon.style.transition = 'transform 0.2s ease';
+            });
 
+            button.addEventListener('mouseleave', function() {
+                icon.style.transform = 'scale(1)';
+            });
+        }
+    });
 
+    // Special animation for refresh-type buttons
+    const refreshButtons = document.querySelectorAll('[id*="refresh"], [class*="refresh"]');
+    refreshButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (icon && icon.className.includes('sync')) {
+                icon.style.animation = 'spin 1s linear infinite';
+                setTimeout(() => {
+                    icon.style.animation = '';
+                }, 1000);
+            }
+        });
+    });
+}
 
+// Add CSS animations if not already present
+function addIconAnimations() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
+        .btn i, button i {
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .subject-header:hover .toggle-arrow {
+            transform: scale(1.1);
+        }
+
+        button:hover i {
+            transform: scale(1.05);
+        }
+
+        .btn:active i, button:active i {
+            transform: scale(0.95);
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Initialize icon animations
+setTimeout(addIconAnimations, 100);
+
+console.log('✨ Icon management system loaded!');
