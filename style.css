@@ -1716,3 +1716,1016 @@ tr:hover {
     format('woff2');
 }
 
+
+
+/* ===============================================================================
+   COMPLETE ENHANCED ADMIN PORTAL WITH PROPER DARK THEME SWITCHING
+   =============================================================================== */
+
+/* Enhanced Action Button Styling - Theme Compatible */
+.btn.action-btn {
+    background: linear-gradient(135deg, var(--color-teal-500), var(--color-teal-600));
+    color: var(--color-white);
+    border: 2px solid var(--color-teal-600);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-transform: none;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+}
+
+.btn.action-btn:hover {
+    background: linear-gradient(135deg, var(--color-teal-400), var(--color-teal-500));
+    border-color: var(--color-teal-500);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn.action-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn.action-btn .btn-icon {
+    margin-right: 8px;
+    font-size: 16px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.btn.action-btn:hover .btn-icon {
+    transform: scale(1.1);
+}
+
+/* Button shine effect */
+.btn.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn.action-btn:hover::before {
+    left: 100%;
+}
+
+.btn.action-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 60, 100, 0.3);
+}
+
+/* Loading Animation */
+.loading-animation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    min-height: 200px;
+}
+
+.loading-animation .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-gray-300);
+    border-top: 3px solid var(--color-teal-500);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+.loading-animation p {
+    color: var(--color-slate-500);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===============================================================================
+   STUDENT CATEGORIZATION - LIGHT THEME (DEFAULT)
+   =============================================================================== */
+#studentCategorization .categorization-content {
+    padding: 20px;
+    background: var(--color-cream-50);
+}
+
+.category-stats {
+    margin-bottom: 32px;
+}
+
+.stats-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-box {
+    background: linear-gradient(135deg, var(--color-teal-500), var(--color-teal-600));
+    border: 1px solid var(--color-teal-600);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.stat-box.high-performers {
+    background: linear-gradient(135deg, #198754, #20c997);
+    border-color: #198754;
+}
+
+.stat-box.at-risk {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    border-color: #dc3545;
+}
+
+.stat-box.improving {
+    background: linear-gradient(135deg, var(--color-teal-500), var(--color-teal-400));
+    border-color: var(--color-teal-500);
+}
+
+.stat-box.declining {
+    background: linear-gradient(135deg, #fd7e14, #ffc107);
+    border-color: #fd7e14;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-white) !important;
+    margin-bottom: 8px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stat-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 24px;
+    opacity: 0.3;
+}
+
+#studentCategorization .category-section {
+    margin-bottom: 28px;
+    border: 1px solid var(--color-gray-300);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#studentCategorization .category-title {
+    background: linear-gradient(135deg, var(--color-teal-500), var(--color-teal-600));
+    color: var(--color-white);
+    margin: 0;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#studentCategorization .category-list {
+    padding: 16px;
+    background: var(--color-cream-50);
+}
+
+/* REDUCED SPACING FOR STUDENT ITEMS */
+#studentCategorization .category-item {
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    border: 1px solid var(--color-gray-300);
+    background: var(--color-white);
+    position: relative;
+    transition: all 0.3s ease;
+    animation: slideInUp 0.5s ease-out;
+    animation-fill-mode: both;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#studentCategorization .category-item:hover {
+    transform: translateX(4px) translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#studentCategorization .category-item.high-performer {
+    border-left: 4px solid #198754;
+    background: linear-gradient(135deg, var(--color-white), rgba(25, 135, 84, 0.03));
+}
+
+#studentCategorization .category-item.at-risk {
+    border-left: 4px solid #dc3545;
+    background: linear-gradient(135deg, var(--color-white), rgba(220, 53, 69, 0.03));
+}
+
+#studentCategorization .category-item.improving {
+    border-left: 4px solid var(--color-teal-500);
+    background: linear-gradient(135deg, var(--color-white), rgba(40, 60, 100, 0.03));
+}
+
+#studentCategorization .category-item.declining {
+    border-left: 4px solid #fd7e14;
+    background: linear-gradient(135deg, var(--color-white), rgba(253, 126, 20, 0.03));
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+
+.student-name {
+    font-weight: 600;
+    color: var(--color-black);
+    font-size: 13px;
+}
+
+.student-roll {
+    font-size: 11px;
+    color: var(--color-slate-500);
+    font-weight: 500;
+}
+
+.performance-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 45px;
+    margin-left: auto;
+}
+
+.performance-badge.high {
+    background: rgba(25, 135, 84, 0.1);
+    color: #198754;
+    border: 1px solid rgba(25, 135, 84, 0.2);
+}
+
+.performance-badge.risk {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.performance-badge.improving {
+    background: rgba(40, 60, 100, 0.1);
+    color: var(--color-teal-600);
+    border: 1px solid rgba(40, 60, 100, 0.2);
+}
+
+.performance-badge.declining {
+    background: rgba(253, 126, 20, 0.1);
+    color: #fd7e14;
+    border: 1px solid rgba(253, 126, 20, 0.2);
+}
+
+#studentCategorization .category-reason {
+    font-size: 11px;
+    color: var(--color-slate-500);
+    font-style: italic;
+    margin-top: 2px;
+    line-height: 1.3;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 24px;
+    color: var(--color-slate-500);
+    font-style: italic;
+}
+
+/* ===============================================================================
+   PERFORMANCE ALERTS - LIGHT THEME (DEFAULT)
+   =============================================================================== */
+#performanceAlerts .alerts-content {
+    padding: 20px;
+    background: var(--color-cream-50);
+}
+
+.alert-count {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.alerts-summary {
+    margin-bottom: 32px;
+}
+
+.alert-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.alert-stat {
+    background: linear-gradient(135deg, var(--color-brown-600), rgba(15, 35, 65, 0.9));
+    border: 1px solid var(--color-brown-600);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.alert-stat:hover {
+    transform: scale(1.05);
+}
+
+.alert-stat.high-alerts {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    border-color: #dc3545;
+}
+
+.alert-stat.medium-alerts {
+    background: linear-gradient(135deg, #fd7e14, #ffc107);
+    border-color: #fd7e14;
+}
+
+.alert-stat.positive-alerts {
+    background: linear-gradient(135deg, #198754, #20c997);
+    border-color: #198754;
+}
+
+.alert-count-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-white) !important;
+    margin-bottom: 4px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.alert-count-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#performanceAlerts .alert-section {
+    margin-bottom: 28px;
+    border: 1px solid var(--color-gray-300);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#performanceAlerts .alert-type-title {
+    background: linear-gradient(135deg, var(--color-brown-600), rgba(15, 35, 65, 0.9));
+    color: var(--color-white);
+    margin: 0;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.count-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#performanceAlerts .alert-list {
+    padding: 16px;
+    background: var(--color-cream-50);
+}
+
+#performanceAlerts .alert-item {
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--color-gray-300);
+    background: var(--color-white);
+    position: relative;
+    transition: all 0.3s ease;
+    animation: slideInUp 0.5s ease-out;
+    animation-fill-mode: both;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#performanceAlerts .alert-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#performanceAlerts .alert-item.high {
+    border-left: 4px solid #dc3545;
+    background: linear-gradient(135deg, var(--color-white), rgba(220, 53, 69, 0.03));
+}
+
+#performanceAlerts .alert-item.medium {
+    border-left: 4px solid #fd7e14;
+    background: linear-gradient(135deg, var(--color-white), rgba(253, 126, 20, 0.03));
+}
+
+#performanceAlerts .alert-item.positive {
+    border-left: 4px solid #198754;
+    background: linear-gradient(135deg, var(--color-white), rgba(25, 135, 84, 0.03));
+}
+
+.alert-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#performanceAlerts .severity-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-white);
+}
+
+#performanceAlerts .severity-badge.high {
+    background: #dc3545;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.3);
+}
+
+#performanceAlerts .severity-badge.medium {
+    background: #fd7e14;
+    box-shadow: 0 0 8px rgba(253, 126, 20, 0.3);
+}
+
+#performanceAlerts .severity-badge.positive {
+    background: #198754;
+    box-shadow: 0 0 8px rgba(25, 135, 84, 0.3);
+}
+
+.alert-priority {
+    font-size: 20px;
+}
+
+#performanceAlerts .alert-message {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--color-black);
+    font-size: 14px;
+}
+
+#performanceAlerts .alert-action {
+    font-size: 12px;
+    color: var(--color-slate-500);
+    padding: 10px;
+    background: rgba(40, 60, 100, 0.03);
+    border-left: 3px solid var(--color-teal-500);
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 6px;
+}
+
+.alert-timestamp {
+    font-size: 10px;
+    color: var(--color-slate-500);
+    text-align: right;
+    opacity: 0.7;
+}
+
+.no-alerts {
+    text-align: center;
+    padding: 32px;
+    background: linear-gradient(135deg, var(--color-white), rgba(25, 135, 84, 0.05));
+    border-radius: 12px;
+    border: 1px solid rgba(25, 135, 84, 0.2);
+}
+
+.success-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.no-alerts h3 {
+    color: #198754;
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.no-alerts p {
+    color: var(--color-slate-500);
+    font-size: 14px;
+}
+
+/* WHITE COLOR OVERRIDE FOR ALL STATS */
+#stats .metric-value,
+.stats-item .value,
+.summary-stats .stat-value,
+#stats .total-exams,
+#stats .total-students,
+#stats .average-score {
+    color: var(--color-white) !important;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ===============================================================================
+   DARK THEME OVERRIDES - PROPER DARK COLORS FOR LAST 2 BUTTONS
+   =============================================================================== */
+
+/* Student Categorization - Dark Theme */
+[data-theme="dark"] #studentCategorization .categorization-content {
+    background: var(--color-charcoal-800) !important;
+}
+
+[data-theme="dark"] #studentCategorization .category-section {
+    background: var(--color-charcoal-700) !important;
+    border: 1px solid var(--color-charcoal-600) !important;
+}
+
+[data-theme="dark"] #studentCategorization .category-list {
+    background: var(--color-charcoal-800) !important;
+}
+
+[data-theme="dark"] #studentCategorization .category-item {
+    background: var(--color-charcoal-700) !important;
+    border: 1px solid var(--color-charcoal-600) !important;
+}
+
+[data-theme="dark"] #studentCategorization .category-item:hover {
+    background: var(--color-charcoal-600) !important;
+    border-color: var(--color-slate-500) !important;
+}
+
+[data-theme="dark"] #studentCategorization .category-item.high-performer {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(25, 135, 84, 0.15)) !important;
+    border-left: 4px solid #198754;
+}
+
+[data-theme="dark"] #studentCategorization .category-item.at-risk {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(220, 53, 69, 0.15)) !important;
+    border-left: 4px solid #dc3545;
+}
+
+[data-theme="dark"] #studentCategorization .category-item.improving {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(40, 60, 100, 0.15)) !important;
+    border-left: 4px solid var(--color-teal-500);
+}
+
+[data-theme="dark"] #studentCategorization .category-item.declining {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(253, 126, 20, 0.15)) !important;
+    border-left: 4px solid #fd7e14;
+}
+
+[data-theme="dark"] .student-name {
+    color: var(--color-white) !important;
+}
+
+[data-theme="dark"] .student-roll,
+[data-theme="dark"] #studentCategorization .category-reason,
+[data-theme="dark"] .empty-state {
+    color: var(--color-gray-400) !important;
+}
+
+/* Performance Alerts - Dark Theme */
+[data-theme="dark"] #performanceAlerts .alerts-content {
+    background: var(--color-charcoal-800) !important;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-section {
+    background: var(--color-charcoal-700) !important;
+    border: 1px solid var(--color-charcoal-600) !important;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-list {
+    background: var(--color-charcoal-800) !important;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-item {
+    background: var(--color-charcoal-700) !important;
+    border: 1px solid var(--color-charcoal-600) !important;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-item:hover {
+    background: var(--color-charcoal-600) !important;
+    border-color: var(--color-slate-500) !important;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-item.high {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(220, 53, 69, 0.15)) !important;
+    border-left: 4px solid #dc3545;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-item.medium {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(253, 126, 20, 0.15)) !important;
+    border-left: 4px solid #fd7e14;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-item.positive {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(25, 135, 84, 0.15)) !important;
+    border-left: 4px solid #198754;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-message {
+    color: var(--color-white) !important;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-action,
+[data-theme="dark"] .alert-timestamp {
+    color: var(--color-gray-400) !important;
+}
+
+[data-theme="dark"] #performanceAlerts .alert-action {
+    background: rgba(40, 60, 100, 0.1) !important;
+    border-left: 3px solid var(--color-teal-500);
+}
+
+[data-theme="dark"] .no-alerts {
+    background: linear-gradient(135deg, var(--color-charcoal-700), rgba(25, 135, 84, 0.1)) !important;
+    border: 1px solid rgba(25, 135, 84, 0.3) !important;
+}
+
+[data-theme="dark"] .no-alerts p {
+    color: var(--color-gray-400) !important;
+}
+
+/* Loading animation dark theme */
+[data-theme="dark"] .loading-animation .spinner {
+    border-color: var(--color-charcoal-600) !important;
+    border-top-color: var(--color-teal-400) !important;
+}
+
+[data-theme="dark"] .loading-animation p {
+    color: var(--color-gray-400) !important;
+}
+
+/* Animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .btn.action-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+
+    .btn.action-btn .btn-icon {
+        margin-right: 6px;
+        font-size: 14px;
+    }
+
+    #studentCategorization .categorization-content,
+    #performanceAlerts .alerts-content {
+        padding: 16px;
+    }
+
+    .stats-summary,
+    .alert-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .stat-box,
+    .alert-stat {
+        padding: 16px;
+    }
+
+    .stat-number,
+    .alert-count-number {
+        font-size: 24px;
+    }
+
+    #studentCategorization .category-item,
+    #performanceAlerts .alert-item {
+        padding: 8px 10px;
+    }
+
+    .student-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .performance-badge {
+        margin-left: 0;
+        font-size: 10px;
+        padding: 1px 6px;
+        min-width: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn.action-btn .btn-icon {
+        display: none;
+    }
+
+    .btn.action-btn {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+
+    .stats-summary,
+    .alert-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .alert-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
+
+
+
+/* FIXED DARK THEME - Dark backgrounds with preserved colored boxes */
+[data-color-scheme="dark"] #studentCategorization .categorization-content {
+  background: var(--color-charcoal-800) !important;
+  border: 1px solid rgba(var(--color-gray-400-rgb), 0.3) !important;
+}
+
+[data-color-scheme="dark"] #studentCategorization .category-section {
+  background: var(--color-charcoal-700) !important;
+  border: 1px solid rgba(var(--color-gray-400-rgb), 0.2) !important;
+}
+
+[data-color-scheme="dark"] #performanceAlerts .alerts-content {
+  background: var(--color-charcoal-800) !important;
+  border: 1px solid rgba(var(--color-gray-400-rgb), 0.3) !important;
+}
+
+[data-color-scheme="dark"] #performanceAlerts .alert-section {
+  background: var(--color-charcoal-700) !important;
+  border: 1px solid rgba(var(--color-gray-400-rgb), 0.2) !important;
+}
+
+/* ONLY THE STAT BOXES KEEP LIGHT THEME COLORS - backgrounds remain dark */
+[data-color-scheme="dark"] .stat-box.high-performers,
+[data-color-scheme="dark"] .stat-box[data-category="high-performers"] {
+  background: linear-gradient(135deg, #198754, #20c997) !important;
+  border-color: #198754 !important;
+  color: var(--color-white) !important;
+}
+
+[data-color-scheme="dark"] .stat-box.at-risk,
+[data-color-scheme="dark"] .stat-box[data-category="at-risk"] {
+  background: linear-gradient(135deg, #dc3545, #fd7e14) !important;
+  border-color: #dc3545 !important;
+  color: var(--color-white) !important;
+}
+
+[data-color-scheme="dark"] .stat-box.improving,
+[data-color-scheme="dark"] .stat-box[data-category="improving"] {
+  background: linear-gradient(135deg, var(--color-teal-500), var(--color-teal-400)) !important;
+  border-color: var(--color-teal-500) !important;
+  color: var(--color-white) !important;
+}
+
+[data-color-scheme="dark"] .stat-box.declining,
+[data-color-scheme="dark"] .stat-box[data-category="declining"] {
+  background: linear-gradient(135deg, #fd7e14, #ffc107) !important;
+  border-color: #fd7e14 !important;
+  color: var(--color-white) !important;
+}
+
+[data-color-scheme="dark"] .alert-stat.high-alerts,
+[data-color-scheme="dark"] .alert-stat[data-type="high"] {
+  background: linear-gradient(135deg, #dc3545, #fd7e14) !important;
+  border-color: #dc3545 !important;
+  color: var(--color-white) !important;
+}
+
+[data-color-scheme="dark"] .alert-stat.medium-alerts,
+[data-color-scheme="dark"] .alert-stat[data-type="medium"] {
+  background: linear-gradient(135deg, #fd7e14, #ffc107) !important;
+  border-color: #fd7e14 !important;
+  color: var(--color-white) !important;
+}
+
+[data-color-scheme="dark"] .alert-stat.positive-alerts,
+[data-color-scheme="dark"] .alert-stat[data-type="positive"] {
+  background: linear-gradient(135deg, #198754, #20c997) !important;
+  border-color: #198754 !important;
+  color: var(--color-white) !important;
+}
+
+/* Keep dark backgrounds for other elements */
+[data-color-scheme="dark"] .category-stats,
+[data-color-scheme="dark"] .alert-stats {
+  background: var(--color-charcoal-700) !important;
+}
+
+[data-color-scheme="dark"] .category-list,
+[data-color-scheme="dark"] .alert-list {
+  background: var(--color-charcoal-800) !important;
+}
+
+[data-color-scheme="dark"] .category-item,
+[data-color-scheme="dark"] .alert-item {
+  background: var(--color-charcoal-700) !important;
+  border: 1px solid rgba(var(--color-gray-400-rgb), 0.2) !important;
+  color: var(--color-text) !important;
+}
+
+[data-color-scheme="dark"] .category-item:hover,
+[data-color-scheme="dark"] .alert-item:hover {
+  background: rgba(var(--color-gray-400-rgb), 0.1) !important;
+  border-color: var(--color-teal-300) !important;
+}
+
+/* Text colors for dark theme */
+[data-color-scheme="dark"] .student-name,
+[data-color-scheme="dark"] .alert-message {
+  color: var(--color-text) !important;
+}
+
+[data-color-scheme="dark"] .student-roll,
+[data-color-scheme="dark"] .category-reason,
+[data-color-scheme="dark"] .alert-timestamp {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Ensure stat box text is always white/visible */
+[data-color-scheme="dark"] .stat-number,
+[data-color-scheme="dark"] .alert-count-number {
+  color: var(--color-white) !important;
+  font-weight: bold !important;
+}
+
+[data-color-scheme="dark"] .stat-label,
+[data-color-scheme="dark"] .alert-count-label {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+
+/* ========================================================================
+   LIGHT THEME RANKLIST VISIBILITY FIX - ADDED BY USER REQUEST
+   ======================================================================== */
+
+/* Fix for Overall Ranklist and Last 3 Ranklist visibility in light theme */
+[data-color-scheme="light"] #rankTable,
+[data-color-scheme="light"] #last3Table {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text) !important;
+}
+
+[data-color-scheme="light"] #rankTable tbody tr,
+[data-color-scheme="light"] #last3Table tbody tr {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+}
+
+[data-color-scheme="light"] #rankTable tbody tr:hover,
+[data-color-scheme="light"] #last3Table tbody tr:hover {
+    background-color: var(--color-secondary-hover) !important;
+}
+
+[data-color-scheme="light"] #rankTable th,
+[data-color-scheme="light"] #last3Table th {
+    background-color: var(--color-secondary) !important;
+    color: var(--color-text) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+}
+
+[data-color-scheme="light"] #rankTable td,
+[data-color-scheme="light"] #last3Table td {
+    color: var(--color-text) !important;
+    background-color: transparent !important;
+}
+
+/* Fix for table section containers in light theme */
+[data-color-scheme="light"] .table-section {
+    background-color: var(--color-surface) !important;
+    border: 1px solid var(--color-card-border) !important;
+}
+
+/* Fix for table containers */
+[data-color-scheme="light"] .table-container {
+    background-color: var(--color-surface) !important;
+}
+
+/* Ensure proper text visibility */
+[data-color-scheme="light"] .name {
+    color: var(--color-primary) !important;
+}
+
+[data-color-scheme="light"] .name:hover {
+    color: var(--color-primary-hover) !important;
+}
+
+/* Fix for top performers styling */
+[data-color-scheme="light"] .top-performer {
+    background-color: var(--color-secondary-hover) !important;
+    color: var(--color-text) !important;
+}
+
+/* Additional fixes for overall ranking and last 3 ranking tabs */
+[data-color-scheme="light"] #overallRank .table-section,
+[data-color-scheme="light"] #last3Rank .table-section {
+    background-color: var(--color-surface) !important;
+    border-color: var(--color-card-border) !important;
+}
+
+[data-color-scheme="light"] #overallRank table,
+[data-color-scheme="light"] #last3Rank table {
+    background-color: var(--color-surface) !important;
+}
+
+/* Fix section headers */
+[data-color-scheme="light"] #overallRank .section-header,
+[data-color-scheme="light"] #last3Rank .section-header {
+    background: linear-gradient(135deg, var(--color-surface), rgba(var(--color-teal-500-rgb), 0.05)) !important;
+    color: var(--color-text) !important;
+}
+
+/* Count badges fix */
+[data-color-scheme="light"] .count-badge {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover)) !important;
+    color: var(--color-cream-50) !important;
+}
+
+/* ========================================================================
+   ADDITIONAL THEME FIXES
+   ======================================================================== */
+
+/* Make sure the theme attribute is properly applied */
+body[data-color-scheme="light"] {
+    background-color: var(--color-background) !important;
+    color: var(--color-text) !important;
+}
+
+/* Ensure all table elements are visible in light theme */
+[data-color-scheme="light"] table thead tr th {
+    background: linear-gradient(135deg, var(--color-secondary), rgba(var(--color-teal-500-rgb), 0.1)) !important;
+    color: var(--color-text) !important;
+}
+
+[data-color-scheme="light"] table tbody tr td {
+    color: var(--color-text) !important;
+}
+
+/* Tab content visibility */
+[data-color-scheme="light"] .tab-content {
+    background-color: transparent !important;
+}
+
+/* Search results fix */
+[data-color-scheme="light"] #searchTable {
+    background-color: var(--color-surface) !important;
+}
+
+[data-color-scheme="light"] #searchTable tbody tr {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text) !important;
+}
+
+[data-color-scheme="light"] #searchTable tbody tr:hover {
+    background-color: var(--color-secondary-hover) !important;
+}
