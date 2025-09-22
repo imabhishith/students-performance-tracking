@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- Loading Overlay -->
@@ -20,8 +21,8 @@
     </div>
 
     <div id="header">
-        <button id="themeToggle" title="Toggle Theme">☀️</button>
-        <button id="logoutBtn">Logout</button>
+        <button id="themeToggle" title="Toggle Theme"><i class="fas fa-moon"></i>☀️</button>
+        <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
         <div class="header-content">
             <img id="logo" src="logo.png" alt="INSTITUTE LOGO">
             <h1>REPEATER'S BATCH 2025-26</h1>
@@ -37,8 +38,8 @@
                     <span class="search-icon">🔍</span>
                     <input type="text" id="search" placeholder="Search by Name or Roll No">
                 </div>
-                <button id="searchButton" class="btn search-btn">Search</button>
-                <button id="clearSearchButton" class="btn clear-btn">Clear</button>
+                <button id="searchButton" class="btn search-btn"><i class="fas fa-search"></i> Search</button>
+                <button id="clearSearchButton" class="btn clear-btn"><i class="fas fa-eraser"></i> Clear</button>
             </div>
         </div>
         
@@ -110,19 +111,31 @@
                 </div>
                 
                 <div class="action-buttons">
-                    <button id="subjectDifficultyBtn" class="btn action-btn">
-                        <span class="btn-icon">📚</span>
-                        Subject Analysis
-                    </button>
-                    <button id="examDetailsBtn" class="btn action-btn">
-                        <span class="btn-icon">📋</span>
-                        Exam Details
-                    </button>
-                    <button id="studentDetailsBtn" class="btn action-btn">
-                        <span class="btn-icon">👤</span>
-                        Student Analysis
-                    </button>
-                </div>
+                        <button id="subjectDifficultyBtn" class="btn action-btn">
+                            <span class="btn-icon">📚</span>
+                            <span class="btn-text">Subject Analysis</span>
+                        </button>
+                        <button id="examDetailsBtn" class="btn action-btn">
+                            <span class="btn-icon">📋</span>
+                            <span class="btn-text">Exam Details</span>
+                        </button>
+                        <button id="studentDetailsBtn" class="btn action-btn">
+                            <span class="btn-icon">👤</span>
+                            <span class="btn-text">Student Analysis</span>
+                        </button>
+                        <button id="examDifficultyBtn" class="btn action-btn" onclick="toggleExamDifficultyAnalysis()">
+                            <span class="btn-icon">📊</span>
+                            <span class="btn-text">Exam Difficulty Analysis</span>
+                        </button>
+                        <button id="studentCategorizationBtn" class="btn action-btn" onclick="toggleStudentCategorization()">
+                            <span class="btn-icon">🎯</span>
+                            <span class="btn-text">Student Categorization</span>
+                        </button>
+                        <button id="performanceAlertsBtn" class="btn action-btn" onclick="togglePerformanceAlerts()">
+                            <span class="btn-icon">🚨</span>
+                            <span class="btn-text">Performance Alerts</span>
+                        </button>
+                    </div>
             </div>
 
             <!-- Expandable Details -->
@@ -179,6 +192,47 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                </div>
+            </div>
+
+            <div id="examDifficultyDetails" class="detail-panel">
+                <div class="panel-header">
+                    <h3>📊 Exam Difficulty Analysis</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exam Name</th>
+                                <th>Chem %</th>
+                                <th>Phy %</th>
+                                <th>Bio %</th>
+                                <th>Math %</th>
+                                <th>Difficulty Score</th>
+                                <th>Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody id="examDifficultyTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="studentCategorization" class="detail-panel">
+                <div class="panel-header">
+                    <h3>🎯 Student Categorization Analysis</h3>
+                </div>
+                <div class="categorization-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="performanceAlerts" class="detail-panel">
+                <div class="panel-header">
+                    <h3>🚨 Performance Alert System</h3>
+                </div>
+                <div class="alerts-content">
+                    <!-- Content will be populated by JavaScript -->
                 </div>
             </div>
         </div>
