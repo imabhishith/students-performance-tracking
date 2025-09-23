@@ -455,7 +455,7 @@ function populateStats() {
 
     // Overall average
     const overallAvg = students.length > 0 ? 
-        (students.reduce((sum, stu) => sum + parseFloat(stu.cumPercent), 0) / students.length).toFixed(1) : 0;
+        (students.reduce((sum, stu) => sum + parseFloat(stu.cumPercent), 0) / students.length).toFixed(2) : 0;
     document.querySelector('#avgScore').textContent = `${overallAvg}%`;
 
     // Class average % per subject
@@ -2332,3 +2332,4 @@ document.addEventListener('DOMContentLoaded', function() {
         initializePrintExport();
     }, 1000);
 });
+
