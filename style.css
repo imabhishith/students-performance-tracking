@@ -2454,3 +2454,488 @@ body {
     padding: var(--space-24);
   }
 }
+
+/* Print & Export Section */
+#printToolsSection {
+  margin-top: 25px;
+  padding: 15px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+#printToolsSection h3 {
+  margin-bottom: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------------- Modern Card-style Print Table with Smaller Fonts ---------------- */
+@media print {
+  /* Page setup */
+  @page {
+    margin: 10mm;
+    size: auto;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    color: #111;
+    font-family: "Inter", sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body > *:not(#printArea) {
+    display: none !important;
+  }
+
+  #printArea {
+    display: block;
+    width: 100%;
+    position: static;
+    overflow: visible;
+    page-break-after: avoid;
+  }
+
+  /* Header */
+  .print-header {
+    text-align: center;
+    margin: 0 0 10px 0;
+    border-radius: 14px;
+    padding: 16px 0;
+  }
+  .print-header img {
+    max-height: 70px;
+    margin-bottom: 5px;
+  }
+  .print-header h1 {
+    font-size: 24px; /* slightly smaller for balance */
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  /* Table */
+  #printArea table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 7px;
+    font-size: 13px; /* smaller font for uniform row height */
+    page-break-inside: auto;
+    border: none;
+    background: none;
+  }
+
+  #printArea th {
+    padding: 10px 12px; /* adjusted padding to match smaller font */
+    text-align: center;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transform: skewX(-12deg);
+    position: relative;
+    background: darkblue;
+    border-right: 1px solid #ffffff;
+    color: white;
+  }
+
+  #printArea td {
+    padding: 10px 12px; /* adjusted padding */
+    font-family: "Fira Mono", monospace;
+    font-size: 10px; /* consistent with table font */
+    text-align: center;
+    color: #111;
+    background: linear-gradient(120deg, #e6f7ff, #d0eaff);
+    border-right: 1px solid #ffffff;
+    border-bottom: none;
+    transform: skewX(-12deg);
+    position: relative;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  #printArea td > * {
+    display: inline-block;
+    transform: skewX(12deg);
+  }
+
+  /* Alternate row gradients */
+  #printArea tr:nth-child(odd) td {
+    background: linear-gradient(120deg, #e6f7ff, #cce5ff);
+  }
+  #printArea tr:nth-child(even) td {
+    background: linear-gradient(120deg, #d0eaff, #b3d9ff);
+  }
+
+  /* Column widths */
+  #printArea td:nth-child(3),
+  #printArea th:nth-child(3) {text-align: left; font-family: "Inter", sans-serif; }
+
+  /* Highlight important numbers */
+  #printArea td:last-child,
+  #printArea td:nth-last-child(2) { font-weight: 800; color: #004080; }
+
+  /* Prevent row breaks */
+  #printArea tr, td, th { page-break-inside: avoid; }
+}
+
+/* ============= MODAL BUTTON STYLES ============= */
+
+/* Print Option Card Styling */
+.print-option-card {
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.print-option-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.print-option-card:hover::before {
+    left: 100%;
+}
+
+.print-option-card:hover {
+    border-color: var(--color-orange-400);
+    background: linear-gradient(135deg, var(--color-bg), var(--color-bg-hover));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.print-option-card:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Overall Ranking Card */
+.print-option-card:nth-child(1):hover {
+    border-color: #FFD700;
+    background: linear-gradient(135deg, var(--color-bg), rgba(255, 215, 0, 0.1));
+}
+
+.print-option-card:nth-child(1) .option-icon {
+    color: #FFD700;
+}
+
+/* Last 3 Exams Card */
+.print-option-card:nth-child(2):hover {
+    border-color: #4CAF50;
+    background: linear-gradient(135deg, var(--color-bg), rgba(76, 175, 80, 0.1));
+}
+
+.print-option-card:nth-child(2) .option-icon {
+    color: #4CAF50;
+}
+
+/* Exam Ranklist Card */
+.print-option-card:nth-child(3):hover {
+    border-color: #2196F3;
+    background: linear-gradient(135deg, var(--color-bg), rgba(33, 150, 243, 0.1));
+}
+
+.print-option-card:nth-child(3) .option-icon {
+    color: #2196F3;
+}
+
+/* Student Profile Card */
+.print-option-card:nth-child(4):hover {
+    border-color: #9C27B0;
+    background: linear-gradient(135deg, var(--color-bg), rgba(156, 39, 176, 0.1));
+}
+
+.print-option-card:nth-child(4) .option-icon {
+    color: #9C27B0;
+}
+
+/* Enhanced Icon Styling */
+.option-icon {
+    font-size: 2.5rem;
+    min-width: 60px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.print-option-card:hover .option-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced Text Styling */
+.option-content h4 {
+    margin: 0 0 8px 0;
+    color: var(--color-text);
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.option-content p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+}
+
+.print-option-card:hover .option-content h4 {
+    color: var(--color-accent);
+    transform: translateX(5px);
+}
+
+.print-option-card:hover .option-content p {
+    color: var(--color-text);
+    transform: translateX(5px);
+}
+
+/* Print Student Profile Button Styling */
+.btn-primary {
+    background: linear-gradient(135deg, #9C27B0, #E91E63);
+    color: var(--color-white);
+    border: none;
+    padding: 14px 28px;
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #E91E63, #FF5722);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+}
+
+.btn-primary i {
+    transition: transform 0.3s ease;
+}
+
+.btn-primary:hover i {
+    transform: scale(1.2);
+}
+
+/* Student Selection Styling */
+.student-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.student-selection label {
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.form-select {
+    padding: 14px 18px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #9C27B0;
+    background: var(--color-surface);
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-select:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Modal Base Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 20, 50, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal[style*="flex"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    cursor: pointer;
+}
+
+.modal-container {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-2xl);
+    width: 500px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+    z-index: 10000;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-text);
+}
+
+.modal-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    color: var(--color-error);
+    background: var(--color-error-bg);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.print-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Grid Responsiveness */
+@media (max-width: 600px) {
+    .print-options-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .print-option-card {
+        padding: 16px;
+    }
+
+    .option-icon {
+        font-size: 2rem;
+        min-width: 50px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .option-content h4 {
+        font-size: 1.1rem;
+    }
+
+    .option-content p {
+        font-size: 0.9rem;
+    }
+}
