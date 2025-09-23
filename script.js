@@ -1954,6 +1954,77 @@ function hideAllDetailPanels() {
     });
 }
 
+// Utility to open print area
+function openPrintWindow(title, content) {
+    const printArea = document.createElement("div");
+    printArea.id = "printArea";
+    printArea.innerHTML = `
+        <div class="print-header">
+            <img src="logo.png" alt="Logo">
+            <h1>${title}</h1>
+        </div>
+        ${content}
+    `;
+    document.body.appendChild(printArea);
+    window.print();
+    document.body.removeChild(printArea);
+}
+
+// ---------------- Overall Ranklist ----------------
+function printOverallRanklist() {
+    const table = document.querySelector("#overallRank table");
+    if (!table) return alert("Overall ranklist not available!");
+    openPrintWindow("OVERALL RANKLIST", table.outerHTML);
+}
+
+// ---------------- Last 3 Exams Ranklist ----------------
+function printLast3Ranklist() {
+    const table = document.querySelector("#last3Rank table");
+    if (!table) return alert("Last 3 exams ranklist not available!");
+    openPrintWindow("LAST 3 EXAMS RANKLIST", table.outerHTML);
+}
+
+// ---------------- Exam Ranklist ----------------
+function selectExamForPrint() {
+    const exams = [...new Set(sampleData.map(d => d.exam))];
+    const exam = prompt("Enter exam name to print:\n" + exams.join(", "));
+    if (!exam) return;
+    const examData = sampleData.filter(d => d.exam === exam && d.maxTotal > 0);
+    if (examData.length === 0) return alert("No data for selected exam");
+
+    let html = `<table class='enhanced-table'><thead><tr>
+        <th>Rank</th>
+        <th>R. No</th>
+        <th>Name</th>
+        <th>Chm</th>
+        <th>Phy</th>
+        <th>Bio</th>
+        <th>Mth</th>
+        <th>Total</th>
+        <th>%</th>
+    </tr></thead><tbody>`;
+
+    examData
+        .sort((a, b) => b.percent - a.percent)
+        .forEach((d, i) => {
+            html += `<tr>
+                <td>${i + 1}</td>
+                <td>${d.roll}</td>
+                <td>${d.name}</td>
+                <td>${d.chem}</td>
+                <td>${d.phy}</td>
+                <td>${d.bio}</td>
+                <td>${d.math}</td>
+                <td>${d.total}</td>
+                <td>${d.percent.toFixed(2)}%</td>
+            </tr>`;
+        });
+
+    html += "</tbody></table>";
+
+    openPrintWindow(`${exam} RANKLIST`, html);
+}
+
 // Initialize after DOM loads
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
@@ -1972,3 +2043,292 @@ function initializeApp() {
     // Add any additional initialization here
     console.log('Enhanced Admin Portal initialized successfully!');
 }
+
+// ============= PRINT & EXPORT FUNCTIONALITY =============
+
+// Initialize Print & Export Feature
+function initializePrintExport() {
+    const printExportBtn = document.getElementById('printExportBtn');
+    const printStudentProfileBtn = document.getElementById('printStudentProfileBtn');
+
+    if (printExportBtn) {
+        printExportBtn.addEventListener('click', openPrintExportModal);
+    }
+
+    if (printStudentProfileBtn) {
+        printStudentProfileBtn.addEventListener('click', printSelectedStudentProfile);
+    }
+}
+
+// Open Print & Export Modal
+function openPrintExportModal() {
+    const modal = document.getElementById('printExportModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+// Close Print & Export Modal
+function closePrintExportModal() {
+    const modal = document.getElementById('printExportModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// PRINT EXPORT MODAL FUNCTIONS
+function initializePrintExport() {
+    const printExportBtn = document.getElementById('printExportBtn');
+    if (printExportBtn) {
+        printExportBtn.addEventListener('click', openPrintExportModal);
+    }
+    
+    // Initialize print student profile button specifically
+    const printStudentProfileBtn = document.getElementById('printStudentProfileBtn');
+    if (printStudentProfileBtn) {
+        printStudentProfileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const select = document.getElementById('studentProfileSelect');
+            if (!select || !select.value) {
+                alert('Please select a student first!');
+                return;
+            }
+            const roll = select.value;
+            const student = students.find(s => s.roll === roll);
+            if (!student) {
+                alert('Student not found!');
+                return;
+            }
+            printStudentProfileReport(student);
+            closeStudentProfileModal();
+        });
+    }
+}
+
+function openPrintExportModal() {
+    const modal = document.getElementById('printExportModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+function closePrintExportModal() {
+    const modal = document.getElementById('printExportModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function selectStudentForProfile() {
+    closePrintExportModal();
+    const modal = document.getElementById('studentProfileModal');
+    const select = document.getElementById('studentProfileSelect');
+    
+    if (modal && select) {
+  // Populate student dropdown sorted by roll number
+  select.innerHTML = '<option value="">Select a student...</option>';
+
+  if (students && students.length > 0) {
+    // Sort students by roll ascending (numerically if roll contains numbers)
+    const sortedStudents = [...students].sort((a, b) => {
+      // Extract numeric part from roll if any, fallback to string
+      const aNum = parseInt(a.roll.replace(/\D/g, ''), 10);
+      const bNum = parseInt(b.roll.replace(/\D/g, ''), 10);
+
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        return aNum - bNum;
+      } else {
+        return a.roll.localeCompare(b.roll);
+      }
+    });
+
+    sortedStudents.forEach(student => {
+      const option = document.createElement('option');
+      option.value = student.roll;
+      option.textContent = `${student.name} (${student.roll})`;
+      select.appendChild(option);
+    });
+  }
+  modal.style.display = 'flex';
+}
+
+}
+
+function closeStudentProfileModal() {
+    const modal = document.getElementById('studentProfileModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function printStudentProfileReport(student) {
+    const totalExams = student.exams.length;
+    const totalScore = student.cumTotal;
+    const maxPossibleScore = student.cumMax;
+    const averagePercent = parseFloat(student.cumPercent);
+    
+    const printContent = `
+    <div class="student-profile-print">
+        <div class="print-header">
+            <img src="logo.png" style="width:150px; margin:10px auto;display:block;" alt="Institute Logo">
+            <h1 style="text-align:center;">REPEATERS BATCH 2025-26</h1>
+            <i>Student Performance Report</i>
+            <p><i>Generated on: ${new Date().toLocaleDateString()}</i></p>
+        </div>
+        
+        <div class="profile-section">
+            <h3>Student Information</h3>
+            <p><strong>Name:</strong> ${student.name}</p>
+            <p><strong>Roll Number:</strong> ${student.roll}</p>
+            <p><strong>Total Exams Attempted:</strong> ${totalExams}</p>
+            <p><strong>Overall Percentage:</strong> ${averagePercent.toFixed(2)}%</p>
+        </div>
+        
+        <div class="profile-section">
+            <h3>Performance Summary</h3>
+            <div class="performance-summary">
+                <p><strong>Total Score:</strong> ${totalScore} / ${maxPossibleScore}</p>
+                <p><strong>Average Score:</strong> ${(totalScore / Math.max(totalExams, 1)).toFixed(2)}</p>
+                <p><strong>Strong Subjects:</strong> <span style="color:green; font-weight:600;">${student.strongSubject.join(', ')}</span></p>
+                <p><strong>Weak Subjects:</strong> <span style="color:red; font-weight:600;">${student.weakSubject.join(', ')}</span></p>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h3>Subject-wise Performance</h3>
+            <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">SUBJECT</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">AVG %</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">PERFORMANCE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #ccc;padding:8px;">Chemistry</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.chem}%</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.chem)}</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ccc;padding:8px;">Physics</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.phy}%</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.phy)}</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ccc;padding:8px;">Biology</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.bio}%</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.bio)}</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ccc;padding:8px;">Mathematics</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.math}%</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.math)}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="profile-section">
+            <h3>Exam-wise Performance</h3>
+            <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Exam</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Rank</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Chm</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Phy</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Bio</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Mth</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Total</th>
+                        <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${student.exams.map(exam => `
+                    <tr>
+                        <td style="border:1px solid #ccc;padding:8px;">${exam.exam}</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${getExamRank(student, exam.exam)}</td>
+                        ${exam.maxTotal === 0
+                        ? `<td colspan="6" style="border:1px solid #ccc;padding:8px;text-align:center; color:red">Not Attempted</td>`
+                        : `
+                        <td style="border:1px solid #ccc;padding:8px;">${exam.scores.chem}/${exam.maxScores.chem}</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${exam.scores.phy}/${exam.maxScores.phy}</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${exam.scores.bio}/${exam.maxScores.bio}</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${exam.scores.math}/${exam.maxScores.math}</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${exam.total}/${exam.maxTotal}</td>
+                        <td style="border:1px solid #ccc;padding:8px;">${exam.percent.toFixed(2)}%</td>
+                        `}
+                    </tr>
+                    `).join('')}
+
+                
+            </table>
+        </div>
+        
+        <div class="profile-section">
+            <h3>Recommendations</h3>
+            <div class="performance-summary">
+                <p><strong>Areas for Improvement:</strong> Focus on ${student.weakSubject.join(' and ')} to boost overall performance.</p>
+                <p><strong>Strengths to Maintain:</strong> Continue excellent work in ${student.strongSubject.join(' and ')}.</p>
+            </div>
+        </div>
+    </div>
+    `;
+    
+function printContentDirect(content) {
+  // Create hidden iframe
+  const iframe = document.createElement('iframe');
+  iframe.style.position = 'fixed';
+  iframe.style.right = '0';
+  iframe.style.bottom = '0';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  document.body.appendChild(iframe);
+
+  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+  iframeDoc.open();
+  iframeDoc.write(`
+    <html>
+      <head>
+        <title>Print Preview</title>
+        <style>
+          /* Your print styles here */
+          body { margin: 20px; font-family: Arial, sans-serif; }
+          .student-profile-print { /* ... your styles ... */ }
+          /* Other styles... */
+        </style>
+      </head>
+      <body>${content}</body>
+    </html>`);
+  iframeDoc.close();
+
+  iframe.onload = function() {
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+    setTimeout(() => {
+      document.body.removeChild(iframe);
+    }, 1000);
+  };
+}
+
+printContentDirect(printContent);
+
+}
+
+function getPerformanceLevel(percentage) {
+    const percent = parseFloat(percentage);
+    if (percent >= 80) return 'Excellent';
+    if (percent >= 65) return 'Good';
+    if (percent >= 50) return 'Average';
+    if (percent >= 35) return 'Below Average';
+    return 'Needs Improvement';
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        initializePrintExport();
+    }, 1000);
+});
