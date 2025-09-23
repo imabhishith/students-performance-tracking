@@ -680,7 +680,7 @@ function buildStudentDetailsContent(stu) {
                 <tbody>
         `;
         
-        ['chem', 'phy', 'bio', 'math'].forEach(sub => {
+        ['chem', 'bio', 'math', 'phy'].forEach(sub => {
             const avgPct = stu.subjectAverages[sub];
             const rowClass = stu.strongSubject.includes(sub) ? 'improved' : 
                            stu.weakSubject.includes(sub) ? 'declined' : '';
@@ -703,7 +703,7 @@ function buildStudentDetailsContent(stu) {
     if (validExams.length > 0) {
         content += `
             <h4>ALL PREVIOUS MARKS</h4>
-            <table>
+            <table class="previous-table">
                 <thead>
                     <tr>
                         <th>EXAM</th>
@@ -1238,10 +1238,10 @@ function updateThemeToggleButton(theme) {
     if (toggleBtn) {
         // Update button content based on theme with proper icons
         if (theme === 'light') {
-            toggleBtn.innerHTML = '🌙'; // Moon icon for switching to dark mode
+            toggleBtn.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for switching to dark mode
             toggleBtn.title = 'Switch to dark mode';
         } else {
-            toggleBtn.innerHTML = '☀️'; // Sun icon for switching to light mode  
+            toggleBtn.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for switching to light mode  
             toggleBtn.title = 'Switch to light mode';
         }
 
@@ -1591,22 +1591,22 @@ function populateStudentCategorization() {
                 <div class="stat-box high-performers">
                     <div class="stat-number">${categorization.highPerformers.length}</div>
                     <div class="stat-label">High Performers</div>
-                    <div class="stat-icon">🏆</div>
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
                 </div>
                 <div class="stat-box at-risk">
                     <div class="stat-number">${categorization.atRiskStudents.length}</div>
                     <div class="stat-label">At Risk</div>
-                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
                 </div>
                 <div class="stat-box improving">
                     <div class="stat-number">${categorization.improvingStudents.length}</div>
                     <div class="stat-label">Improving</div>
-                    <div class="stat-icon">📈</div>
+                    <div class="stat-icon"><i class="fas fa-angles-up"></i></div>
                 </div>
                 <div class="stat-box declining">
                     <div class="stat-number">${categorization.decliningStudents.length}</div>
                     <div class="stat-label">Declining</div>
-                    <div class="stat-icon">📉</div>
+                    <div class="stat-icon"><i class="fas fa-angles-down"></i></div>
                 </div>
             </div>
         </div>
@@ -1964,135 +1964,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
-
-// ====================================
-// ICON MANAGEMENT ENHANCEMENTS
-// Handles theme toggle and other icons
-// ====================================
-
-// Enhanced theme toggle with proper icon switching
-document.addEventListener('DOMContentLoaded', function() {
-    setupIconManagement();
-});
-
-function setupIconManagement() {
-    // Theme toggle icon management
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('dark-theme');
-            const icon = this.querySelector('i');
-            const isDark = document.body.classList.contains('dark-theme');
-
-            if (isDark) {
-                icon.className = 'fas fa-sun';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.className = 'fas fa-moon';
-                localStorage.setItem('theme', 'light');
-            }
-        });
-
-        // Load saved theme and set correct icon
-        const savedTheme = localStorage.getItem('theme');
-        const icon = themeToggle.querySelector('i');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            if (icon) icon.className = 'fas fa-sun';
-        } else {
-            if (icon) icon.className = 'fas fa-moon';
-        }
-    }
-
-    // Subject toggle arrows
-    setupSubjectToggles();
-
-    // Button hover effects
-    setupButtonEffects();
+// Initialize app function
+function initializeApp() {
+    // Process data and initialize all components
+    processJsonData(sampleData);
+    
+    // Add any additional initialization here
+    console.log('Enhanced Admin Portal initialized successfully!');
 }
-
-function setupSubjectToggles() {
-    const subjectHeaders = document.querySelectorAll('.subject-header');
-    subjectHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-            const arrow = this.querySelector('.toggle-arrow');
-            if (arrow) {
-                const isExpanded = this.parentElement.querySelector('.subject-content').style.display !== 'none';
-                if (isExpanded) {
-                    arrow.className = 'fas fa-chevron-right toggle-arrow';
-                } else {
-                    arrow.className = 'fas fa-chevron-down toggle-arrow';
-                }
-            }
-        });
-    });
-}
-
-function setupButtonEffects() {
-    // Add subtle animations to buttons with icons
-    const buttonsWithIcons = document.querySelectorAll('button i, .btn i');
-    buttonsWithIcons.forEach(icon => {
-        const button = icon.closest('button');
-        if (button) {
-            button.addEventListener('mouseenter', function() {
-                icon.style.transform = 'scale(1.1)';
-                icon.style.transition = 'transform 0.2s ease';
-            });
-
-            button.addEventListener('mouseleave', function() {
-                icon.style.transform = 'scale(1)';
-            });
-        }
-    });
-
-    // Special animation for refresh-type buttons
-    const refreshButtons = document.querySelectorAll('[id*="refresh"], [class*="refresh"]');
-    refreshButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const icon = this.querySelector('i');
-            if (icon && icon.className.includes('sync')) {
-                icon.style.animation = 'spin 1s linear infinite';
-                setTimeout(() => {
-                    icon.style.animation = '';
-                }, 1000);
-            }
-        });
-    });
-}
-
-// Add CSS animations if not already present
-function addIconAnimations() {
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .btn i, button i {
-            transition: transform 0.2s ease;
-        }
-
-        .toggle-arrow {
-            transition: transform 0.3s ease;
-        }
-
-        .subject-header:hover .toggle-arrow {
-            transform: scale(1.1);
-        }
-
-        button:hover i {
-            transform: scale(1.05);
-        }
-
-        .btn:active i, button:active i {
-            transform: scale(0.95);
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Initialize icon animations
-setTimeout(addIconAnimations, 100);
-
-console.log('✨ Icon management system loaded!');
