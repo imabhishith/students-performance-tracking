@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REPEATER'S BATCH 2025-26 - Analytics Portal</title>
+    <title>REPEATER'S BATCH 2025-26 - Enhanced Analytics Portal</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -279,6 +279,15 @@
                                 <span class="btn-title">Performance Alerts</span>
                                 <span class="btn-subtitle">Risk Assessment</span>
                             </div>
+                        </button>                        
+                        <button id="printExportBtn" class="action-btn print-export-btn">
+                            <div class="btn-icon">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <div class="btn-content">
+                                <span class="btn-title">Print & Export</span>
+                                <span class="btn-subtitle">Reports & Profiles</span>
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -493,7 +502,7 @@
                             </div>
                             <div class="subject-details">
                                 <h3>Chemistry</h3>
-                            
+                                <p>Organic, Inorganic & Physical Chemistry</p>
                             </div>
                         </div>
                         <div class="toggle-controls">
@@ -527,7 +536,7 @@
                             </div>
                             <div class="subject-details">
                                 <h3>Physics</h3>
-                            
+                                <p>Mechanics, Thermodynamics & Modern Physics</p>
                             </div>
                         </div>
                         <div class="toggle-controls">
@@ -561,7 +570,7 @@
                             </div>
                             <div class="subject-details">
                                 <h3>Biology</h3>
-                                
+                                <p>Botany, Zoology & Human Physiology</p>
                             </div>
                         </div>
                         <div class="toggle-controls">
@@ -595,7 +604,7 @@
                             </div>
                             <div class="subject-details">
                                 <h3>Mathematics</h3>
-                                
+                                <p>Algebra, Calculus & Coordinate Geometry</p>
                             </div>
                         </div>
                         <div class="toggle-controls">
@@ -628,6 +637,96 @@
     <div id="dataStatus" class="status-message"></div>
 
     <script src="script.js"></script>
+
+<!-- Print & Export Modal -->
+<div class="modal" id="printExportModal" style="display: none;">
+    <div class="modal-overlay" onclick="closePrintExportModal()"></div>
+    <div class="modal-container print-export-modal">
+        <div class="modal-header">
+            <h2>
+                <i class="fas fa-print"></i>
+                Print & Export Options
+            </h2>
+            <button class="modal-close" onclick="closePrintExportModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="print-options-grid">
+                <div class="print-option-card" onclick="printOverallRanklist()">
+                    <div class="option-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="option-content">
+                        <h4>Overall Ranking</h4>
+                        <p>Print complete student rankings</p>
+                    </div>
+                </div>
+
+                <div class="print-option-card" onclick="printLast3Ranklist()">
+                    <div class="option-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="option-content">
+                        <h4>Last 3 Exams</h4>
+                        <p>Print recent performance rankings</p>
+                    </div>
+                </div>
+
+                <div class="print-option-card" onclick="selectExamForPrint()">
+                    <div class="option-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="option-content">
+                        <h4>Exam Ranklist</h4>
+                        <p>Select specific exam to print</p>
+                    </div>
+                </div>
+
+                <div class="print-option-card" onclick="selectStudentForProfile()">
+                    <div class="option-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="option-content">
+                        <h4>Student Profile</h4>
+                        <p>Print individual student report</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Student Profile Selection Modal -->
+<div class="modal" id="studentProfileModal" style="display: none;">
+    <div class="modal-overlay" onclick="closeStudentProfileModal()"></div>
+    <div class="modal-container student-profile-modal">
+        <div class="modal-header">
+            <h2>
+                <i class="fas fa-user-graduate"></i>
+                Select Student for Profile
+            </h2>
+            <button class="modal-close" onclick="closeStudentProfileModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="student-selection">
+                <label for="studentProfileSelect">Choose Student:</label>
+                <select id="studentProfileSelect" class="form-select">
+                    <option value="">Select a student...</option>
+                </select>
+
+                <button class="btn btn-primary" id="printStudentProfileBtn">
+                    <i class="fas fa-print"></i>
+                    Print Profile
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
-
