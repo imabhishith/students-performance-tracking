@@ -455,7 +455,7 @@ function populateStats() {
 
     // Overall average
     const overallAvg = students.length > 0 ? 
-        (students.reduce((sum, stu) => sum + parseFloat(stu.cumPercent), 0) / students.length).toFixed(2) : 0;
+        (students.reduce((sum, stu) => sum + parseFloat(stu.cumPercent), 0) / students.length).toFixed(1) : 0;
     document.querySelector('#avgScore').textContent = `${overallAvg}%`;
 
     // Class average % per subject
@@ -1799,18 +1799,44 @@ function performStudentCategorization() {
         const overallPercentage = parseFloat(student.cumPercent) || 0;
         const validExams = student.exams.filter(ex => ex.maxTotal > 0);
 
-        // Calculate improvement rate
-        let improvementRate = 0;
-        if (validExams.length >= 2) {
-            const midPoint = Math.floor(validExams.length / 2);
-            const firstHalf = validExams.slice(0, midPoint);
-            const secondHalf = validExams.slice(midPoint);
-
-            const firstHalfAvg = firstHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / firstHalf.length;
-            const secondHalfAvg = secondHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / secondHalf.length;
-
-            improvementRate = secondHalfAvg - firstHalfAvg;
+// Dynamic improvement calculation that scales with exam count
+let improvementRate = 0;
+if (validExams.length >= 3) {
+    const percentages = validExams.map(ex => (ex.total / ex.maxTotal) * 100);
+    
+    // Dynamic window size based on total exams
+    let windowSize;
+    if (validExams.length <= 4) {
+        windowSize = 2; // Use 2 exams for small datasets
+    } else if (validExams.length <= 8) {
+        windowSize = Math.ceil(validExams.length * 0.3); // 30% of exams
+    } else {
+        windowSize = Math.min(4, Math.ceil(validExams.length * 0.25)); // Max 4 exams, 25% of total
+    }
+    
+    // Compare recent window vs early window
+    const recentWindow = percentages.slice(-windowSize);
+    const earlyWindow = percentages.slice(0, windowSize);
+    
+    const recentAvg = recentWindow.reduce((sum, p) => sum + p, 0) / recentWindow.length;
+    const earlyAvg = earlyWindow.reduce((sum, p) => sum + p, 0) / earlyWindow.length;
+    
+    // Base improvement rate
+    let baseImprovement = recentAvg - earlyAvg;
+    
+    // Add momentum bonus for consistent recent improvement
+    let momentum = 0;
+    if (recentWindow.length >= 2) {
+        let upwardTrend = 0;
+        for (let i = 1; i < recentWindow.length; i++) {
+            if (recentWindow[i] > recentWindow[i-1]) upwardTrend++;
         }
+        momentum = (upwardTrend / (recentWindow.length - 1)) * 5; // Bonus up to 5 points
+    }
+    
+    improvementRate = baseImprovement + momentum;
+}
+
 
         // High Performers (>= 70%)
         if (overallPercentage >= 70) {
@@ -1954,37 +1980,261 @@ function hideAllDetailPanels() {
     });
 }
 
-// Utility to open print area
+// Mobile-friendly utility to open print window
 function openPrintWindow(title, content) {
-    const printArea = document.createElement("div");
-    printArea.id = "printArea";
-    printArea.innerHTML = `
-        <div class="print-header">
-            <img src="logo.png" alt="Logo">
-            <h1>${title}</h1>
-        </div>
-        ${content}
+    // Create mobile-optimized print styles
+    const printStyles = `
+         <style>
+            @media print {
+                body * { visibility: hidden; }
+                .print-content, .print-content * { visibility: visible; }
+                .print-content { position: absolute; left: 0; top: 0; width: 100%; }
+            }
+            .print-content {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                max-width: 100%;
+                margin: 20px;
+                background: white;
+                color: black;
+            }
+            .print-header {
+                text-align: center;
+                border-bottom: 3px solid #2c5aa0;
+                padding-bottom: 15px;
+                margin-bottom: 25px;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                border-radius: 10px;
+                padding: 20px;
+            }
+            .print-header img {
+                width: 150px;
+                height: auto;
+                margin-bottom: 10px;
+            }
+            .print-header h1 {
+                margin: 12px 0;
+                font-size: 20pt;
+                color: #2c5aa0;
+                font-weight: 700;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            }
+            .enhanced-table {
+                width: 98%;
+                border-collapse: separate;
+                border-spacing: 0 4px;
+                font-size: 10pt;
+                margin-top: 15px;
+            }
+            .enhanced-table thead tr {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                transform: skew(-2deg);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            .enhanced-table thead th {
+                padding: 12px 8px;
+                font-weight: 700;
+                text-align: center;
+                border: none;
+                font-size: 10pt;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                transform: skew(2deg);
+            }
+            .enhanced-table tbody tr {
+                background: white;
+                transform: skew(-1deg);
+                transition: all 0.3s ease;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                margin-bottom: 2px;
+            }
+            .enhanced-table tbody tr:nth-child(even) {
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            }
+            .enhanced-table tbody tr:nth-child(odd) {
+                background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            }
+            .enhanced-table tbody tr:hover {
+                background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+                transform: skew(-1deg) translateY(-1px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+            .enhanced-table tbody td {
+                padding: 10px 8px;
+                border: none;
+                transform: skew(1deg);
+                border-left: 3px solid transparent;
+            }
+            /* Rank column styling */
+            .enhanced-table tbody td:nth-child(1) {
+                text-align: center;
+                font-weight: 700;
+                color: #1e40af;
+                background: rgba(59, 130, 246, 0.1);
+                border-left: 3px solid #3b82f6;
+                font-size: 11pt;
+            }
+            /* Roll number styling */
+            .enhanced-table tbody td:nth-child(2) {
+                text-align: center;
+                font-weight: 600;
+                color: #374151;
+            }
+            /* Name column - left aligned */
+            .enhanced-table tbody td:nth-child(3) {
+                text-align: left;
+                font-weight: 600;
+                color: #1f2937;
+                padding-left: 12px;
+            }
+            /* Subject scores - center aligned */
+            .enhanced-table tbody td:nth-child(4),
+            .enhanced-table tbody td:nth-child(5),
+            .enhanced-table tbody td:nth-child(6),
+            .enhanced-table tbody td:nth-child(7) {
+                text-align: center;
+                color: #4b5563;
+                font-weight: 500;
+            }
+            /* Total score column - bold and highlighted */
+            .enhanced-table tbody td:nth-child(8) {
+                text-align: center;
+                font-weight: 700;
+                color: #059669;
+                background: rgba(16, 185, 129, 0.1);
+                border-left: 3px solid #10b981;
+                font-size: 11pt;
+            }
+            /* Percentage column - bold and highlighted */
+            .enhanced-table tbody td:nth-child(9) {
+                text-align: center;
+                font-weight: 700;
+                color: #dc2626;
+                background: rgba(239, 68, 68, 0.1);
+                border-left: 3px solid #ef4444;
+                font-size: 11pt;
+            }
+            /* Top 3 rank special styling */
+            .enhanced-table tbody tr:nth-child(1) td:nth-child(1) {
+                background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+                color: #92400e;
+                border-left: 4px solid #f59e0b;
+            }
+            .enhanced-table tbody tr:nth-child(2) td:nth-child(1) {
+                background: linear-gradient(135deg, #c0c0c0 0%, #e5e7eb 100%);
+                color: #374151;
+                border-left: 4px solid #6b7280;
+            }
+            .enhanced-table tbody tr:nth-child(3) td:nth-child(1) {
+                background: linear-gradient(135deg, #cd7f32 0%, #f97316 100%);
+                color: #ffffff;
+                border-left: 4px solid #ea580c;
+            }
+            @media (max-width: 600px) {
+                .print-content { margin: 10px; }
+                .enhanced-table { font-size: 9pt; }
+                .enhanced-table th, .enhanced-table td { padding: 6px 4px; }
+                .print-header img { width: 70px; }
+                .print-header h1 { font-size: 16pt; }
+            }
+            .print-buttons {
+                margin-top: 25px;
+                text-align: center;
+                padding: 15px;
+                background: #f8fafc;
+                border-radius: 8px;
+                border: 2px dashed #cbd5e1;
+            }
+            .print-btn {
+                padding: 12px 24px;
+                font-size: 14px;
+                margin: 0 8px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .print-btn:first-child {
+                background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+                color: white;
+            }
+            .print-btn:last-child {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                color: white;
+            }
+            .print-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            }
+        </style>
     `;
-    document.body.appendChild(printArea);
-    window.print();
-    document.body.removeChild(printArea);
+
+    // Create new window for better mobile compatibility
+    const printWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes');
+    
+    if (!printWindow) {
+        // Fallback for popup blockers
+        alert('Please allow popups and try again, or use the download option.');
+        return;
+    }
+
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${title}</title>
+            ${printStyles}
+        </head>
+        <body>
+            <div class="print-content">
+                <div class="print-header">
+                    <img src="logo.png" alt="Logo">
+                    <h1>${title}</h1>
+                </div>
+                ${content}
+                <div style="margin-top: 20px; text-align: center;">
+                    <button onclick="window.print()" style="padding: 10px 20px; font-size: 14px;">
+                        Print / Save as PDF
+                    </button>
+                    <button onclick="window.close()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    printWindow.focus();
+    
+    // Auto-print after a small delay (works better on mobile)
+    setTimeout(() => {
+        try {
+            printWindow.print();
+        } catch (e) {
+            console.log('Auto-print failed, user can use manual button');
+        }
+    }, 1000);
 }
 
-// ---------------- Overall Ranklist ----------------
+// Updated functions remain the same, just call the improved openPrintWindow
 function printOverallRanklist() {
     const table = document.querySelector("#overallRank table");
     if (!table) return alert("Overall ranklist not available!");
     openPrintWindow("OVERALL RANKLIST", table.outerHTML);
 }
 
-// ---------------- Last 3 Exams Ranklist ----------------
 function printLast3Ranklist() {
     const table = document.querySelector("#last3Rank table");
     if (!table) return alert("Last 3 exams ranklist not available!");
     openPrintWindow("LAST 3 EXAMS RANKLIST", table.outerHTML);
 }
 
-// ---------------- Exam Ranklist ----------------
 function selectExamForPrint() {
     const exams = [...new Set(sampleData.map(d => d.exam))];
     const exam = prompt("Enter exam name to print:\n" + exams.join(", "));
@@ -1993,35 +2243,20 @@ function selectExamForPrint() {
     if (examData.length === 0) return alert("No data for selected exam");
 
     let html = `<table class='enhanced-table'><thead><tr>
-        <th>Rank</th>
-        <th>R. No</th>
-        <th>Name</th>
-        <th>Chm</th>
-        <th>Phy</th>
-        <th>Bio</th>
-        <th>Mth</th>
-        <th>Total</th>
-        <th>%</th>
+        <th>Rank</th><th>R. No</th><th>Name</th><th>Chm</th><th>Phy</th><th>Bio</th><th>Mth</th><th>Total</th><th>%</th>
     </tr></thead><tbody>`;
 
     examData
         .sort((a, b) => b.percent - a.percent)
         .forEach((d, i) => {
             html += `<tr>
-                <td>${i + 1}</td>
-                <td>${d.roll}</td>
-                <td>${d.name}</td>
-                <td>${d.chem}</td>
-                <td>${d.phy}</td>
-                <td>${d.bio}</td>
-                <td>${d.math}</td>
-                <td>${d.total}</td>
-                <td>${d.percent.toFixed(2)}%</td>
+                <td>${i + 1}</td><td>${d.roll}</td><td>${d.name}</td>
+                <td>${d.chem}</td><td>${d.phy}</td><td>${d.bio}</td><td>${d.math}</td>
+                <td>${d.total}</td><td>${d.percent.toFixed(2)}%</td>
             </tr>`;
         });
 
     html += "</tbody></table>";
-
     openPrintWindow(`${exam} RANKLIST`, html);
 }
 
@@ -2332,4 +2567,3 @@ document.addEventListener('DOMContentLoaded', function() {
         initializePrintExport();
     }, 1000);
 });
-
