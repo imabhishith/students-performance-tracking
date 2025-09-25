@@ -1479,7 +1479,7 @@ body {
 
 .subject-content {
   max-height: 0;
-  overflow: hidden;
+  overflow: scroll;
   transition: max-height var(--duration-slow) var(--ease-standard);
 }
 
@@ -2939,3 +2939,4 @@ body {
         font-size: 0.9rem;
     }
 }
+
