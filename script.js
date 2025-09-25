@@ -1825,26 +1825,26 @@ function performStudentCategorization() {
         ...student,
         score: overallPercentage,
         reason: overallPercentage < 35 ?
-        `Critical performance level: ${overallPercentage.toFixed(1)}%` :
+        `Critical performance level: ${overallPercentage.toFixed(2)}%` :
         `Significant performance decline: ${Math.abs(improvementRate).toFixed(1)}% drop`
       });
     }
 
     // Improving students (> 10% improvement)
-    if (improvementRate > 10) {
+    if (improvementRate > 5) {
       categorization.improvingStudents.push({
         ...student,
         improvement: improvementRate,
-        reason: `Strong upward trend: ${improvementRate.toFixed(1)}% improvement`
+        reason: `Strong upward trend: ${improvementRate.toFixed(2)}% improvement`
       });
     }
 
     // Declining students (< -10% but not at-risk)
-    if (improvementRate < -10 && overallPercentage >= 35) {
+    if (improvementRate < -5 && overallPercentage >= 35) {
       categorization.decliningStudents.push({
         ...student,
         decline: Math.abs(improvementRate),
-        reason: `Performance declining: ${Math.abs(improvementRate).toFixed(1)}% drop`
+        reason: `Performance declining: ${Math.abs(improvementRate).toFixed(2)}% drop`
       });
     }
   });
@@ -1868,23 +1868,22 @@ function generatePerformanceAlerts() {
 
     // Calculate recent decline
     let recentDecline = 0;
-    if (validExams.length >= 2) {
-      const midPoint = Math.floor(validExams.length / 2);
-      const firstHalf = validExams.slice(0, midPoint);
-      const secondHalf = validExams.slice(midPoint);
+    if (validExams.length >= 1) {
+      const lastExam = validExams[validExams.length - 1];
+      const lastPercent = (lastExam.total / lastExam.maxTotal) * 100;
 
-      const firstHalfAvg = firstHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / firstHalf.length;
-      const secondHalfAvg = secondHalf.reduce((sum, ex) => sum + (ex.total / ex.maxTotal * 100), 0) / secondHalf.length;
+      // Average percentage across all exams (student.cumPercent assumed as float or number)
+      const avgPercent = typeof student.cumPercent === 'string' ? parseFloat(student.cumPercent) : student.cumPercent;
 
-      recentDecline = firstHalfAvg - secondHalfAvg;
+      recentDecline = avgPercent - lastPercent;
     }
 
     // Low performance warnings
-    if (overallPercentage < 40 && overallPercentage > 0) {
+    if (overallPercentage < 35 && overallPercentage > 0) {
       alerts.lowPerformance.push({
         student,
         severity: overallPercentage < 25 ? 'HIGH' : 'MEDIUM',
-        message: `${student.name} (${student.roll}) has critically low performance at ${overallPercentage.toFixed(1)}%`,
+        message: `${student.name} (${student.roll}) has critically low performance at ${overallPercentage.toFixed(2)}%`,
         action: overallPercentage < 25 ?
         'Immediate intervention required - schedule parent meeting and create recovery plan' :
         'Monitor closely and provide additional support resources'
@@ -1892,11 +1891,11 @@ function generatePerformanceAlerts() {
     }
 
     // Sudden drop alerts
-    if (recentDecline > 20) {
+    if (recentDecline > 10) {
       alerts.suddenDrop.push({
         student,
         severity: 'HIGH',
-        message: `${student.name} (${student.roll}) has experienced a significant performance drop of ${recentDecline.toFixed(1)}%`,
+        message: `${student.name} (${student.roll}) has experienced a significant performance drop of ${recentDecline.toFixed(2)}%`,
         action: 'Investigate underlying causes, check attendance, and provide counseling support'
       });
     }
@@ -1936,10 +1935,10 @@ function generatePerformanceAlerts() {
 
 function getAlertTypeTitle(type) {
   const titles = {
-    lowPerformance: '<i class="fas fa-chart-line-down"></i> Critical Performance Warnings',
+    lowPerformance: '📉 Critical Performance Warnings',
     suddenDrop: '⬇️ Sudden Performance Drop',
     improvementRecognition: '🎉 Outstanding Improvements',
-    missingExam: '<i class="fas fa-times-circle"></i> Attendance Issues'
+    missingExam: '❌ Attendance Issues'
   };
   return titles[type] || type;
 }
