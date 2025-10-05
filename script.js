@@ -306,7 +306,7 @@ const sampleData = [
 ];
 
 const last3Exams = ['WE 5', 'WE 6', 'RT 2'];
-const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6' 'RT 2'];
+const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6', 'RT 2'];
 
 // Utility functions
 function showLoading() {
@@ -2584,6 +2584,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
 
 
