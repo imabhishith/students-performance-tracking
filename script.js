@@ -302,11 +302,50 @@ const sampleData = [
   {"roll":"CYL25","name":"PARVATHY N P","exam":"RT 2","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
   {"roll":"CYL33","name":"RIDHA FATHIMA","exam":"RT 2","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
   {"roll":"CYL36","name":"SREYA K SUNIL","exam":"RT 2","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-  {"roll":"CYL37","name":"AMRITHA SURESH","exam":"RT 2","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
+  {"roll":"CYL37","name":"AMRITHA SURESH","exam":"RT 2","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL02","name":"ABHIRAMI K M","exam":"WE 7","chem":51,"phy":4,"bio":0,"math":9,"total":64,"percent":40,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL03","name":"AISHA SHARAF S","exam":"WE 7","chem":2,"phy":-3,"bio":0,"math":0,"total":-1,"percent":-0.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL08","name":"ASWITHA C K","exam":"WE 7","chem":59,"phy":16,"bio":0,"math":4,"total":79,"percent":49.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL10","name":"DAKSHA PILLAI","exam":"WE 7","chem":40,"phy":25,"bio":0,"math":30,"total":95,"percent":59.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL12","name":"FARHAN M","exam":"WE 7","chem":10,"phy":5,"bio":0,"math":0,"total":15,"percent":9.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL13","name":"GAURAV S KRISHNAN","exam":"WE 7","chem":51,"phy":22,"bio":0,"math":15,"total":88,"percent":55,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL14","name":"GOWRI KRISHNAN M","exam":"WE 7","chem":24,"phy":4,"bio":0,"math":4,"total":32,"percent":20,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL15","name":"IHSAN HUSSAIN","exam":"WE 7","chem":55,"phy":20,"bio":0,"math":4,"total":79,"percent":49.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"WE 7","chem":60,"phy":14,"bio":0,"math":0,"total":74,"percent":46.25,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL19","name":"MIDHUN P","exam":"WE 7","chem":44,"phy":3,"bio":0,"math":5,"total":52,"percent":32.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 7","chem":37,"phy":-3,"bio":0,"math":14,"total":48,"percent":30,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL22","name":"NIDHA T P","exam":"WE 7","chem":50,"phy":15,"bio":0,"math":16,"total":81,"percent":50.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL23","name":"NIMITHA K J","exam":"WE 7","chem":17,"phy":15,"bio":0,"math":-3,"total":29,"percent":18.13,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"WE 7","chem":35,"phy":20,"bio":0,"math":10,"total":65,"percent":40.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL26","name":"PRAJUL KRISHNA","exam":"WE 7","chem":52,"phy":20,"bio":0,"math":4,"total":76,"percent":47.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL27","name":"RAFA HANOON K","exam":"WE 7","chem":66,"phy":22,"bio":0,"math":16,"total":104,"percent":65,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL28","name":"RHIDHI","exam":"WE 7","chem":45,"phy":20,"bio":0,"math":3,"total":68,"percent":42.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL29","name":"SHAZA FATHIMA P V","exam":"WE 7","chem":80,"phy":27,"bio":0,"math":30,"total":137,"percent":85.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL30","name":"SUKANYA V S","exam":"WE 7","chem":60,"phy":35,"bio":0,"math":36,"total":131,"percent":81.88,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL31","name":"VIDHU NAMBIAR A V","exam":"WE 7","chem":58,"phy":32,"bio":0,"math":36,"total":126,"percent":78.75,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL32","name":"VYDEHI NAIR","exam":"WE 7","chem":67,"phy":24,"bio":0,"math":16,"total":107,"percent":66.88,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL33","name":"RIDHA FATHIMA","exam":"WE 7","chem":58,"phy":0,"bio":0,"math":0,"total":58,"percent":36.25,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL35","name":"G VRINDA","exam":"WE 7","chem":10,"phy":2,"bio":0,"math":0,"total":12,"percent":7.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+{"roll":"CYL01","name":"ABHI A","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL05","name":"ANJANA PRASAD","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL06","name":"ARAVIND R CHANDRAN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL07","name":"ASJAN LAHAR","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL09","name":"ATUL RAJESH K","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL11","name":"EESHA NAIR","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL16","name":"KAILAS","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL25","name":"PARVATHY N P","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL34","name":"THAHSEEN THAJUDHEEN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL36","name":"SREYA K SUNIL","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL37","name":"AMRITHA SURESH","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL38","name":"SHARON BINU","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+{"roll":"CYL39","name":"NIRANJANA SAJEEV","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
 ];
 
-const last3Exams = ['WE 5', 'WE 6', 'RT 2'];
-const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6', 'RT 2'];
+const last3Exams = ['WE 6', 'RT 2', 'WE 7'];
+const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6', 'RT 2', 'WE 7'];
 
 // Utility functions
 function showLoading() {
@@ -2584,6 +2623,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
 
 
