@@ -347,6 +347,20 @@ const sampleData = [
 const last3Exams = ['WE 6', 'RT 2', 'WE 7'];
 const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6', 'RT 2', 'WE 7'];
 
+window.addEventListener('DOMContentLoaded', () => {
+  const themeToggleBtn = document.getElementById('themeToggle');
+  if (themeToggleBtn) {
+    // Delay a bit to make sure page is ready
+    setTimeout(() => {
+        themeToggleBtn.click();
+      // Hide loading overlay after theme toggle
+      setTimeout(() => {
+        document.getElementById('loadingOverlay').style.display = 'none';
+      }, 1);
+    }, 1);
+  }
+});
+
 // NEW: Filter functions
 function filterOverallRanklist(filterType) {
     currentOverallFilter = filterType;
@@ -3088,3 +3102,4 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
