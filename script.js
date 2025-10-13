@@ -304,48 +304,226 @@ const sampleData = [
   {"roll":"CYL36","name":"SREYA K SUNIL","exam":"RT 2","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
   {"roll":"CYL37","name":"AMRITHA SURESH","exam":"RT 2","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
   {"roll":"CYL02","name":"ABHIRAMI K M","exam":"WE 7","chem":51,"phy":4,"bio":0,"math":9,"total":64,"percent":40,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL03","name":"AISHA SHARAF S","exam":"WE 7","chem":2,"phy":-3,"bio":0,"math":0,"total":-1,"percent":-0.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL08","name":"ASWITHA C K","exam":"WE 7","chem":59,"phy":16,"bio":0,"math":4,"total":79,"percent":49.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL10","name":"DAKSHA PILLAI","exam":"WE 7","chem":40,"phy":25,"bio":0,"math":30,"total":95,"percent":59.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL12","name":"FARHAN M","exam":"WE 7","chem":10,"phy":5,"bio":0,"math":0,"total":15,"percent":9.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL13","name":"GAURAV S KRISHNAN","exam":"WE 7","chem":51,"phy":22,"bio":0,"math":15,"total":88,"percent":55,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL14","name":"GOWRI KRISHNAN M","exam":"WE 7","chem":24,"phy":4,"bio":0,"math":4,"total":32,"percent":20,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL15","name":"IHSAN HUSSAIN","exam":"WE 7","chem":55,"phy":20,"bio":0,"math":4,"total":79,"percent":49.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"WE 7","chem":60,"phy":14,"bio":0,"math":0,"total":74,"percent":46.25,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL19","name":"MIDHUN P","exam":"WE 7","chem":44,"phy":3,"bio":0,"math":5,"total":52,"percent":32.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 7","chem":37,"phy":-3,"bio":0,"math":14,"total":48,"percent":30,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL22","name":"NIDHA T P","exam":"WE 7","chem":50,"phy":15,"bio":0,"math":16,"total":81,"percent":50.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL23","name":"NIMITHA K J","exam":"WE 7","chem":17,"phy":15,"bio":0,"math":-3,"total":29,"percent":18.13,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"WE 7","chem":35,"phy":20,"bio":0,"math":10,"total":65,"percent":40.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL26","name":"PRAJUL KRISHNA","exam":"WE 7","chem":52,"phy":20,"bio":0,"math":4,"total":76,"percent":47.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL27","name":"RAFA HANOON K","exam":"WE 7","chem":66,"phy":22,"bio":0,"math":16,"total":104,"percent":65,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL28","name":"RHIDHI","exam":"WE 7","chem":45,"phy":20,"bio":0,"math":3,"total":68,"percent":42.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL29","name":"SHAZA FATHIMA P V","exam":"WE 7","chem":80,"phy":27,"bio":0,"math":30,"total":137,"percent":85.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL30","name":"SUKANYA V S","exam":"WE 7","chem":60,"phy":35,"bio":0,"math":36,"total":131,"percent":81.88,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL31","name":"VIDHU NAMBIAR A V","exam":"WE 7","chem":58,"phy":32,"bio":0,"math":36,"total":126,"percent":78.75,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL32","name":"VYDEHI NAIR","exam":"WE 7","chem":67,"phy":24,"bio":0,"math":16,"total":107,"percent":66.88,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL33","name":"RIDHA FATHIMA","exam":"WE 7","chem":58,"phy":0,"bio":0,"math":0,"total":58,"percent":36.25,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL35","name":"G VRINDA","exam":"WE 7","chem":10,"phy":2,"bio":0,"math":0,"total":12,"percent":7.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
-{"roll":"CYL01","name":"ABHI A","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL05","name":"ANJANA PRASAD","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL06","name":"ARAVIND R CHANDRAN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL07","name":"ASJAN LAHAR","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL09","name":"ATUL RAJESH K","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL11","name":"EESHA NAIR","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL16","name":"KAILAS","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL25","name":"PARVATHY N P","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL34","name":"THAHSEEN THAJUDHEEN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL36","name":"SREYA K SUNIL","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL37","name":"AMRITHA SURESH","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL38","name":"SHARON BINU","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL39","name":"NIRANJANA SAJEEV","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
+  {"roll":"CYL03","name":"AISHA SHARAF S","exam":"WE 7","chem":2,"phy":-3,"bio":0,"math":0,"total":-1,"percent":-0.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL08","name":"ASWITHA C K","exam":"WE 7","chem":59,"phy":16,"bio":0,"math":4,"total":79,"percent":49.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL10","name":"DAKSHA PILLAI","exam":"WE 7","chem":40,"phy":25,"bio":0,"math":30,"total":95,"percent":59.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL12","name":"FARHAN M","exam":"WE 7","chem":10,"phy":5,"bio":0,"math":0,"total":15,"percent":9.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL13","name":"GAURAV S KRISHNAN","exam":"WE 7","chem":51,"phy":22,"bio":0,"math":15,"total":88,"percent":55,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL14","name":"GOWRI KRISHNAN M","exam":"WE 7","chem":24,"phy":4,"bio":0,"math":4,"total":32,"percent":20,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL15","name":"IHSAN HUSSAIN","exam":"WE 7","chem":55,"phy":20,"bio":0,"math":4,"total":79,"percent":49.38,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"WE 7","chem":60,"phy":14,"bio":0,"math":0,"total":74,"percent":46.25,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL19","name":"MIDHUN P","exam":"WE 7","chem":44,"phy":3,"bio":0,"math":5,"total":52,"percent":32.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 7","chem":37,"phy":-3,"bio":0,"math":14,"total":48,"percent":30,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL22","name":"NIDHA T P","exam":"WE 7","chem":50,"phy":15,"bio":0,"math":16,"total":81,"percent":50.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL23","name":"NIMITHA K J","exam":"WE 7","chem":17,"phy":15,"bio":0,"math":-3,"total":29,"percent":18.13,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"WE 7","chem":35,"phy":20,"bio":0,"math":10,"total":65,"percent":40.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL26","name":"PRAJUL KRISHNA","exam":"WE 7","chem":52,"phy":20,"bio":0,"math":4,"total":76,"percent":47.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL27","name":"RAFA HANOON K","exam":"WE 7","chem":66,"phy":22,"bio":0,"math":16,"total":104,"percent":65,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL28","name":"RHIDHI","exam":"WE 7","chem":45,"phy":20,"bio":0,"math":3,"total":68,"percent":42.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL29","name":"SHAZA FATHIMA P V","exam":"WE 7","chem":80,"phy":27,"bio":0,"math":30,"total":137,"percent":85.63,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL30","name":"SUKANYA V S","exam":"WE 7","chem":60,"phy":35,"bio":0,"math":36,"total":131,"percent":81.88,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL31","name":"VIDHU NAMBIAR A V","exam":"WE 7","chem":58,"phy":32,"bio":0,"math":36,"total":126,"percent":78.75,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL32","name":"VYDEHI NAIR","exam":"WE 7","chem":67,"phy":24,"bio":0,"math":16,"total":107,"percent":66.88,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL33","name":"RIDHA FATHIMA","exam":"WE 7","chem":58,"phy":0,"bio":0,"math":0,"total":58,"percent":36.25,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL35","name":"G VRINDA","exam":"WE 7","chem":10,"phy":2,"bio":0,"math":0,"total":12,"percent":7.5,"maxTotal":160,"maxChem":80,"maxPhy":40,"maxBio":0,"maxMath":40},
+  {"roll":"CYL01","name":"ABHI A","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL05","name":"ANJANA PRASAD","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL06","name":"ARAVIND R CHANDRAN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL07","name":"ASJAN LAHAR","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL09","name":"ATUL RAJESH K","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL11","name":"EESHA NAIR","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL16","name":"KAILAS","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL25","name":"PARVATHY N P","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL34","name":"THAHSEEN THAJUDHEEN","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL36","name":"SREYA K SUNIL","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL37","name":"AMRITHA SURESH","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL38","name":"SHARON BINU","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL39","name":"NIRANJANA SAJEEV","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
 ];
 
 const last3Exams = ['WE 6', 'RT 2', 'WE 7'];
 const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6', 'RT 2', 'WE 7'];
+
+// NEW: Filter functions
+function filterOverallRanklist(filterType) {
+    currentOverallFilter = filterType;
+
+    // Update button states
+    document.getElementById('overallAllBtn').classList.toggle('active', filterType === 'all');
+    document.getElementById('overallRTBtn').classList.toggle('active', filterType === 'RT');
+    document.getElementById('overallWEBtn').classList.toggle('active', filterType === 'WE');
+
+    // Repopulate the overall ranklist with filtered data
+    populateOverallFiltered(filterType);
+}
+
+function filterLast3Ranklist(filterType) {
+    currentLast3Filter = filterType;
+
+    // Update button states
+    document.getElementById('last3AllBtn').classList.toggle('active', filterType === 'all');
+    document.getElementById('last3RTBtn').classList.toggle('active', filterType === 'RT');
+    document.getElementById('last3WEBtn').classList.toggle('active', filterType === 'WE');
+
+    // Repopulate the last 3 ranklist with filtered data
+    populateLast3Filtered(filterType);
+}
+
+function getFilteredExamsForOverall(filterType) {
+    if (filterType === 'all') {
+        return examOrder; // All exams
+    } else if (filterType === 'RT') {
+        return examOrder.filter(exam => exam.startsWith('RT')); // Only RT exams
+    } else if (filterType === 'WE') {
+        return examOrder.filter(exam => exam.startsWith('WE')); // Only WE exams
+    }
+    return examOrder;
+}
+
+function getFilteredExamsForLast3(filterType) {
+    if (filterType === 'all') {
+        return last3Exams; // WE 6, RT 2, WE 7
+    } else if (filterType === 'RT') {
+        // Get last 3 RT exams - but only RT 1 and RT 2 exist
+        const rtExams = examOrder.filter(exam => exam.startsWith('RT'));
+        return rtExams; // Will return ['RT 1', 'RT 2'] - all available RTs
+    } else if (filterType === 'WE') {
+        // Get last 3 WE exams - WE 5, WE 6, WE 7
+        const weExams = examOrder.filter(exam => exam.startsWith('WE'));
+        return weExams.slice(-3); // Last 3 WEs: ['WE 5', 'WE 6', 'WE 7']
+    }
+    return last3Exams;
+}
+
+function populateOverallFiltered(filterType) {
+    const tbody = document.querySelector('#rankTable tbody');
+    tbody.innerHTML = '';
+
+    const filteredExams = getFilteredExamsForOverall(filterType);
+
+    // Calculate cumulative totals based on filtered exams
+    const filteredStudents = students.map(stu => {
+        let cumTotal = 0;
+        let cumMax = 0;
+        let examsAttempted = 0;
+
+        stu.exams.forEach(ex => {
+            if (ex.maxTotal > 0 && filteredExams.includes(ex.exam)) {
+                cumTotal += ex.total;
+                cumMax += ex.maxTotal;
+                examsAttempted++;
+            }
+        });
+
+        const cumPercent = cumMax > 0 ? ((cumTotal / cumMax) * 100).toFixed(2) : '0';
+
+        return {
+            ...stu,
+            filteredCumTotal: cumTotal,
+            filteredCumMax: cumMax,
+            filteredCumPercent: cumPercent,
+            filteredExamsAttempted: examsAttempted
+        };
+    });
+
+    // Sort by filtered cumulative total
+    const sorted = [...filteredStudents].sort((a, b) => {
+        if (b.filteredCumTotal !== a.filteredCumTotal) {
+            return b.filteredCumTotal - a.filteredCumTotal;
+        }
+        return a.roll.localeCompare(b.roll);
+    });
+
+    sorted.forEach((stu, i) => {
+        const rank = stu.filteredCumTotal > 0 ? i + 1 : '-';
+        const tr = document.createElement('tr');
+
+        if (rank <= 3 && rank !== '-' && stu.filteredCumTotal > 0) {
+            tr.classList.add('top-performer');
+        }
+
+        tr.innerHTML = `
+            <td>${rank}</td>
+            <td>${stu.roll}</td>
+            <td class="name" data-roll="${stu.roll}">${stu.name}</td>
+            <td>${stu.filteredExamsAttempted}</td>
+            <td>${stu.filteredCumTotal}</td>
+            <td>${stu.filteredCumPercent}%</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('overallCount').textContent = `${students.length} students`;
+    addClickListeners();
+}
+
+function populateLast3Filtered(filterType) {
+    const tbody = document.querySelector('#last3Table tbody');
+    tbody.innerHTML = '';
+
+    const filteredExams = getFilteredExamsForLast3(filterType);
+
+    // Calculate last 3 totals based on filtered exams
+    const last3Students = students.map(stu => {
+        let total = 0;
+        let maxTotal = 0;
+        let examsAttempted = 0;
+
+        filteredExams.forEach(examName => {
+            const examData = stu.exams.find(ex => ex.exam === examName && ex.maxTotal > 0);
+            if (examData) {
+                total += examData.total;
+                maxTotal += examData.maxTotal;
+                examsAttempted++;
+            }
+        });
+
+        const last3Percent = maxTotal > 0 ? ((total / maxTotal) * 100).toFixed(2) : '0.00';
+
+        return {
+            ...stu,
+            last3Total: total,
+            last3Percent: last3Percent,
+            last3ExamsAttempted: examsAttempted,
+            last3MaxTotal: maxTotal
+        };
+    });
+
+    // Sort by last 3 total
+    const sorted = last3Students.sort((a, b) => {
+        if (b.last3Total !== a.last3Total) {
+            return b.last3Total - a.last3Total;
+        }
+        return a.roll.localeCompare(b.roll);
+    });
+
+    sorted.forEach((stu, i) => {
+        const rank = stu.last3Total > 0 ? i + 1 : '-';
+        const tr = document.createElement('tr');
+
+        if (rank <= 3 && rank !== '-') {
+            tr.classList.add('top-performer');
+        }
+
+        tr.innerHTML = `
+            <td>${rank}</td>
+            <td>${stu.roll}</td>
+            <td class="name" data-roll="${stu.roll}">${stu.name}</td>
+            <td>${stu.last3ExamsAttempted}</td>
+            <td>${stu.last3Total}</td>
+            <td>${stu.last3Percent}%</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('last3Count').textContent = `${students.length} students`;
+    addClickListeners();
+}
 
 // Utility functions
 function showLoading() {
@@ -835,19 +1013,21 @@ function buildStudentDetailsContent(stu) {
 
     validExams.forEach(ex => {
       const rank = getExamRank(stu, ex.exam);
-      const cPct = ex.maxScores.chem ? (ex.scores.chem / ex.maxScores.chem * 100).toFixed(2) : '0.00';
-      const pPct = ex.maxScores.phy ? (ex.scores.phy / ex.maxScores.phy * 100).toFixed(2) : '0.00';
-      const bPct = ex.maxScores.bio ? (ex.scores.bio / ex.maxScores.bio * 100).toFixed(2) : '0.00';
-      const mPct = ex.maxScores.math ? (ex.scores.math / ex.maxScores.math * 100).toFixed(2) : '0.00';
+
+      // Show "-" for subjects that have maxScore = 0, otherwise show score and percentage
+      const chemDisplay = ex.maxScores.chem > 0 ? `${ex.scores.chem} | ${(ex.scores.chem / ex.maxScores.chem * 100).toFixed(2)}%` : '-';
+      const phyDisplay = ex.maxScores.phy > 0 ? `${ex.scores.phy} | ${(ex.scores.phy / ex.maxScores.phy * 100).toFixed(2)}%` : '-';
+      const bioDisplay = ex.maxScores.bio > 0 ? `${ex.scores.bio} | ${(ex.scores.bio / ex.maxScores.bio * 100).toFixed(2)}%` : '-';
+      const mathDisplay = ex.maxScores.math > 0 ? `${ex.scores.math} | ${(ex.scores.math / ex.maxScores.math * 100).toFixed(2)}%` : '-';
 
       content += `
       <tr>
       <td>${ex.exam}</td>
       <td>${rank}</td>
-      <td>${ex.scores.chem} | ${cPct}%</td>
-      <td>${ex.scores.phy} | ${pPct}%</td>
-      <td>${ex.scores.bio} | ${bPct}%</td>
-      <td>${ex.scores.math} | ${mPct}%</td>
+      <td>${chemDisplay}</td>
+      <td>${phyDisplay}</td>
+      <td>${bioDisplay}</td>
+      <td>${mathDisplay}</td>
       <td>${ex.total}</td>
       <td>${(ex.total / ex.maxTotal * 100).toFixed(2)}%</td>
       </tr>
@@ -973,10 +1153,11 @@ function handleExamClick(event) {
     const rank = stu.examTotal > 0 ? i + 1 : '-';
     const ex = stu.examData;
 
-    const cPct = ex.maxScores.chem ? (ex.scores.chem / ex.maxScores.chem * 100).toFixed(2) : '0.00';
-    const pPct = ex.maxScores.phy ? (ex.scores.phy / ex.maxScores.phy * 100).toFixed(2) : '0.00';
-    const bPct = ex.maxScores.bio ? (ex.scores.bio / ex.maxScores.bio * 100).toFixed(2) : '0.00';
-    const mPct = ex.maxScores.math ? (ex.scores.math / ex.maxScores.math * 100).toFixed(2) : '0.00';
+    // Show "-" for subjects that have maxScore = 0, otherwise show score and percentage
+    const chemDisplay = ex.maxScores.chem > 0 ? `${ex.scores.chem} | ${(ex.scores.chem / ex.maxScores.chem * 100).toFixed(2)}%` : '-';
+    const phyDisplay = ex.maxScores.phy > 0 ? `${ex.scores.phy} | ${(ex.scores.phy / ex.maxScores.phy * 100).toFixed(2)}%` : '-';
+    const bioDisplay = ex.maxScores.bio > 0 ? `${ex.scores.bio} | ${(ex.scores.bio / ex.maxScores.bio * 100).toFixed(2)}%` : '-';
+    const mathDisplay = ex.maxScores.math > 0 ? `${ex.scores.math} | ${(ex.scores.math / ex.maxScores.math * 100).toFixed(2)}%` : '-';
 
     const rowClass = rank <= 3 && rank !== '-' ? ' class="top-performer"' : '';
 
@@ -985,10 +1166,10 @@ function handleExamClick(event) {
     <td>${rank}</td>
     <td>${stu.roll}</td>
     <td>${stu.name}</td>
-    <td>${ex.scores.chem} | ${cPct}%</td>
-    <td>${ex.scores.phy} | ${pPct}%</td>
-    <td>${ex.scores.bio} | ${bPct}%</td>
-    <td>${ex.scores.math} | ${mPct}%</td>
+    <td>${chemDisplay}</td>
+    <td>${phyDisplay}</td>
+    <td>${bioDisplay}</td>
+    <td>${mathDisplay}</td>
     <td>${stu.examTotal}</td>
     <td>${stu.examPercent}%</td>
     </tr>
@@ -1622,12 +1803,39 @@ function calculateExamDifficulty() {
       const bioAvg = examStat.bioScores.reduce((sum, score) => sum + score, 0) / examStat.bioScores.length;
       const mathAvg = examStat.mathScores.reduce((sum, score) => sum + score, 0) / examStat.mathScores.length;
 
-      const chemPercent = ((chemAvg / examStat.maxScores.chem) * 100).toFixed(1);
-      const phyPercent = ((phyAvg / examStat.maxScores.phy) * 100).toFixed(1);
-      const bioPercent = ((bioAvg / examStat.maxScores.bio) * 100).toFixed(1);
-      const mathPercent = ((mathAvg / examStat.maxScores.math) * 100).toFixed(1);
+      // Only calculate percentages and consider subjects that have maxScore > 0
+      let validSubjects = [];
+      let totalPercent = 0;
 
-      const overallAvg = (parseFloat(chemPercent) + parseFloat(phyPercent) + parseFloat(bioPercent) + parseFloat(mathPercent)) / 4;
+      if (examStat.maxScores.chem > 0) {
+        const chemPercent = ((chemAvg / examStat.maxScores.chem) * 100);
+        validSubjects.push(chemPercent);
+        totalPercent += chemPercent;
+      }
+      if (examStat.maxScores.phy > 0) {
+        const phyPercent = ((phyAvg / examStat.maxScores.phy) * 100);
+        validSubjects.push(phyPercent);
+        totalPercent += phyPercent;
+      }
+      if (examStat.maxScores.bio > 0) {
+        const bioPercent = ((bioAvg / examStat.maxScores.bio) * 100);
+        validSubjects.push(bioPercent);
+        totalPercent += bioPercent;
+      }
+      if (examStat.maxScores.math > 0) {
+        const mathPercent = ((mathAvg / examStat.maxScores.math) * 100);
+        validSubjects.push(mathPercent);
+        totalPercent += mathPercent;
+      }
+
+      // Calculate percentages for display (showing "-" for subjects with maxScore = 0)
+      const chemPercent = examStat.maxScores.chem > 0 ? ((chemAvg / examStat.maxScores.chem) * 100).toFixed(1) : '-';
+      const phyPercent = examStat.maxScores.phy > 0 ? ((phyAvg / examStat.maxScores.phy) * 100).toFixed(1) : '-';
+      const bioPercent = examStat.maxScores.bio > 0 ? ((bioAvg / examStat.maxScores.bio) * 100).toFixed(1) : '-';
+      const mathPercent = examStat.maxScores.math > 0 ? ((mathAvg / examStat.maxScores.math) * 100).toFixed(1) : '-';
+
+      // Calculate overall average only from valid subjects
+      const overallAvg = validSubjects.length > 0 ? totalPercent / validSubjects.length : 0;
 
       let difficultyScore = 10;
       if (overallAvg >= 80) difficultyScore = 1;
@@ -2292,13 +2500,203 @@ function printLast3Ranklist() {
   openPrintWindow("LAST 3 EXAMS RANKLIST", table.outerHTML);
 }
 
-function selectExamForPrint() {
-  const exams = [...new Set(sampleData.map(d => d.exam))];
-  const exam = prompt("Enter exam name to print:\n" + exams.join(", "));
-  if (!exam) return;
-  const examData = sampleData.filter(d => d.exam === exam && d.maxTotal > 0);
-  if (examData.length === 0) return alert("No data for selected exam");
 
+// Enhanced Print Dialog Functions with Exam Selection Modal
+let currentPrintType = '';
+
+// Make sure filter variables exist
+if (typeof currentOverallFilter === 'undefined') {
+    var currentOverallFilter = 'all';
+}
+if (typeof currentLast3Filter === 'undefined') {
+    var currentLast3Filter = 'all';
+}
+
+function openOverallPrintDialog() {
+  currentPrintType = 'overall';
+  document.getElementById('printDialogTitle').textContent = 'Print Overall Ranklist';
+  document.getElementById('printFilterDialog').style.display = 'flex';
+  // Reset to 'all' selection
+  document.querySelector('input[name="printFilter"][value="all"]').checked = true;
+}
+
+function openLast3PrintDialog() {
+  currentPrintType = 'last3';
+  document.getElementById('printDialogTitle').textContent = 'Print Last 3 Exams Ranklist';
+  document.getElementById('printFilterDialog').style.display = 'flex';
+  // Reset to 'all' selection
+  document.querySelector('input[name="printFilter"][value="all"]').checked = true;
+}
+
+function closePrintFilterDialog() {
+  document.getElementById('printFilterDialog').style.display = 'none';
+  currentPrintType = '';
+}
+
+function executePrint() {
+  const selectedFilter = document.querySelector('input[name="printFilter"]:checked');
+  if (!selectedFilter) {
+    alert('Please select a filter option');
+    return;
+  }
+
+  const filterValue = selectedFilter.value;
+
+  if (currentPrintType === 'overall') {
+    printOverallRanklistWithFilter(filterValue);
+  } else if (currentPrintType === 'last3') {
+    printLast3RanklistWithFilter(filterValue);
+  }
+
+  closePrintFilterDialog();
+}
+
+function printOverallRanklistWithFilter(filterType) {
+  console.log('Printing overall ranklist with filter:', filterType);
+
+  // Store the current filter to restore later
+  const originalFilter = currentOverallFilter || 'all';
+
+  // Apply the print filter if it's different from current
+  if (filterType !== originalFilter) {
+    console.log('Applying filter:', filterType);
+    filterOverallRanklist(filterType);
+  }
+
+  // Wait a moment for the filter to be applied, then get the table
+  setTimeout(() => {
+    const table = document.querySelector("#overallRank table");
+    if (!table) {
+      alert("Overall ranklist not available!");
+      return;
+    }
+
+    // Create title with filter info
+    let title = "OVERALL RANKLIST";
+    if (filterType === 'RT') {
+      title += " (RT ONLY)";
+    } else if (filterType === 'WE') {
+      title += " (WE ONLY)";  
+    }
+
+    console.log('Opening print window with title:', title);
+    openPrintWindow(title, table.outerHTML);
+
+    // Restore original filter after a delay
+    setTimeout(() => {
+      if (originalFilter !== filterType) {
+        console.log('Restoring original filter:', originalFilter);
+        filterOverallRanklist(originalFilter);
+      }
+    }, 1000);
+  }, 200);
+}
+
+function printLast3RanklistWithFilter(filterType) {
+  console.log('Printing last 3 ranklist with filter:', filterType);
+
+  // Store the current filter to restore later
+  const originalFilter = currentLast3Filter || 'all';
+
+  // Apply the print filter if it's different from current
+  if (filterType !== originalFilter) {
+    console.log('Applying filter:', filterType);
+    filterLast3Ranklist(filterType);
+  }
+
+  // Wait a moment for the filter to be applied, then get the table
+  setTimeout(() => {
+    const table = document.querySelector("#last3Rank table");
+    if (!table) {
+      alert("Last 3 exams ranklist not available!");
+      return;
+    }
+
+    // Create title with filter info
+    let title = "LAST 3 EXAMS RANKLIST";
+    if (filterType === 'RT') {
+      title += " (RT ONLY)";
+    } else if (filterType === 'WE') {
+      title += " (WE ONLY)";
+    }
+
+    console.log('Opening print window with title:', title);
+    openPrintWindow(title, table.outerHTML);
+
+    // Restore original filter after a delay
+    setTimeout(() => {
+      if (originalFilter !== filterType) {
+        console.log('Restoring original filter:', originalFilter);
+        filterLast3Ranklist(originalFilter);
+      }
+    }, 1000);
+  }, 200);
+}
+
+// Enhanced Exam Selection Modal Functions
+function openExamSelectionDialog() {
+  // Get available exams from the data
+  const exams = [...new Set(sampleData.map(d => d.exam))];
+
+  // Sort exams by the predefined order
+  const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6', 'RT 2', 'WE 7'];
+  const sortedExams = exams.sort((a, b) => {
+    const indexA = examOrder.indexOf(a);
+    const indexB = examOrder.indexOf(b);
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    if (indexA !== -1 && indexB === -1) return -1;
+    if (indexA === -1 && indexB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  // Populate the exam selection grid
+  const grid = document.getElementById('examSelectionGrid');
+  grid.innerHTML = '';
+
+  sortedExams.forEach(exam => {
+    // Check if this exam has data
+    const examData = sampleData.filter(d => d.exam === exam && d.maxTotal > 0);
+    const hasData = examData.length > 0;
+
+    const examButton = document.createElement('button');
+    examButton.className = hasData ? 'exam-option' : 'exam-option disabled';
+    examButton.onclick = hasData ? () => selectAndPrintExam(exam) : null;
+    examButton.disabled = !hasData;
+
+    examButton.innerHTML = `
+      <div class="exam-icon">
+        <i class="fas ${exam.startsWith('RT') ? 'fa-clock' : 'fa-calendar-week'}"></i>
+      </div>
+      <div class="exam-info">
+        <span class="exam-name">${exam}</span>
+        <span class="exam-students">${examData.length} students</span>
+      </div>
+    `;
+
+    grid.appendChild(examButton);
+  });
+
+  document.getElementById('examSelectionDialog').style.display = 'flex';
+}
+
+function closeExamSelectionDialog() {
+  document.getElementById('examSelectionDialog').style.display = 'none';
+}
+
+function selectAndPrintExam(examName) {
+  console.log('Printing exam:', examName);
+
+  // Close the dialog first
+  closeExamSelectionDialog();
+
+  // Get exam data
+  const examData = sampleData.filter(d => d.exam === examName && d.maxTotal > 0);
+  if (examData.length === 0) {
+    alert("No data available for selected exam");
+    return;
+  }
+
+  // Create the ranklist HTML
   let html = `<table class='enhanced-table'><thead><tr>
   <th>Rank</th><th>R. No</th><th>Name</th><th>Chm</th><th>Phy</th><th>Bio</th><th>Mth</th><th>Total</th><th>%</th>
   </tr></thead><tbody>`;
@@ -2313,9 +2711,11 @@ function selectExamForPrint() {
     </tr>`;
   });
 
-  html += "</tbody></table>";
-  openPrintWindow(`${exam} RANKLIST`, html);
+  html += '</tbody></table>';
+
+  openPrintWindow(`${examName} RANKLIST`, html);
 }
+
 
 // Initialize after DOM loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -2617,14 +3017,74 @@ function getPerformanceLevel(percentage) {
   return 'Needs Improvement';
 }
 
+// Footer functionality
+function updateFooterStats() {
+    try {
+        // Update student count
+        const studentCount = getUniqueStudents ? getUniqueStudents().length : 39;
+        const footerStudentElement = document.getElementById('footerStudentCount');
+        if (footerStudentElement) {
+            footerStudentElement.textContent = `${studentCount} Students`;
+        }
+        
+        // Update exam count  
+        const examCount = getUniqueExams ? getUniqueExams().length : 9;
+        const footerExamElement = document.getElementById('footerExamCount');
+        if (footerExamElement) {
+            footerExamElement.textContent = `${examCount} Exams`;
+        }
+        
+        // Update last updated time
+        const lastUpdatedElement = document.getElementById('lastUpdated');
+        if (lastUpdatedElement) {
+            lastUpdatedElement.textContent = new Date().toLocaleString();
+        }
+        
+        // Update total records
+        const totalRecordsElement = document.getElementById('totalRecords');
+        if (totalRecordsElement) {
+            const recordCount = typeof students !== 'undefined' ? students.length : 0;
+            totalRecordsElement.textContent = recordCount;
+        }
+    } catch (error) {
+        console.log('Footer stats update error:', error);
+    }
+}
+
+// Refresh all data function
+function refreshAllData() {
+    if (typeof showLoadingOverlay === 'function') {
+        showLoadingOverlay();
+    }
+    
+    setTimeout(() => {
+        updateFooterStats();
+        if (typeof hideLoadingOverlay === 'function') {
+            hideLoadingOverlay();
+        }
+        alert('Data refreshed successfully!');
+    }, 1000);
+}
+
+// Export all data function
+function exportAllData() {
+    alert('Exporting all data... This feature will be implemented soon!');
+}
+
+// Initialize footer when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure other scripts have loaded
+    setTimeout(() => {
+        updateFooterStats();
+    }, 500);
+    
+    // Update footer stats every 30 seconds
+    setInterval(updateFooterStats, 30000);
+});
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(() => {
     initializePrintExport();
   }, 1000);
 });
-
-
-
-
-
