@@ -2873,153 +2873,313 @@ function printStudentProfileReport(student) {
   const maxPossibleScore = student.cumMax;
   const averagePercent = parseFloat(student.cumPercent);
 
-  const printContent = `
-  <div class="student-profile-print">
-  <div class="print-header">
-  <img src="logo.png" style="width:150px; margin:10px auto;display:block;" alt="Institute Logo">
-  <h1 style="text-align:center;">REPEATERS BATCH 2025-26</h1>
-  <i>Student Performance Report</i>
-  <p><i>Generated on: ${new Date().toLocaleDateString()}</i></p>
-  </div>
+  // Function to convert subject short codes to full names
+  const getFullSubjectName = (shortName) => {
+    const subjectMap = {
+      'CHEMISTRY': 'Chemistry',
+      'PHYSICS': 'Physics',
+      'BIOLOGY': 'Biology',
+      'MATHEMATICS': 'Mathematics',
+      'chem': 'Chemistry',
+      'phy': 'Physics',
+      'bio': 'Biology',
+      'math': 'Mathematics'
+    };
+    return subjectMap[shortName] || shortName;
+  };
 
-  <div class="profile-section">
-  <h3>Student Information</h3>
-  <p><strong>Name:</strong> ${student.name}</p>
-  <p><strong>Roll Number:</strong> ${student.roll}</p>
-  <p><strong>Total Exams Attempted:</strong> ${totalExams}</p>
-  <p><strong>Overall Percentage:</strong> ${averagePercent.toFixed(2)}%</p>
-  </div>
+  // Convert subject arrays to full names
+  const strongSubjectsFullNames = student.strongSubject.map(s => getFullSubjectName(s));
+  const weakSubjectsFullNames = student.weakSubject.map(s => getFullSubjectName(s));
 
-  <div class="profile-section">
-  <h3>Performance Summary</h3>
-  <div class="performance-summary">
-  <p><strong>Total Score:</strong> ${totalScore} / ${maxPossibleScore}</p>
-  <p><strong>Average Score:</strong> ${(totalScore / Math.max(totalExams, 1)).toFixed(2)}</p>
-  <p><strong>Strong Subjects:</strong> <span style="color:green; font-weight:600;">${student.strongSubject.join(', ')}</span></p>
-  <p><strong>Weak Subjects:</strong> <span style="color:red; font-weight:600;">${student.weakSubject.join(', ')}</span></p>
-  </div>
-  </div>
+  const printStyles = `
+    <style>
+      @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
-  <div class="profile-section">
-  <h3>Subject-wise Performance</h3>
-  <table style="width:100%;border-collapse:collapse;">
-  <thead>
-  <tr>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">SUBJECT</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">AVG %</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">PERFORMANCE</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td style="border:1px solid #ccc;padding:8px;">Chemistry</td>
-  <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.chem}%</td>
-  <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.chem)}</td>
-  </tr>
-  <tr>
-  <td style="border:1px solid #ccc;padding:8px;">Physics</td>
-  <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.phy}%</td>
-  <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.phy)}</td>
-  </tr>
-  <tr>
-  <td style="border:1px solid #ccc;padding:8px;">Biology</td>
-  <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.bio}%</td>
-  <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.bio)}</td>
-  </tr>
-  <tr>
-  <td style="border:1px solid #ccc;padding:8px;">Mathematics</td>
-  <td style="border:1px solid #ccc;padding:8px;">${student.subjectAverages.math}%</td>
-  <td style="border:1px solid #ccc;padding:8px;">${getPerformanceLevel(student.subjectAverages.math)}</td>
-  </tr>
-  </tbody>
-  </table>
-  </div>
+      @media print {
+        body > *:not(.student-profile-print) { display: none !important; }
+        body { margin: 0; padding: 0; background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .student-profile-print { display: block !important; visibility: visible !important; width: 95%; margin: 0; padding: 20px; background: white; }
 
-  <div class="profile-section">
-  <h3>Exam-wise Performance</h3>
-  <table style="width:100%;border-collapse:collapse;">
-  <thead>
-  <tr>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Exam</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Rank</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Chm</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Phy</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Bio</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Mth</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">Total</th>
-  <th style="border:1px solid #ccc;padding:8px;background:#f5f5f5;">%</th>
-  </tr>
-  </thead>
-  <tbody>
-  ${student.exams.map(exam => `
-  <tr>
-  <td style="border:1px solid #ccc;padding:8px;">${exam.exam}</td>
-  <td style="border:1px solid #ccc;padding:8px;">${getExamRank(student, exam.exam)}</td>
-  ${exam.maxTotal === 0
-  ? `<td colspan="6" style="border:1px solid #ccc;padding:8px;text-align:center; color:red">Not Attempted</td>`
-  : `
-  <td style="border:1px solid #ccc;padding:8px;">${exam.scores.chem}/${exam.maxScores.chem}</td>
-  <td style="border:1px solid #ccc;padding:8px;">${exam.scores.phy}/${exam.maxScores.phy}</td>
-  <td style="border:1px solid #ccc;padding:8px;">${exam.scores.bio}/${exam.maxScores.bio}</td>
-  <td style="border:1px solid #ccc;padding:8px;">${exam.scores.math}/${exam.maxScores.math}</td>
-  <td style="border:1px solid #ccc;padding:8px;">${exam.total}/${exam.maxTotal}</td>
-  <td style="border:1px solid #ccc;padding:8px;">${exam.percent.toFixed(2)}%</td>
-  `}
-  </tr>
-  `).join('')}
-
-  </table>
-  </div>
-
-  <div class="profile-section">
-  <h3>Recommendations</h3>
-  <div class="performance-summary">
-  <p><strong>Areas for Improvement:</strong> Focus on ${student.weakSubject.join(' and ')} to boost overall performance.</p>
-  <p><strong>Strengths to Maintain:</strong> Continue excellent work in ${student.strongSubject.join(' and ')}.</p>
-  </div>
-  </div>
-  </div>
+        .student-profile-print .print-header {
+          text-align: center;
+          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%);
+          padding: 30px 20px;
+          border-radius: 10px;
+          margin-bottom: 25px;
+          position: relative;
+          overflow: hidden;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print .print-header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          right: -10%;
+          width: 250px;
+          height: 250px;
+          background: rgba(255,255,255,0.1);
+          border-radius: 50%;
+        }
+        .student-profile-print .print-header img {
+          max-width: 150px;
+          height: auto;
+          margin-bottom: 12px;
+          filter: brightness(0) invert(1);
+          position: relative;
+          z-index: 2;
+        }
+        .student-profile-print .print-header h1 {
+          font-size: 24pt;
+          font-weight: 800;
+          color: white !important;
+          margin: 10px 0 6px 0;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+          position: relative;
+          z-index: 2;
+        }
+        .student-profile-print .print-header p {
+          font-size: 11pt;
+          color: white !important;
+          margin: 4px 0;
+          font-weight: 500;
+          position: relative;
+          z-index: 2;
+        }
+        .student-profile-print .profile-section {
+          background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+          border: 2px solid #e0e7ff;
+          border-radius: 10px;
+          padding: 20px;
+          margin-bottom: 18px;
+          page-break-inside: avoid;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print .profile-section h3 {
+          font-size: 14pt;
+          font-weight: 700;
+          color: #1e40af !important;
+          margin: 0 0 14px 0;
+          padding-bottom: 10px;
+          border-bottom: 3px solid #3b82f6;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .student-profile-print .profile-section h3 i {
+          font-size: 16pt;
+          color: #3b82f6 !important;
+        }
+        .student-profile-print .profile-section h3::before {
+          content: '';
+          width: 4px;
+          height: 20px;
+          background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+          border-radius: 2px;
+        }
+        .student-profile-print .profile-section p {
+          font-size: 10pt;
+          line-height: 1.6;
+          margin: 6px 0;
+          color: #374151 !important;
+        }
+        .student-profile-print .profile-section strong {
+          color: #1f2937 !important;
+          font-weight: 600;
+          display: inline-block;
+          min-width: 140px;
+        }
+        .student-profile-print .performance-summary {
+          background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+          border-left: 4px solid #10b981;
+          padding: 16px;
+          border-radius: 6px;
+          margin: 12px 0;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print .performance-summary strong {
+          color: #047857 !important;
+        }
+        .student-profile-print table {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+          border-radius: 6px;
+          overflow: hidden;
+          margin: 12px 0;
+          page-break-inside: avoid;
+        }
+        .student-profile-print table thead {
+          background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print table th {
+          padding: 10px 8px;
+          text-align: left;
+          font-weight: 700;
+          font-size: 9pt;
+          color: white !important;
+          text-transform: uppercase;
+          letter-spacing: 0.4px;
+          border: none;
+        }
+        .student-profile-print table td {
+          padding: 9px 8px;
+          border-bottom: 1px solid #e5e7eb;
+          font-size: 9pt;
+          color: #374151 !important;
+          background: white;
+        }
+        .student-profile-print table tbody tr:nth-child(odd) td {
+          background: #f9fafb !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print table tbody tr:last-child td {
+          border-bottom: none;
+        }
+        .student-profile-print .strong-subject {
+          background: #d1fae5 !important;
+          color: #047857 !important;
+          padding: 3px 8px;
+          border-radius: 12px;
+          font-weight: 600;
+          display: inline-block;
+          border: 1px solid #10b981;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print .weak-subject {
+          background: #fee2e2 !important;
+          color: #dc2626 !important;
+          padding: 3px 8px;
+          border-radius: 12px;
+          font-weight: 600;
+          display: inline-block;
+          border: 1px solid #ef4444;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print .recommendations {
+          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+          border: 2px solid #fbbf24;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .student-profile-print .recommendations h3 {
+          color: #92400e !important;
+          border-bottom-color: #f59e0b;
+        }
+        .student-profile-print .recommendations h3 i {
+          color: #f59e0b !important;
+        }
+        .student-profile-print .recommendations p {
+          color: #78350f !important;
+          font-weight: 500;
+        }
+        .student-profile-print .print-footer {
+          text-align: center;
+          margin-top: 25px;
+          padding-top: 15px;
+          border-top: 2px solid #e5e7eb;
+          font-size: 8pt;
+          color: #6b7280 !important;
+        }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      }
+    </style>
   `;
 
-  function printContentDirect(content) {
-    // Create hidden iframe
-    const iframe = document.createElement('iframe');
-    iframe.style.position = 'fixed';
-    iframe.style.right = '0';
-    iframe.style.bottom = '0';
-    iframe.style.width = '0';
-    iframe.style.height = '0';
-    iframe.style.border = '0';
-    document.body.appendChild(iframe);
+  const printContent = `
+    ${printStyles}
+    <div class="student-profile-print">
+      <div class="print-header">
+        <img src="logo.png" alt="Institute Logo">
+        <h1>CRISPR</h1>
+        <p>REPEATER'S BATCH 2025-26</p>
+        <p>Student Performance Analysis Report</p>
+      </div>
 
-    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-    iframeDoc.open();
-    iframeDoc.write(`
-    <html>
-    <head>
-    <title>Print Preview</title>
-    <style>
-    /* Your print styles here */
-    body { margin: 20px; font-family: Arial, sans-serif; }
-    .student-profile-print { /* ... your styles ... */ }
-    /* Other styles... */
-    </style>
-    </head>
-    <body>${content}</body>
-    </html>`);
-    iframeDoc.close();
+      <div class="profile-section">
+        <h3><i class="fas fa-clipboard-list"></i> STUDENT INFORMATION</h3>
+        <div class="performance-summary">
+          <p><strong>Name:</strong> ${student.name}</p>
+          <p><strong>Roll Number:</strong> ${student.roll}</p>
+          <p><strong>Total Exams Attempted:</strong> ${totalExams}</p>
+          <p><strong>Overall Percentage:</strong> ${averagePercent.toFixed(2)}%</p>
+          <p><strong>Total Score:</strong> ${totalScore} / ${maxPossibleScore}</p>
+          <p><strong>Average Score:</strong> ${(totalScore / Math.max(totalExams, 1)).toFixed(2)}</p>
+        </div>
+      </div>
 
-    iframe.onload = function() {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-      setTimeout(() => {
-        document.body.removeChild(iframe);
-      }, 1000);
-    };
-  }
+      <div class="profile-section">
+        <h3><i class="fas fa-dumbbell"></i> SUBJECT PERFORMANCE</h3>
+        <p><strong>Strong Subjects:</strong> <span class="strong-subject">${strongSubjectsFullNames.join('</span> <span class="strong-subject">')}</span></p>
+        <p><strong>Weak Subjects:</strong> <span class="weak-subject">${weakSubjectsFullNames.join('</span> <span class="weak-subject">')}</span></p>
+        <table>
+          <thead>
+            <tr>
+              <th>SUBJECT</th>
+              <th>AVG %</th>
+              <th>PERFORMANCE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Chemistry</td><td>${student.subjectAverages.chem}%</td><td>${getPerformanceLevel(student.subjectAverages.chem)}</td></tr>
+            <tr><td>Physics</td><td>${student.subjectAverages.phy}%</td><td>${getPerformanceLevel(student.subjectAverages.phy)}</td></tr>
+            <tr><td>Biology</td><td>${student.subjectAverages.bio}%</td><td>${getPerformanceLevel(student.subjectAverages.bio)}</td></tr>
+            <tr><td>Mathematics</td><td>${student.subjectAverages.math}%</td><td>${getPerformanceLevel(student.subjectAverages.math)}</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-  printContentDirect(printContent);
+      <div class="profile-section">
+        <h3><i class="fas fa-chart-bar"></i> EXAM BREAKDOWN</h3>
+        <table>
+          <thead>
+            <tr><th>Exam</th><th>Rank</th><th>Chem</th><th>Phy</th><th>Bio</th><th>Math</th><th>Total</th><th>%</th></tr>
+          </thead>
+          <tbody>
+            ${student.exams.map(exam => {
+              if (exam.maxTotal === 0) return '';
+              return `<tr>
+                <td>${exam.exam}</td>
+                <td>${getExamRank(student, exam.exam)}</td>
+                <td>${exam.scores.chem}/${exam.maxScores.chem}</td>
+                <td>${exam.scores.phy}/${exam.maxScores.phy}</td>
+                <td>${exam.scores.bio}/${exam.maxScores.bio}</td>
+                <td>${exam.scores.math}/${exam.maxScores.math}</td>
+                <td>${exam.total}/${exam.maxTotal}</td>
+                <td>${exam.percent.toFixed(2)}%</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
 
+      <div class="profile-section recommendations">
+        <h3><i class="fas fa-lightbulb"></i> RECOMMENDATIONS</h3>
+        <p><strong>Areas for Improvement:</strong> Focus on ${weakSubjectsFullNames.join(' and ')} to boost overall performance.</p>
+        <p><strong>Strengths to Maintain:</strong> Continue excellent work in ${strongSubjectsFullNames.join(' and ')}.</p>
+        <p><strong>Study Tips:</strong> Regular practice and consistent revision will help improve weaker areas.</p>
+      </div>
+
+      <div class="print-footer">
+        <p>Generated on ${new Date().toLocaleDateString()} | CRISPR - Student Performance Analysis Portal</p>
+        <p>© 2025 CRISPR - Repeater's Batch 2025-26</p>
+      </div>
+    </div>
+  `;
+
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(printContent);
+  printWindow.document.close();
+  printWindow.focus();
+  setTimeout(() => { printWindow.print(); }, 500);
 }
 
 function getPerformanceLevel(percentage) {
