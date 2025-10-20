@@ -2,7 +2,7 @@ let students = [];
 let currentExpandedRow = null;
 let currentExpandedExam = null;
 let chartInstances = {};
-const currentDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+const currentDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: 'numeric' });
 
 const subjectNames = {
   chem: 'CHEMISTRY',
@@ -5314,4 +5314,5 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
