@@ -2,6 +2,7 @@ let students = [];
 let currentExpandedRow = null;
 let currentExpandedExam = null;
 let chartInstances = {};
+const currentDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
 
 const subjectNames = {
   chem: 'CHEMISTRY',
@@ -343,44 +344,44 @@ const sampleData = [
   {"roll":"CYL38","name":"SHARON BINU","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
   {"roll":"CYL39","name":"NIRANJANA SAJEEV","exam":"WE 7","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
   {"roll":"CYL02","name":"ABHIRAMI K M","exam":"WE 8","chem":2,"phy":0,"bio":16,"math":9,"total":27,"percent":17.76,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL03","name":"AISHA SHARAF S","exam":"WE 8","chem":7,"phy":8,"bio":18,"math":0,"total":33,"percent":21.71,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL08","name":"ASWITHA C K","exam":"WE 8","chem":27,"phy":28,"bio":26,"math":28,"total":109,"percent":71.71,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL10","name":"DAKSHA PILLAI","exam":"WE 8","chem":30,"phy":7,"bio":35,"math":15,"total":87,"percent":57.24,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL13","name":"GAURAV S KRISHNAN","exam":"WE 8","chem":24,"phy":15,"bio":23,"math":18,"total":80,"percent":52.63,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL14","name":"GOWRI KRISHNAN M","exam":"WE 8","chem":10,"phy":4,"bio":27,"math":16,"total":57,"percent":37.5,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL15","name":"IHSAN HUSSAIN","exam":"WE 8","chem":27,"phy":24,"bio":35,"math":19,"total":105,"percent":69.08,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"WE 8","chem":23,"phy":0,"bio":26,"math":0,"total":49,"percent":32.24,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"WE 8","chem":27,"phy":20,"bio":36,"math":24,"total":107,"percent":70.39,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL19","name":"MIDHUN P","exam":"WE 8","chem":11,"phy":8,"bio":30,"math":18,"total":67,"percent":44.08,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 8","chem":5,"phy":6,"bio":30,"math":16,"total":57,"percent":37.5,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL22","name":"NIDHA T P","exam":"WE 8","chem":27,"phy":24,"bio":40,"math":28,"total":119,"percent":78.29,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL23","name":"NIMITHA K J","exam":"WE 8","chem":24,"phy":11,"bio":31,"math":-3,"total":63,"percent":41.45,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL26","name":"PRAJUL KRISHNA","exam":"WE 8","chem":28,"phy":24,"bio":26,"math":16,"total":94,"percent":61.84,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL27","name":"RAFA HANOON K","exam":"WE 8","chem":26,"phy":23,"bio":30,"math":28,"total":107,"percent":70.39,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL28","name":"RHIDHI","exam":"WE 8","chem":16,"phy":4,"bio":32,"math":28,"total":80,"percent":52.63,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL29","name":"SHAZA FATHIMA P V","exam":"WE 8","chem":35,"phy":27,"bio":35,"math":31,"total":128,"percent":84.21,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL30","name":"SUKANYA V S","exam":"WE 8","chem":35,"phy":22,"bio":26,"math":31,"total":114,"percent":75,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL31","name":"VIDHU NAMBIAR A V","exam":"WE 8","chem":27,"phy":24,"bio":40,"math":32,"total":123,"percent":80.92,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL32","name":"VYDEHI NAIR","exam":"WE 8","chem":23,"phy":20,"bio":31,"math":27,"total":101,"percent":66.45,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL33","name":"RIDHA FATHIMA","exam":"WE 8","chem":36,"phy":0,"bio":35,"math":0,"total":71,"percent":46.71,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL35","name":"G VRINDA","exam":"WE 8","chem":6,"phy":4,"bio":18,"math":2,"total":30,"percent":19.74,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
-{"roll":"CYL01","name":"ABHI A","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL05","name":"ANJANA PRASAD","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL06","name":"ARAVIND R CHANDRAN","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL07","name":"ASJAN LAHAR","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL09","name":"ATUL RAJESH K","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL11","name":"EESHA NAIR","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL12","name":"FARHAN M","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL16","name":"KAILAS","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL25","name":"PARVATHY N P","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL34","name":"THAHSEEN THAJUDHEEN","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL36","name":"SREYA K SUNIL","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL37","name":"AMRITHA SURESH","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL38","name":"SHARON BINU","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
-{"roll":"CYL39","name":"NIRANJANA SAJEEV","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
+  {"roll":"CYL03","name":"AISHA SHARAF S","exam":"WE 8","chem":7,"phy":8,"bio":18,"math":0,"total":33,"percent":21.71,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL08","name":"ASWITHA C K","exam":"WE 8","chem":27,"phy":28,"bio":26,"math":28,"total":109,"percent":71.71,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL10","name":"DAKSHA PILLAI","exam":"WE 8","chem":30,"phy":7,"bio":35,"math":15,"total":87,"percent":57.24,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL13","name":"GAURAV S KRISHNAN","exam":"WE 8","chem":24,"phy":15,"bio":23,"math":18,"total":80,"percent":52.63,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL14","name":"GOWRI KRISHNAN M","exam":"WE 8","chem":10,"phy":4,"bio":27,"math":16,"total":57,"percent":37.5,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL15","name":"IHSAN HUSSAIN","exam":"WE 8","chem":27,"phy":24,"bio":35,"math":19,"total":105,"percent":69.08,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"WE 8","chem":23,"phy":0,"bio":26,"math":0,"total":49,"percent":32.24,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"WE 8","chem":27,"phy":20,"bio":36,"math":24,"total":107,"percent":70.39,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL19","name":"MIDHUN P","exam":"WE 8","chem":11,"phy":8,"bio":30,"math":18,"total":67,"percent":44.08,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 8","chem":5,"phy":6,"bio":30,"math":16,"total":57,"percent":37.5,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL22","name":"NIDHA T P","exam":"WE 8","chem":27,"phy":24,"bio":40,"math":28,"total":119,"percent":78.29,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL23","name":"NIMITHA K J","exam":"WE 8","chem":24,"phy":11,"bio":31,"math":-3,"total":63,"percent":41.45,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL26","name":"PRAJUL KRISHNA","exam":"WE 8","chem":28,"phy":24,"bio":26,"math":16,"total":94,"percent":61.84,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL27","name":"RAFA HANOON K","exam":"WE 8","chem":26,"phy":23,"bio":30,"math":28,"total":107,"percent":70.39,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL28","name":"RHIDHI","exam":"WE 8","chem":16,"phy":4,"bio":32,"math":28,"total":80,"percent":52.63,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL29","name":"SHAZA FATHIMA P V","exam":"WE 8","chem":35,"phy":27,"bio":35,"math":31,"total":128,"percent":84.21,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL30","name":"SUKANYA V S","exam":"WE 8","chem":35,"phy":22,"bio":26,"math":31,"total":114,"percent":75,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL31","name":"VIDHU NAMBIAR A V","exam":"WE 8","chem":27,"phy":24,"bio":40,"math":32,"total":123,"percent":80.92,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL32","name":"VYDEHI NAIR","exam":"WE 8","chem":23,"phy":20,"bio":31,"math":27,"total":101,"percent":66.45,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL33","name":"RIDHA FATHIMA","exam":"WE 8","chem":36,"phy":0,"bio":35,"math":0,"total":71,"percent":46.71,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL35","name":"G VRINDA","exam":"WE 8","chem":6,"phy":4,"bio":18,"math":2,"total":30,"percent":19.74,"maxTotal":152,"maxChem":40,"maxPhy":32,"maxBio":40,"maxMath":40},
+  {"roll":"CYL01","name":"ABHI A","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL04","name":"ALEENA ELIZABETH MATHEW","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL05","name":"ANJANA PRASAD","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL06","name":"ARAVIND R CHANDRAN","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL07","name":"ASJAN LAHAR","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL09","name":"ATUL RAJESH K","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL11","name":"EESHA NAIR","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL12","name":"FARHAN M","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL16","name":"KAILAS","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL21","name":"NIDHA FATHIMA V N","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL25","name":"PARVATHY N P","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL34","name":"THAHSEEN THAJUDHEEN","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL36","name":"SREYA K SUNIL","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL37","name":"AMRITHA SURESH","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL38","name":"SHARON BINU","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0},
+  {"roll":"CYL39","name":"NIRANJANA SAJEEV","exam":"WE 8","chem":0,"phy":0,"bio":0,"math":0,"total":0,"percent":0,"maxTotal":0,"maxChem":0,"maxPhy":0,"maxBio":0,"maxMath":0}
 ];
 
 const last3Exams = ['RT 2', 'WE 7', 'WE 8'];
@@ -458,29 +459,30 @@ function populateOverallFiltered(filterType) {
     const filteredExams = getFilteredExamsForOverall(filterType);
 
     // Calculate cumulative totals based on filtered exams
-    const filteredStudents = students.map(stu => {
-        let cumTotal = 0;
-        let cumMax = 0;
-        let examsAttempted = 0;
+const filteredStudents = students.map(stu => {
+  let cumTotal = 0;
+  let cumMax = 0;
+  let examsAttempted = 0;
 
-        stu.exams.forEach(ex => {
-            if (ex.maxTotal > 0 && filteredExams.includes(ex.exam)) {
-                cumTotal += ex.total;
-                cumMax += ex.maxTotal;
-                examsAttempted++;
-            }
-        });
+  stu.exams.forEach(ex => {
+    if (ex.maxTotal > 0 && filteredExams.includes(ex.exam)) {
+      cumTotal += ex.total;
+      cumMax += ex.maxTotal;
+      examsAttempted++;
+    }
+  });
 
-        const cumPercent = cumMax > 0 ? ((cumTotal / cumMax) * 100).toFixed(2) : '0';
+  const cumPercent = cumMax > 0 ? ((cumTotal / cumMax) * 100).toFixed(2) : "0.00";
 
-        return {
-            ...stu,
-            filteredCumTotal: cumTotal,
-            filteredCumMax: cumMax,
-            filteredCumPercent: cumPercent,
-            filteredExamsAttempted: examsAttempted
-        };
-    });
+  return {
+    ...stu,
+    filteredCumTotal: cumTotal,
+    filteredCumMax: cumMax,
+    filteredCumPercent: cumPercent,
+    filteredExamsAttempted: examsAttempted
+  };
+});
+
 
     // Sort by filtered cumulative total
     const sorted = [...filteredStudents].sort((a, b) => {
@@ -798,75 +800,79 @@ function populateStats() {
   document.querySelector('#totalExams').textContent = totalExams;
   document.querySelector('#totalStudents').textContent = totalStudents;
 
-  // Overall average
-  const overallAvg = students.length > 0 ?
-  (students.reduce((sum, stu) => sum + parseFloat(stu.cumPercent), 0) / students.length).toFixed(2) : 0;
-  document.querySelector('#avgScore').textContent = `${overallAvg}%`;
+// Overall average — cohort totals over cohort maxima
+let overallObtained = 0;
+let overallMax = 0;
+students.forEach(stu => {
+  overallObtained += (parseFloat(stu.cumTotal) || 0);
+  overallMax += (parseFloat(stu.cumMax) || 0);
+});
+const overallAvg = overallMax > 0 ? ((overallObtained / overallMax) * 100).toFixed(2) : "0.00";
+document.querySelector('#avgScore').textContent = `${overallAvg}%`;
 
-  // Class average % per subject
-  const subjectAverages = { chem: 0, phy: 0, bio: 0, math: 0 };
-  const subjectCounts = { chem: 0, phy: 0, bio: 0, math: 0 };
 
-  students.forEach(stu => {
-    for (let sub in stu.subjectAverages) {
-      const avg = parseFloat(stu.subjectAverages[sub]);
-      if (avg > 0) {
-        subjectAverages[sub] += avg;
-        subjectCounts[sub]++;
-      }
-    }
+  // Class average % per subject — sum of totals / sum of maxima
+const subjectKeys = ['chem', 'phy', 'bio', 'math'];
+const subjectTotals = { chem: 0, phy: 0, bio: 0, math: 0 };
+const subjectMaxTotals = { chem: 0, phy: 0, bio: 0, math: 0 };
+
+students.forEach(stu => {
+  subjectKeys.forEach(sub => {
+    subjectTotals[sub] += (parseFloat(stu.subjectTotals?.[sub]) || 0);
+    subjectMaxTotals[sub] += (parseFloat(stu.subjectMaxTotals?.[sub]) || 0);
   });
+});
 
-  // Calculate final averages
-  let mostDifficult = 'N/A';
-  let minAvg = Infinity;
+const subjectAverages = {};
+let mostDifficult = 'N/A';
+let minAvg = Infinity;
 
-  for (let sub in subjectAverages) {
-    subjectAverages[sub] = subjectCounts[sub] > 0 ? (subjectAverages[sub] / subjectCounts[sub]).toFixed(2) : 0;
-    const avg = parseFloat(subjectAverages[sub]);
-    if (avg < minAvg && avg > 0) {
-      minAvg = avg;
-      mostDifficult = subjectNames[sub];
-    }
+subjectKeys.forEach(sub => {
+  const pct = subjectMaxTotals[sub] > 0 ? ((subjectTotals[sub] / subjectMaxTotals[sub]) * 100) : 0;
+  subjectAverages[sub] = pct.toFixed(2);
+  if (pct > 0 && pct < minAvg) {
+    minAvg = pct;
+    mostDifficult = subjectNames[sub];
+  }
+});
+
+// Populate subject difficulty table (unchanged rendering logic)
+const subjectTbody = document.querySelector('#subjectDifficultyDetails tbody');
+subjectTbody.innerHTML = '';
+
+subjectKeys.forEach(sub => {
+  const tr = document.createElement('tr');
+  const avg = parseFloat(subjectAverages[sub]);
+  let status = '';
+  let statusClass = '';
+
+  if (avg >= 70) {
+    status = 'Easy';
+    statusClass = 'improved';
+  } else if (avg >= 50) {
+    status = 'Moderate';
+  } else if (avg > 0) {
+    status = 'Difficult';
+    statusClass = 'declined';
+  } else {
+    status = 'No Data';
   }
 
-  // Populate subject difficulty table
-  const subjectTbody = document.querySelector('#subjectDifficultyDetails tbody');
-  subjectTbody.innerHTML = '';
-
-  ['chem', 'phy', 'bio', 'math'].forEach(sub => {
-    const tr = document.createElement('tr');
-    const avg = parseFloat(subjectAverages[sub]);
-    let status = '';
-    let statusClass = '';
-
-    if (avg >= 70) {
-      status = 'Easy';
-      statusClass = 'improved';
-    } else if (avg >= 50) {
-      status = 'Moderate';
-    } else if (avg > 0) {
-      status = 'Difficult';
-      statusClass = 'declined';
-    } else {
-      status = 'No Data';
-    }
-
-    tr.innerHTML = `
+  tr.innerHTML = `
     <td>${subjectNames[sub]}</td>
     <td>${subjectAverages[sub]}%</td>
     <td class="${statusClass}">${status}</td>
-    `;
-    subjectTbody.appendChild(tr);
-  });
+  `;
+  subjectTbody.appendChild(tr);
+});
 
-  // Add most difficult subject row
-  const mostTr = document.createElement('tr');
-  mostTr.innerHTML = `
+// Add most difficult subject row
+const mostTr = document.createElement('tr');
+mostTr.innerHTML = `
   <td><strong>MOST DIFFICULT</strong></td>
   <td colspan="2" class="declined"><strong>${mostDifficult}</strong></td>
-  `;
-  subjectTbody.appendChild(mostTr);
+`;
+subjectTbody.appendChild(mostTr);
 
   // Populate exam participation table
   const examTbody = document.querySelector('#examDetails tbody');
@@ -2517,7 +2523,7 @@ function openPrintWindow(title, content) {
   <body>
   <div class="print-content">
   <div class="print-header">
-  <img src="logo.png" alt="Logo">
+  <img src="logo2.png" alt="Logo">
   <h1>${title}</h1>
   </div>
   ${content}
@@ -2692,7 +2698,6 @@ function openExamSelectionDialog() {
   const exams = [...new Set(sampleData.map(d => d.exam))];
 
   // Sort exams by the predefined order
-  const examOrder = ['WE 1', 'WE 2', 'WE 3', 'RT 1', 'WE 4', 'WE 5', 'WE 6', 'RT 2', 'WE 7'];
   const sortedExams = exams.sort((a, b) => {
     const indexA = examOrder.indexOf(a);
     const indexB = examOrder.indexOf(b);
@@ -2940,51 +2945,17 @@ function printStudentProfileReport(student) {
         body { margin: 0; padding: 0; background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         .student-profile-print { display: block !important; visibility: visible !important; width: 95%; margin: 0; padding: 20px; background: white; }
 
-        .student-profile-print .print-header {
-          text-align: center;
-          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%);
-          padding: 30px 20px;
-          border-radius: 10px;
-          margin-bottom: 25px;
-          position: relative;
-          overflow: hidden;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-        .student-profile-print .print-header::before {
-          content: '';
-          position: absolute;
-          top: -50%;
-          right: -10%;
-          width: 250px;
-          height: 250px;
-          background: rgba(255,255,255,0.1);
-          border-radius: 50%;
-        }
-        .student-profile-print .print-header img {
-          max-width: 150px;
-          height: auto;
-          margin-bottom: 12px;
-          filter: brightness(0) invert(1);
-          position: relative;
-          z-index: 2;
-        }
-        .student-profile-print .print-header h1 {
-          font-size: 24pt;
-          font-weight: 800;
-          color: white !important;
-          margin: 10px 0 6px 0;
-          text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-          position: relative;
-          z-index: 2;
-        }
-        .student-profile-print .print-header p {
-          font-size: 11pt;
-          color: white !important;
-          margin: 4px 0;
-          font-weight: 500;
-          position: relative;
-          z-index: 2;
+        /* Header */
+        .student-profile-print .print-header{text-align:center;background:linear-gradient(135deg,#2563eb 0%,#7c3aed 50%,#ec4899 100%);padding:20px;border-radius:10px;margin-bottom:20px;position:relative;overflow:hidden}
+        .student-profile-print .print-header::before{content:'';position:absolute;top:-50%;right:-10%;width:250px;height:250px;background:rgba(255,255,255,0.1);border-radius:50%}
+        .student-profile-print .print-header img{max-width:120px;margin-bottom:8px;position:relative;z-index:2}
+        .student-profile-print .print-header h1{font-size:20pt;font-weight:800;color:#fff!important;margin:6px 0 4px;position:relative;z-index: 2;text-shadow: 2px 2px 4px rgba(0,0,0,0.2);}
+        .student-profile-print .print-header p{font-size:9pt;color:#fff!important;margin:2px 0;font-weight:500;position:relative;z-index: 2;}
+        /* Footer */
+        .student-profile-print .print-footer { -webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;text-align:center;margin-top: 20px;padding-top: 10px;border-top: 3px solid #3b82f6;color: #6b7280 !important;font-size: 8pt}
+        @media (max-width: 600px) {
+        .student-profile-print .print-header img { width: 70px}
+        .student-profile-print .print-header h1 { font-size: 16pt}
         }
         .student-profile-print .profile-section {
           background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
@@ -3120,15 +3091,6 @@ function printStudentProfileReport(student) {
           color: #78350f !important;
           font-weight: 500;
         }
-        .student-profile-print .print-footer {
-          text-align: center;
-          margin-top: 25px;
-          padding-top: 15px;
-          border-top: 2px solid #e5e7eb;
-          font-size: 8pt;
-          color: #6b7280 !important;
-        }
-        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
       }
     </style>
   `;
@@ -3137,9 +3099,9 @@ function printStudentProfileReport(student) {
     ${printStyles}
     <div class="student-profile-print">
       <div class="print-header">
-        <img src="logo.png" alt="Institute Logo">
-        <h1>CRISPR</h1>
-        <p>REPEATER'S BATCH 2025-26</p>
+        <img src="logo2.png" alt="Institute Logo">
+        <h1>STUDENT PROFILE</h1>
+        <p>CRISPR Repeater's Batch 2025-26</p>
         <p>Student Performance Analysis Report</p>
       </div>
 
@@ -3207,10 +3169,11 @@ function printStudentProfileReport(student) {
         <p><strong>Study Tips:</strong> Regular practice and consistent revision will help improve weaker areas.</p>
       </div>
 
-      <div class="print-footer">
-        <p>Generated on ${new Date().toLocaleDateString()} | CRISPR - Student Performance Analysis Portal</p>
-        <p>© 2025 CRISPR - Repeater's Batch 2025-26</p>
-      </div>
+        <div class="print-footer">
+            <p><strong>CRISPR • Repeater's Batch 2025–26</strong></p>
+            <p>This is an automated report generated by the Student Performance Tracking System</p>
+            <p>Generated on ${currentDate} • For queries, contact the academic administration</p>
+        </div>
     </div>
   `;
 
@@ -3230,6 +3193,1647 @@ function getPerformanceLevel(percentage) {
   return 'Needs Improvement';
 }
 
+function openClassPerformanceModal() {
+    closePrintExportModal();
+    currentPrintType = 'classPerformance';
+    document.getElementById('printDialogTitle').textContent = 'Class Performance Summary';
+    document.getElementById('printFilterDialog').style.display = 'flex';
+    document.querySelector('input[name="printFilter"][value="all"]').checked = true;
+}
+function executePrint() {
+    const selectedFilter = document.querySelector('input[name="printFilter"]:checked');
+    if (!selectedFilter) {
+        alert('Please select a filter option');
+        return;
+    }
+    
+    const filterValue = selectedFilter.value;
+    
+    if (currentPrintType === 'overall') {
+        printOverallRanklistWithFilter(filterValue);
+    } else if (currentPrintType === 'last3') {
+        printLast3RanklistWithFilter(filterValue);
+    } else if (currentPrintType === 'classPerformance') {
+        printClassPerformanceSummary(filterValue);
+    }
+    
+    closePrintFilterDialog();
+}
+
+// ================= CLASS PERFORMANCE SUMMARY - FINAL CORRECTED CODE =================
+// Copy this ENTIRE code block to the END of your script.js file
+
+function printClassPerformanceSummary(filterType) {
+    const filteredExams = getFilteredExamsForReport(filterType);
+    
+    if (filteredExams.length === 0) {
+        alert('No exams available for the selected filter.');
+        return;
+    }
+    
+    const stats = calculateClassStatistics(filteredExams);
+    const topPerformers = getTopPerformers(filteredExams, 5);
+    const atRiskStudents = getAtRiskStudents(filteredExams, 5);
+    const subjectStats = calculateSubjectStatistics(filteredExams);
+    const examStats = calculateExamStatistics(filteredExams);
+    
+    const htmlContent = generateClassPerformanceHTML(
+        filterType,
+        filteredExams,
+        stats,
+        topPerformers,
+        atRiskStudents,
+        subjectStats,
+        examStats
+    );
+    
+    const printWindow = window.open('', '', 'width=900,height=700');
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    
+    printWindow.onload = function() {
+        setTimeout(() => {
+            printWindow.print();
+        }, 500);
+    };
+}
+
+function getFilteredExamsForReport(filterType) {
+    if (filterType === 'all') {
+        return examOrder;
+    } else if (filterType === 'RT') {
+        return examOrder.filter(exam => exam.startsWith('RT'));
+    } else if (filterType === 'WE') {
+        return examOrder.filter(exam => exam.startsWith('WE'));
+    }
+    return examOrder;
+}
+
+function calculateClassStatistics(exams) {
+    let totalParticipations = 0;
+    let totalScore = 0;
+    let totalMaxScore = 0;
+    let passCount = 0;
+    let failCount = 0;
+    let studentsWithData = new Set();
+    
+    students.forEach(student => {
+        let studentTotal = 0;
+        let studentMax = 0;
+        
+        student.exams.forEach(ex => {
+            if (exams.includes(ex.exam) && ex.maxTotal > 0) {
+                studentTotal += ex.total;
+                studentMax += ex.maxTotal;
+                totalParticipations++;
+                studentsWithData.add(student.roll);
+            }
+        });
+        
+        if (studentMax > 0) {
+            totalScore += studentTotal;
+            totalMaxScore += studentMax;
+            const percent = (studentTotal / studentMax) * 100;
+            if (percent >= 60) passCount++;
+            if (percent < 35) failCount++;
+        }
+    });
+    
+    const avgPercentage = totalMaxScore > 0 ? (totalScore / totalMaxScore) * 100 : 0;
+    const passRate = studentsWithData.size > 0 ? (passCount / studentsWithData.size) * 100 : 0;
+    const participationRate = students.length > 0 ? (studentsWithData.size / students.length) * 100 : 0;
+    const failRate = studentsWithData.size > 0 ? (failCount / studentsWithData.size) * 100 : 0;
+    
+    return {
+        totalStudents: students.length,
+        activeStudents: studentsWithData.size,
+        avgPercentage: avgPercentage.toFixed(2),
+        passRate: passRate.toFixed(2),
+        failRate: failRate.toFixed(2),
+        participationRate: participationRate.toFixed(2),
+        passCount,
+        failCount,
+        totalScore,
+        totalMaxScore,
+        totalExams: exams.length
+    };
+}
+
+function getTopPerformers(exams, count) {
+    const studentScores = students.map(student => {
+        let total = 0, maxTotal = 0, examsAttempted = 0;
+        student.exams.forEach(ex => {
+            if (exams.includes(ex.exam) && ex.maxTotal > 0) {
+                total += ex.total;
+                maxTotal += ex.maxTotal;
+                examsAttempted++;
+            }
+        });
+        const percent = maxTotal > 0 ? (total / maxTotal) * 100 : 0;
+        return {
+            roll: student.roll,
+            name: student.name,
+            total,
+            maxTotal,
+            percentage: percent.toFixed(2),
+            examsAttempted
+        };
+    }).filter(s => s.maxTotal > 0);
+    return studentScores.sort((a, b) => b.total - a.total).slice(0, count);
+}
+
+function getAtRiskStudents(exams, count) {
+    const studentScores = students.map(student => {
+        let total = 0, maxTotal = 0, examsAttempted = 0;
+        student.exams.forEach(ex => {
+            if (exams.includes(ex.exam) && ex.maxTotal > 0) {
+                total += ex.total;
+                maxTotal += ex.maxTotal;
+                examsAttempted++;
+            }
+        });
+        const percent = maxTotal > 0 ? (total / maxTotal) * 100 : 0;
+        return {
+            roll: student.roll,
+            name: student.name,
+            total,
+            maxTotal,
+            percentage: percent.toFixed(2),
+            examsAttempted
+        };
+    }).filter(s => s.maxTotal > 0 && parseFloat(s.percentage) < 35);
+    return studentScores.sort((a, b) => a.percentage - b.percentage).slice(0, count);
+}
+
+function calculateSubjectStatistics(exams) {
+    const subjects = ['chem', 'phy', 'bio', 'math'];
+    const subjectStats = {};
+    
+    subjects.forEach(subject => {
+        let totalScore = 0, maxScore = 0, count = 0, highestScore = -Infinity, lowestScore = Infinity;
+        
+        // Use sampleData directly to access the flat structure
+        sampleData.forEach(data => {
+            if (exams.includes(data.exam) && data.maxTotal > 0) {
+                const maxKey = 'max' + subject.charAt(0).toUpperCase() + subject.slice(1);
+                const subMax = data[maxKey];
+                const subScore = data[subject];
+                
+                if (subMax > 0) {
+                    totalScore += subScore;
+                    maxScore += subMax;
+                    count++;
+                    if (subScore > highestScore) highestScore = subScore;
+                    if (subScore < lowestScore) lowestScore = subScore;
+                }
+            }
+        });
+        
+        const avgPercentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
+        
+        subjectStats[subject] = {
+            name: subjectNames[subject],
+            avgPercentage: avgPercentage.toFixed(2),
+            totalScore,
+            maxScore,
+            highestScore: highestScore === -Infinity ? 0 : highestScore,
+            lowestScore: lowestScore === Infinity ? 0 : lowestScore,
+            count
+        };
+    });
+    
+    return subjectStats;
+}
+
+function calculateExamStatistics(exams) {
+    return exams.map(examName => {
+        let totalScore = 0, maxScore = 0, studentCount = 0, highestScore = -Infinity, lowestScore = Infinity;
+        
+        students.forEach(student => {
+            const exam = student.exams.find(ex => ex.exam === examName);
+            if (exam && exam.maxTotal > 0) {
+                totalScore += exam.total;
+                maxScore += exam.maxTotal;
+                studentCount++;
+                if (exam.total > highestScore) highestScore = exam.total;
+                if (exam.total < lowestScore) lowestScore = exam.total;
+            }
+        });
+        
+        const avgPercentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
+        const avgScore = studentCount > 0 ? (totalScore / studentCount).toFixed(2) : 0;
+        
+        // Use the SAME difficulty calculation everywhere
+        let difficulty;
+        if (avgPercentage >= 60) {
+            difficulty = 'Easy';
+        } else if (avgPercentage >= 40) {
+            difficulty = 'Moderate';
+        } else {
+            difficulty = 'Difficult';
+        }
+        
+        return {
+            name: examName,
+            avgPercentage: avgPercentage.toFixed(2),
+            studentCount,
+            totalStudents: students.length,
+            participationRate: ((studentCount / students.length) * 100).toFixed(2),
+            highestScore: highestScore === -Infinity ? 0 : highestScore,
+            lowestScore: lowestScore === Infinity ? 0 : lowestScore,
+            avgScore,
+            difficulty
+        };
+    });
+}
+
+function generateClassPerformanceHTML(filterType, exams, stats, topPerformers, atRiskStudents, subjectStats, examStats) {
+    const filterLabel = filterType === 'all' ? 'All Exams' : filterType === 'RT' ? 'Review Tests (RT)' : 'Weekly Exams (WE)';
+    const currentDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+    
+    const subjectsArray = Object.values(subjectStats);
+    const strongest = subjectsArray.reduce((max, s) => parseFloat(s.avgPercentage) > parseFloat(max.avgPercentage) ? s : max, subjectsArray[0]);
+    const weakest = subjectsArray.reduce((min, s) => parseFloat(s.avgPercentage) < parseFloat(min.avgPercentage) ? s : min, subjectsArray[0]);
+    
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Class Performance Summary - ${filterLabel}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+        
+        @media print {
+            @page { 
+                size: A4; 
+                margin: 10mm; 
+            }
+            body { 
+                margin: 0; 
+                padding: 0;
+            }
+        }
+        
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+            background: white;
+            color: #1a1a1a;
+        }
+        
+        /* Header */
+        .print-header{text-align:center;background:linear-gradient(135deg,#2563eb 0%,#7c3aed 50%,#ec4899 100%);padding:20px;border-radius:10px;margin-bottom:20px;position:relative;overflow:hidden}
+        .print-header::before{content:'';position:absolute;top:-50%;right:-10%;width:250px;height:250px;background:rgba(255,255,255,0.1);border-radius:50%}
+        .print-header img{max-width:120px;margin-bottom:8px;position:relative;z-index:2}
+        .print-header h1{font-size:20pt;font-weight:800;color:#fff!important;margin:6px 0 4px;position:relative;z-index: 2;text-shadow: 2px 2px 4px rgba(0,0,0,0.2);}
+        .print-header p{font-size:9pt;color:#fff!important;margin:2px 0;font-weight:500;position:relative;z-index: 2;}
+        /* Footer */
+        .print-footer { -webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;text-align:center;margin-top: 20px;padding-top: 10px;border-top: 3px solid #3b82f6;color: #6b7280 !important;font-size: 8pt}
+        @media (max-width: 600px) {
+        .print-header img { width: 70px}
+        .print-header h1 { font-size: 16pt}
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #cbd5e1;
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 6px 0;
+            font-size: 9pt;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            font-weight: 600;
+        }
+        
+        .stat-card .value {
+            font-size: 24pt;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 0;
+        }
+        
+        .stat-card .sub-value {
+            font-size: 8pt;
+            color: #64748b;
+            margin-top: 3px;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white !important;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12pt;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .section-title i {
+            font-size: 14pt;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            page-break-inside: avoid;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white !important;
+            padding: 7px 6px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        td {
+            padding: 6px 6px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 8pt;
+            color: #1f2937;
+            background: white;
+        }
+        
+        tr:nth-child(even) td {
+            background: #f9fafb !important;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 7pt;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        
+        .badge-success {
+            background: #d1fae5 !important;
+            color: #065f46 !important;
+            border: 1px solid #10b981;
+        }
+        
+        .badge-warning {
+            background: #fef3c7 !important;
+            color: #92400e !important;
+            border: 1px solid #f59e0b;
+        }
+        
+        .badge-danger {
+            background: #fee2e2 !important;
+            color: #991b1b !important;
+            border: 1px solid #ef4444;
+        }
+        
+        .insights-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #f59e0b;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+        
+        .insights-box h3 {
+            margin-top: 0;
+            color: #92400e !important;
+            font-size: 10pt;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .insights-box ul {
+            margin: 6px 0;
+            padding-left: 18px;
+        }
+        
+        .insights-box li {
+            margin-bottom: 4px;
+            line-height: 1.4;
+            font-size: 8pt;
+            color: #78350f !important;
+        }
+        
+        .no-data {
+            padding: 15px;
+            text-align: center;
+            color: #10b981 !important;
+            font-weight: 600;
+            background: #d1fae5;
+            border-radius: 6px;
+            font-size: 8pt;
+        }
+        
+        .info-box {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+        
+        .info-box p {
+            margin: 3px 0;
+            font-size: 8pt;
+        }
+        
+        .highlight-box {
+            background: #eff6ff;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #3b82f6;
+            margin-top: 10px;
+        }
+        
+        .highlight-box p {
+            margin: 4px 0;
+            font-size: 8pt;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-header">
+        <img src="logo2.png" alt="Institute Logo" onerror="this.style.display='none'">
+        <h1>CLASS PERFORMANCE</h1>
+        <p>CRISPR Repeater's Batch 2025-26</p>
+        <p><strong>Class Performance Analysis Report</strong></p>
+    </div>
+    
+    <div class="info-box">
+        <p><strong>Filter:</strong> ${filterLabel}</p>
+        <p><strong>Exams Analyzed:</strong> ${exams.join(', ')}</p>
+        <p><strong>Total Exams:</strong> ${stats.totalExams} | <strong>Active Students:</strong> ${stats.activeStudents} / ${stats.totalStudents}</p>
+        <p><strong>Generated:</strong> ${currentDate}</p>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3><i class="fas fa-chart-line"></i> Class Average</h3>
+            <p class="value">${stats.avgPercentage}%</p>
+            <p class="sub-value">${stats.totalScore} / ${stats.totalMaxScore}</p>
+        </div>
+        <div class="stat-card">
+            <h3><i class="fas fa-users"></i> Participation</h3>
+            <p class="value">${stats.participationRate}%</p>
+            <p class="sub-value">${stats.activeStudents} / ${stats.totalStudents} students</p>
+        </div>
+        <div class="stat-card">
+            <h3><i class="fas fa-check-circle"></i> Pass Rate</h3>
+            <p class="value">${stats.passRate}%</p>
+            <p class="sub-value">${stats.passCount} students ≥60%</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title"><i class="fas fa-trophy"></i> Top 5 Performers</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Exams</th>
+                    <th>Total Score</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${topPerformers.map((student, index) => `
+                    <tr>
+                        <td><strong>#${index + 1}</strong></td>
+                        <td>${student.roll}</td>
+                        <td>${student.name}</td>
+                        <td>${student.examsAttempted}</td>
+                        <td>${student.total} / ${student.maxTotal}</td>
+                        <td><span class="badge badge-success">${student.percentage}%</span></td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="section">
+        <div class="section-title"><i class="fas fa-exclamation-triangle"></i> Students Needing Attention (&lt;35%)</div>
+        ${atRiskStudents.length > 0 ? `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Name</th>
+                        <th>Exams</th>
+                        <th>Total Score</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${atRiskStudents.map(student => `
+                        <tr>
+                            <td>${student.roll}</td>
+                            <td>${student.name}</td>
+                            <td>${student.examsAttempted}</td>
+                            <td>${student.total} / ${student.maxTotal}</td>
+                            <td><span class="badge badge-danger">${student.percentage}%</span></td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        ` : '<div class="no-data"><i class="fas fa-check-circle"></i> No students below 35%. Excellent class performance!</div>'}
+    </div>
+    
+    <div class="section">
+        <div class="section-title"><i class="fas fa-book"></i> Subject-wise Performance</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Average %</th>
+                    <th>Total Score</th>
+                    <th>Highest</th>
+                    <th>Lowest</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${Object.keys(subjectStats).map(subKey => {
+                    const subject = subjectStats[subKey];
+                    const pct = parseFloat(subject.avgPercentage);
+                    const badgeClass = pct >= 60 ? 'badge-success' : pct >= 40 ? 'badge-warning' : 'badge-danger';
+                    const status = pct >= 60 ? 'Strong' : pct >= 40 ? 'Moderate' : 'Needs Focus';
+                    return `
+                        <tr>
+                            <td><strong>${subject.name}</strong></td>
+                            <td><strong>${subject.avgPercentage}%</strong></td>
+                            <td>${subject.totalScore} / ${subject.maxScore}</td>
+                            <td>${subject.highestScore}</td>
+                            <td>${subject.lowestScore}</td>
+                            <td><span class="badge ${badgeClass}">${status}</span></td>
+                        </tr>
+                    `;
+                }).join('')}
+            </tbody>
+        </table>
+        
+        <div class="highlight-box">
+            <p><strong><i class="fas fa-star"></i> Strongest Subject:</strong> ${strongest.name} (${strongest.avgPercentage}%)</p>
+            <p><strong><i class="fas fa-chart-line"></i> Weakest Subject:</strong> ${weakest.name} (${weakest.avgPercentage}%)</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title"><i class="fas fa-clipboard-list"></i> Exam-wise Difficulty Analysis</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exam</th>
+                    <th>Participated</th>
+                    <th>Avg Score</th>
+                    <th>Average %</th>
+                    <th>Highest</th>
+                    <th>Lowest</th>
+                    <th>Difficulty</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${examStats.map(exam => {
+                    const pct = parseFloat(exam.avgPercentage);
+                    const badgeClass = exam.difficulty === 'Easy' ? 'badge-success' : 
+                                      exam.difficulty === 'Moderate' ? 'badge-warning' : 'badge-danger';
+                    return `
+                        <tr>
+                            <td><strong>${exam.name}</strong></td>
+                            <td>${exam.studentCount} / ${exam.totalStudents}</td>
+                            <td>${exam.avgScore}</td>
+                            <td><strong>${exam.avgPercentage}%</strong></td>
+                            <td>${exam.highestScore}</td>
+                            <td>${exam.lowestScore}</td>
+                            <td><span class="badge ${badgeClass}">${exam.difficulty}</span></td>
+                        </tr>
+                    `;
+                }).join('')}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="section">
+        <div class="insights-box">
+            <h3><i class="fas fa-lightbulb"></i> Key Insights & Recommendations</h3>
+            <ul>
+                ${parseFloat(stats.avgPercentage) >= 60 ? 
+                    '<li><strong><i class="fas fa-thumbs-up"></i> Excellent class performance!</strong> Average score of ' + stats.avgPercentage + '% indicates strong understanding.</li>' : 
+                    parseFloat(stats.avgPercentage) >= 40 ?
+                    '<li><strong><i class="fas fa-info-circle"></i> Moderate performance.</strong> Focus on targeted interventions to improve weak areas.</li>' :
+                    '<li><strong><i class="fas fa-exclamation-circle"></i> Performance needs attention.</strong> Consider remedial classes and personalized mentoring.</li>'}
+                ${atRiskStudents.length > 5 ? 
+                    '<li><strong><i class="fas fa-user-friends"></i> High number of struggling students.</strong> ' + atRiskStudents.length + ' students need immediate support and intervention.</li>' : 
+                    atRiskStudents.length > 0 ?
+                    '<li><strong><i class="fas fa-user-check"></i> Some students need support.</strong> ' + atRiskStudents.length + ' student(s) require extra attention and practice.</li>' :
+                    '<li><strong><i class="fas fa-smile"></i> All students performing well!</strong> No students below 35%. Maintain current teaching approach.</li>'}
+                ${parseFloat(strongest.avgPercentage) >= 60 ?
+                    '<li><strong><i class="fas fa-medal"></i> Strong subject: ' + strongest.name + '.</strong> Leverage this success to motivate students in weaker areas.</li>' :
+                    '<li><strong><i class="fas fa-chart-bar"></i> No subject has strong performance.</strong> Need comprehensive improvement strategy.</li>'}
+                ${parseFloat(weakest.avgPercentage) < 40 ?
+                    '<li><strong><i class="fas fa-tools"></i> Focus area: ' + weakest.name + '.</strong> Only ' + weakest.avgPercentage + '% average. Implement extra practice sessions.</li>' :
+                    '<li><strong><i class="fas fa-balance-scale"></i> Balanced subject performance.</strong> Continue current teaching methodology.</li>'}
+                ${parseFloat(stats.participationRate) < 85 ?
+                    '<li><strong><i class="fas fa-calendar-check"></i> Low participation rate (' + stats.participationRate + '%).</strong> Encourage regular exam attendance.</li>' :
+                    '<li><strong><i class="fas fa-users-cog"></i> Excellent participation (' + stats.participationRate + '%).</strong> Students are engaged and motivated.</li>'}
+            </ul>
+        </div>
+    </div>
+  
+        <div class="print-footer">
+            <p><strong>CRISPR • Repeater's Batch 2025–26</strong></p>
+            <p>This is an automated report generated by the Student Performance Tracking System</p>
+            <p>Generated on ${currentDate} • For queries, contact the academic administration</p>
+        </div>
+</body>
+</html>
+    `;
+}
+
+// ==============================
+// SUBJECT SPECIFIC REPORT MODAL (standalone, no impact on other modals)
+// ==============================
+
+// 1. Compute cumulative score info on students (reusable)
+function computeSubjectCumulatives() {
+  const subjects = ['chem', 'phy', 'bio', 'math'];
+  students.forEach(s => {
+    s.subjectTotals = { chem:0, phy:0, bio:0, math:0 };
+    s.subjectMaxTotals = { chem:0, phy:0, bio:0, math:0 };
+    s.exams.forEach(ex => {
+      subjects.forEach(sub => {
+        s.subjectTotals[sub] += ex[sub] || 0;
+        const mk = 'max' + sub.charAt(0).toUpperCase() + sub.slice(1);
+        s.subjectMaxTotals[sub] += ex[mk] || 0;
+      });
+    });
+  });
+}
+
+// 2. Open subject specific modal (totally separate from everything else)
+function openSubjectSpecificModal() {
+  // clean up old modal
+  let old = document.getElementById('subjectSpecificModal');
+  if (old) old.remove();
+
+  // create modal container with identical CSS classes as your normal modal
+  const modalHTML = `
+    <div id="subjectSpecificModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="printDialogTitle">Subject Specific Report</h3>
+                <button class="modal-close" onclick="closeSubjectSpecificModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <p>Select filter type for printing:</p>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="radio" name="printFilter" value="all" checked>
+                        <span><i class="fas fa-th"></i> All Subjects</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="printFilter" value="chem">
+                        <span><i class="fas fa-flask"></i> Chemistry</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="printFilter" value="phy">
+                        <span><i class="fas fa-atom"></i> Physics</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="printFilter" value="bio">
+                        <span><i class="fas fa-dna"></i> Biology</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="printFilter" value="math">
+                        <span><i class="fas fa-calculator"></i> Mathematics</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="printSelectedSubjectReport()">
+                    <i class="fas fa-print"></i>
+                    Print
+                </button>
+            </div>
+        </div>
+    </div>
+  `;
+
+  // Inject modal into body
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// 3. Close modal function
+function closeSubjectSpecificModal() {
+  const modal = document.getElementById('subjectSpecificModal');
+  if (modal) modal.remove();
+}
+
+// 4. Handle Print button inside modal
+// 0) Utility: ensure safe access
+const _val = (o, path, fallback = 0) => {
+  try {
+    return path.split('.').reduce((x, k) => (x && x[k] != null ? x[k] : undefined), o) ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+// 1) Trigger print from the Subject-Specific modal (supports both legacy and new radio names)
+function printSelectedSubjectReport() {
+  const sel =
+    document.querySelector('#subjectSpecificModal input[name="subjectSpecFilter"]:checked') ||
+    document.querySelector('#subjectSpecificModal input[name="printFilter"]:checked');
+  const subject = sel ? sel.value : 'all';
+  closeSubjectSpecificModal();
+  printSubjectSpecificReport(subject);
+}
+
+// 2) Compute per-student cumulative subject totals/max (FIXED: read scores from ex.scores and ex.maxScores)
+function computeSubjectCumulatives() {
+  const subs = ['chem', 'phy', 'bio', 'math'];
+
+  students.forEach(s => {
+    // init containers
+    s.subjectTotals = s.subjectTotals || {};
+    s.subjectMaxTotals = s.subjectMaxTotals || {};
+    subs.forEach(sub => {
+      s.subjectTotals[sub] = 0;
+      s.subjectMaxTotals[sub] = 0;
+    });
+
+    // nothing to aggregate
+    if (!Array.isArray(s.exams)) return;
+
+    // sum across exams, only when that exam defines a positive max
+    s.exams.forEach(ex => {
+      subs.forEach(sub => {
+        // primary path uses nested structures built from processJsonData
+        const score = _val(ex, `scores.${sub}`, _val(ex, sub, 0));
+        const max   = _val(ex, `maxScores.${sub}`, _val(ex, `max${sub.charAt(0).toUpperCase()}${sub.slice(1)}`, 0));
+        if (max > 0) {
+          s.subjectTotals[sub] += score;
+          s.subjectMaxTotals[sub] += max;
+        }
+      });
+    });
+  });
+} // [attached_file:1]
+
+// 3) Open a print window with the generated HTML
+function printSubjectSpecificReport(subjectFilter) {
+  computeSubjectCumulatives(); // must be called after processJsonData and before computing ranks [attached_file:1]
+  const reportData = calculateSubjectSpecificData(subjectFilter); // [attached_file:1]
+  const html = generateSubjectSpecificHTML(subjectFilter, reportData); // [attached_file:1]
+
+  const printWindow = window.open('', '', 'width=1200,height=800');
+  if (!printWindow) {
+    alert('Allow popups for printing.');
+    return;
+  }
+  printWindow.document.write(html);
+  printWindow.document.close();
+  printWindow.onload = () => setTimeout(() => printWindow.print(), 500);
+} // [attached_file:1]
+
+// 4) Calculate subject-specific stats and prepare for printing
+function calculateSubjectSpecificData(subjectFilter) {
+  const subjects = subjectFilter === 'all' ? ['chem', 'phy', 'bio', 'math'] : [subjectFilter];
+
+  // class-level subject stats (from flat sampleData)
+  const stats = { totalStudents: students.length, totalExams: examOrder.length, subjects: {} };
+  subjects.forEach(sub => {
+    let total = 0, maxTotal = 0;
+    const maxKey = 'max' + sub.charAt(0).toUpperCase() + sub.slice(1);
+    sampleData.forEach(d => {
+      if (d.maxTotal > 0 && d[maxKey] > 0) {
+        total += (d[sub] || 0);
+        maxTotal += (d[maxKey] || 0);
+      }
+    });
+    stats.subjects[sub] = {
+      name: subjectNames[sub],
+      avgPercentage: maxTotal ? ((total / maxTotal) * 100).toFixed(2) : '0.00',
+      totalScore: total,
+      maxScore: maxTotal
+    };
+  }); // [attached_file:1]
+
+  // per-student performances within the selected subject(s)
+  const studentPerformances = [];
+  students.forEach(s => {
+    let ok = false, tot = 0, mx = 0;
+    const perf = { roll: s.roll, name: s.name, subjects: {} };
+
+    subjects.forEach(sub => {
+      const st = (s.subjectTotals?.[sub] ?? 0);
+      const sm = (s.subjectMaxTotals?.[sub] ?? 0);
+      if (sm > 0) ok = true;
+      perf.subjects[sub] = {
+        total: st,
+        max: sm,
+        avgPercent: sm ? ((st / sm) * 100).toFixed(2) : '0.00'
+      };
+      tot += st;
+      mx += sm;
+    });
+
+    if (ok && mx > 0) {
+      perf.overallPercent = ((tot / mx) * 100).toFixed(2);
+      perf.overallTotal = tot;
+      perf.overallMax = mx;
+      studentPerformances.push(perf);
+    }
+  });
+
+  studentPerformances.sort((a, b) => parseFloat(b.overallPercent) - parseFloat(a.overallPercent)); // [attached_file:1]
+
+  const topPerformers = studentPerformances.slice(0, 5);
+  const bottomPerformers = studentPerformances.slice(-5).reverse(); // [attached_file:1]
+
+  // exam-wise averages and highs for selected subjects (from flat sampleData)
+  const examStats = examOrder.map(exam => {
+    const row = { name: exam, subjects: {} };
+    subjects.forEach(sub => {
+      const maxKey = 'max' + sub.charAt(0).toUpperCase() + sub.slice(1);
+      let totalSub = 0, maxSub = 0, high = -Infinity;
+      sampleData.forEach(d => {
+        if (d.exam === exam && d.maxTotal > 0 && d[maxKey] > 0) {
+          totalSub += (d[sub] || 0);
+          maxSub += (d[maxKey] || 0);
+          if ((d[sub] || 0) > high) high = d[sub];
+        }
+      });
+      row.subjects[sub] = {
+        avgPercent: maxSub ? ((totalSub / maxSub) * 100).toFixed(2) : '0.00',
+        highestScore: high === -Infinity ? 0 : high
+      };
+    });
+    return row;
+  }); // [attached_file:1]
+
+  return { stats, studentPerformances, topPerformers, bottomPerformers, examStats };
+} // [attached_file:1]
+
+// 5) Generate the subject-specific HTML report for printing (row templates FIXED)
+function generateSubjectSpecificHTML(subjectFilter, data) {
+  const filterLabel = subjectFilter === 'all' ? 'All Subjects' : (subjectNames[subjectFilter] || subjectFilter.toUpperCase());
+  const currentDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+  const subjects = subjectFilter === 'all' ? ['chem', 'phy', 'bio', 'math'] : [subjectFilter];
+
+  // short labels for compact headers
+  const subjectShort = { chem: 'Chem', phy: 'Phy', bio: 'Bio', math: 'Math' };
+
+  // rows (logic unchanged; styling classes only)
+  const topRows = (data.topPerformers.length
+    ? data.topPerformers.map((s, i) => `
+      <tr>
+        <td class="text-center"><strong>#${i + 1}</strong></td>
+        <td>${s.roll}</td>
+        <td>${s.name}</td>
+        ${subjects.map(sub => `<td class="num">${s.subjects[sub].avgPercent}%</td>`).join('')}
+        <td class="num"><span class="badge badge-success">${s.overallPercent}%</span></td>
+      </tr>`).join('')
+    : `<tr><td colspan="${subjects.length + 4}" class="empty">No records available for this view.</td></tr>`
+  );
+
+  const bottomRows = (data.bottomPerformers.length
+    ? data.bottomPerformers.map(s => `
+      <tr>
+        <td>${s.roll}</td>
+        <td>${s.name}</td>
+        ${subjects.map(sub => `<td class="num">${s.subjects[sub].avgPercent}%</td>`).join('')}
+        <td class="num"><span class="badge badge-danger">${s.overallPercent}%</span></td>
+      </tr>`).join('')
+    : `<tr><td colspan="${subjects.length + 3}" class="empty positive">No students require support in this view.</td></tr>`
+  );
+
+  const allRows = (data.studentPerformances.length
+    ? data.studentPerformances.map((s, i) => {
+        const pct = parseFloat(s.overallPercent);
+        const badge = pct >= 60 ? 'badge-success' : pct >= 40 ? 'badge-warning' : 'badge-danger';
+        return `
+          <tr>
+            <td class="text-center"><strong>${i + 1}</strong></td>
+            <td>${s.roll}</td>
+            <td>${s.name}</td>
+            ${subjects.map(sub => `<td class="num">${s.subjects[sub].avgPercent}%</td>`).join('')}
+            <td class="num">${s.overallTotal}/${s.overallMax}</td>
+            <td class="num"><span class="badge ${badge}">${s.overallPercent}%</span></td>
+          </tr>`;
+      }).join('')
+    : `<tr><td colspan="${subjects.length + 5}" class="empty">No records available for this view.</td></tr>`
+  );
+
+  const examRows = data.examStats.map(e => `
+    <tr>
+      <td><strong>${e.name}</strong></td>
+      ${subjects.map(sub => `<td class="num">${e.subjects[sub].avgPercent}%</td>`).join('')}
+      ${subjects.map(sub => `<td class="num">${e.subjects[sub].highestScore}</td>`).join('')}
+    </tr>
+  `).join('');
+
+  // colgroups: enforce identical widths across all tables
+  const makeColgroupTop = () => `
+    <colgroup>
+      <col class="col-rank"><col class="col-roll"><col class="col-name">
+      ${subjects.map(() => `<col class="col-sub">`).join('')}
+      <col class="col-overall">
+    </colgroup>`;
+
+  const makeColgroupBottom = () => `
+    <colgroup>
+      <col class="col-roll"><col class="col-name">
+      ${subjects.map(() => `<col class="col-sub">`).join('')}
+      <col class="col-overall">
+    </colgroup>`;
+
+  const makeColgroupAll = () => `
+    <colgroup>
+      <col class="col-rank"><col class="col-roll"><col class="col-name">
+      ${subjects.map(() => `<col class="col-sub">`).join('')}
+      <col class="col-total"><col class="col-overall">
+    </colgroup>`;
+
+  const makeColgroupExam = () => `
+    <colgroup>
+      <col class="col-exam">
+      ${subjects.map(() => `<col class="col-sub">`).join('')}
+      ${subjects.map(() => `<col class="col-sub">`).join('')}
+    </colgroup>`;
+
+  return `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Subject Performance Report — ${filterLabel}</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+/* Print: A4 portrait */
+@media print { @page { size: A4 portrait; margin: 10mm } }
+
+/* Keep colors in print */
+* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important }
+
+/* Base */
+body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; background: #fff; color: #1a1a1a }
+
+/* Header */
+.print-header{text-align:center;background:linear-gradient(135deg,#2563eb 0%,#7c3aed 50%,#ec4899 100%);padding:20px;border-radius:10px;margin-bottom:20px;position:relative;overflow:hidden}
+.print-header::before{content:'';position:absolute;top:-50%;right:-10%;width:250px;height:250px;background:rgba(255,255,255,0.1);border-radius:50%}
+.print-header img{max-width:120px;margin-bottom:8px;position:relative;z-index:2}
+.print-header h1{font-size:20pt;font-weight:800;color:#fff!important;margin:6px 0 4px;position:relative;z-index: 2;text-shadow: 2px 2px 4px rgba(0,0,0,0.2);}
+.print-header p{font-size:9pt;color:#fff!important;margin:2px 0;font-weight:500;position:relative;z-index: 2;}
+/* Footer */
+.print-footer { -webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;text-align:center;margin-top: 20px;padding-top: 10px;border-top: 3px solid #3b82f6;color: #6b7280 !important;font-size: 8pt}
+@media (max-width: 600px) {
+.print-header img { width: 70px}
+.print-header h1 { font-size: 16pt}
+}
+
+/* Info bar */
+.info-box { background: #f3f4f6; padding: 8px; border-radius: 6px; margin-bottom: 8px }
+.info-box p { margin: 2px 0; font-size: 7pt }
+
+/* Stats cards */
+.stats-grid { display: grid; grid-template-columns: repeat(${subjects.length===1?3:4}, 1fr); gap: 10px; margin-bottom: 8px }
+.stat-card { background: linear-gradient(135deg,#f0f4ff,#e0e7ff); padding: 12px; border-radius: 8px; text-align: center; border: 2px solid #cbd5e1 }
+.stat-card h3 { margin: 0 0 6px; font-size: 9pt; color: #475569; text-transform: uppercase; font-weight: 600 }
+.stat-card .value { font-size: 18pt; font-weight: 700; color: #2563eb }
+.stat-card .sub-value { font-size: 7pt; color: #64748b; margin-top: 3px }
+
+/* Sections */
+.section { margin-bottom: 12px; page-break-inside: avoid }
+.section-title { background: linear-gradient(135deg,#2563eb,#7c3aed); color: #fff !important; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; font-size: 11pt; font-weight: 700; display: flex; align-items: center; gap: 6px }
+
+/* Tables */
+table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 6px; overflow: hidden; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); table-layout: fixed }
+th { background: linear-gradient(135deg,#3b82f6,#2563eb); color: #fff !important; padding: 6px 5px; text-align: left; font-weight: 700; font-size: 7pt; text-transform: uppercase; letter-spacing: .2px; white-space: nowrap }
+td { padding: 5px; border-bottom: 1px solid #e5e7eb; font-size: 7.2pt; color: #1f2937; background: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+tr:nth-child(even) td { background: #f9fafb !important }
+tr:last-child td { border-bottom: none }
+
+/* Column widths: uniform subject % columns, tighter Roll and Score/Max */
+.col-rank { width: 7ch }
+.col-roll { width: 8ch }        /* decreased from 10ch */
+.col-name { width: auto }
+.col-sub { width: 7ch }
+.col-total { width: 12ch }      /* decreased from 16ch */
+.col-overall { width: 9ch }
+.col-exam { width: 14ch }
+
+/* Alignment helpers */
+.text-center { text-align: center }
+.num { text-align: right; font-variant-numeric: tabular-nums }
+
+/* Empty-state messaging */
+.empty { text-align: center; color: #6b7280; padding: 10px 0 }
+.empty.positive { color: #10b981 }
+
+/* Badges */
+.badge { display: inline-block; padding: 2px 6px; border-radius: 8px; font-size: 6pt; font-weight: 700 }
+.badge-success { background: #d1fae5 !important; color: #065f46 !important; border: 1px solid #10b981 }
+.badge-warning { background: #fef3c7 !important; color: #92400e !important; border: 1px solid #f59e0b }
+.badge-danger { background: #fee2e2 !important; color: #991b1b !important; border: 1px solid #ef4444 }
+
+</style></head><body>
+
+<div class="print-header">
+  <img src="logo2.png" onerror="this.style.display='none'">
+  <h1>SUBJECT ANALYSIS</h1>
+  <p>CRISPR Repeater's Batch 2025–26</p>
+  <p><strong>Subject Performance Report</strong></p>
+</div>
+
+<div class="info-box">
+  <p><strong>View:</strong> ${filterLabel} &nbsp; | &nbsp; <strong>Students:</strong> ${data.stats.totalStudents} &nbsp; | &nbsp; <strong>Assessments:</strong> ${data.stats.totalExams} &nbsp; | &nbsp; <strong>Date:</strong> ${currentDate}</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="stats-grid">
+  ${subjects.map(sub => {
+    const s = data.stats.subjects[sub];
+    const icon = sub==='chem'?'flask':sub==='phy'?'atom':sub==='bio'?'dna':'calculator';
+    return `<div class="stat-card">
+      <h3><i class="fas fa-${icon}"></i> ${s.name}</h3>
+      <p class="value">${s.avgPercentage}%</p>
+      <p class="sub-value">Cumulative: ${s.totalScore}/${s.maxScore}</p>
+    </div>`;
+  }).join('')}
+</div>
+
+<!-- Top 5 -->
+<div class="section">
+  <div class="section-title"><i class="fas fa-trophy"></i> Top 5 Performers</div>
+  <table>
+    ${makeColgroupTop()}
+    <thead>
+      <tr>
+        <th class="col-rank text-center">Rank</th>
+        <th class="col-roll">Roll</th>
+        <th class="col-name">Name</th>
+        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
+        <th class="col-overall">Overall %</th>
+      </tr>
+    </thead>
+    <tbody>${topRows}</tbody>
+  </table>
+</div>
+
+<!-- Needs Support -->
+<div class="section">
+  <div class="section-title"><i class="fas fa-hands-helping"></i> Needs Support</div>
+  <table>
+    ${makeColgroupBottom()}
+    <thead>
+      <tr>
+        <th class="col-roll">Roll</th>
+        <th class="col-name">Name</th>
+        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
+        <th class="col-overall">Overall %</th>
+      </tr>
+    </thead>
+    <tbody>${bottomRows}</tbody>
+  </table>
+</div>
+
+<!-- All Students -->
+<div class="section">
+  <div class="section-title"><i class="fas fa-users"></i> All Students</div>
+  <table>
+    ${makeColgroupAll()}
+    <thead>
+      <tr>
+        <th class="col-rank text-center">Rank</th>
+        <th class="col-roll">Roll</th>
+        <th class="col-name">Name</th>
+        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
+        <th class="col-total">Score/Max</th>
+        <th class="col-overall">Overall %</th>
+      </tr>
+    </thead>
+    <tbody>${allRows}</tbody>
+  </table>
+</div>
+
+<!-- Assessment Summary -->
+<div class="section">
+  <div class="section-title"><i class="fas fa-clipboard-list"></i> Assessment Summary</div>
+  <table>
+    ${makeColgroupExam()}
+    <thead>
+      <tr>
+        <th class="col-exam">Exam</th>
+        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]} Avg">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} Avg %</th>`).join('')}
+        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]} High">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} High</th>`).join('')}
+      </tr>
+    </thead>
+    <tbody>${examRows}</tbody>
+  </table>
+</div>
+
+        <div class="print-footer">
+            <p><strong>CRISPR • Repeater's Batch 2025–26</strong></p>
+            <p>This is an automated report generated by the Student Performance Tracking System</p>
+            <p>Generated on ${currentDate} • For queries, contact the academic administration</p>
+        </div>
+
+</body></html>`;
+}
+
+/***** PROGRESS TRACKING REPORT *****/
+/* Drop this entire block into script.js */
+
+/* Modal entry point from:
+   <div class="print-option-card" onclick="openStudentSelectionModal('progress')"> ... </div>
+*/
+function openStudentSelectionModal(mode) {
+  if (mode !== 'progress') return;
+  ensureProgressModal();
+  populateProgressStudentDropdown();
+  const modal = document.getElementById('progressTrackingModal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeStudentSelectionModal() {
+  const modal = document.getElementById('progressTrackingModal');
+  if (modal) modal.style.display = 'none';
+}
+
+/* Build modal once (reuses minimal inline styles to avoid dependencies) */
+function ensureProgressModal() {
+  if (document.getElementById('progressTrackingModal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'progressTrackingModal';
+  modal.className = 'modal-overlay';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:9999';
+  modal.innerHTML = `
+    <div class="modal-content" style="background:#fff;border-radius:10px;min-width:420px;max-width:560px;box-shadow:0 10px 30px rgba(0,0,0,.2);overflow:hidden">
+      <div class="modal-header" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff">
+        <h3 style="margin:0;font-size:16px;font-weight:700"><i class="fas fa-user-clock"></i> Progress Tracking Report</h3>
+        <button class="close-btn" id="progressCloseBtn" title="Close" style="background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer">&times;</button>
+      </div>
+      <div class="modal-body" style="padding:16px">
+        <label for="progressStudentSelect" class="modal-label" style="display:block;font-size:12px;color:#475569;margin-bottom:6px">Select Student (Roll ↑)</label>
+        <select id="progressStudentSelect" class="modal-select" style="width:100%;padding:8px 10px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;font-size:14px">
+          <option value="">Select a student…</option>
+        </select>
+      </div>
+      <div class="modal-footer" style="display:flex;justify-content:flex-end;gap:10px;padding:12px 16px;background:#f8fafc">
+        <button id="progressCancelBtn" class="btn" style="padding:8px 12px;border:none;border-radius:6px;cursor:pointer;background:#e5e7eb;color:#111827">Cancel</button>
+        <button id="progressPrintBtn" class="btn" style="padding:8px 12px;border:none;border-radius:6px;cursor:pointer;background:#16a34a;color:#fff"><i class="fas fa-print"></i> Print</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  document.getElementById('progressCloseBtn').addEventListener('click', closeStudentSelectionModal);
+  document.getElementById('progressCancelBtn').addEventListener('click', closeStudentSelectionModal);
+  document.getElementById('progressPrintBtn').addEventListener('click', () => {
+    const sel = document.getElementById('progressStudentSelect');
+    const roll = sel?.value;
+    if (!roll) { alert('Please select a student.'); return; }
+    const student = students.find(s => s.roll === roll);
+    if (!student) { alert('Student not found.'); return; }
+    printProgressTrackingReport(student);
+    closeStudentSelectionModal();
+  });
+}
+
+/* Fill dropdown with roll‑sorted students (natural sort) */
+function populateProgressStudentDropdown() {
+  const select = document.getElementById('progressStudentSelect');
+  if (!select) return;
+
+  const sorted = [...students].sort((a, b) =>
+    a.roll.localeCompare(b.roll, undefined, { numeric: true, sensitivity: 'base' })
+  );
+
+  select.innerHTML = '<option value="">Select a student…</option>';
+  for (const s of sorted) {
+    const opt = document.createElement('option');
+    opt.value = s.roll;
+    opt.textContent = `${s.name} (${s.roll})`;
+    select.appendChild(opt);
+  }
+}
+
+/* PRINT: Per-student progress report */
+function printProgressTrackingReport(student) {
+  if (typeof computeSubjectCumulatives === 'function') computeSubjectCumulatives();
+
+  const html = generateProgressTrackingHTML(student);
+  const w = window.open('', '', 'width=1200,height=800');
+  if (!w) { alert('Allow popups for printing.'); return; }
+  w.document.write(html);
+  w.document.close();
+  w.onload = () => setTimeout(() => w.print(), 500);
+}
+
+/* Helpers for metrics */
+const _safe = (o, p, d=0) => {
+  try { return p.split('.').reduce((x,k)=> (x && x[k]!=null? x[k]:undefined), o) ?? d; } catch { return d; }
+};
+const SUBJECTS = ['chem','phy','bio','math'];
+const SHORT = { chem:'Chem', phy:'Phy', bio:'Bio', math:'Math' };
+const FULL  = { chem:'CHEMISTRY', phy:'PHYSICS', bio:'BIOLOGY', math:'MATHEMATICS' };
+
+/* Build the printable HTML */
+// Replace your current generateProgressTrackingHTML with this version
+function generateProgressTrackingHTML(stu) {
+  const SUBJECTS = ['chem','phy','bio','math'];
+  const SHORT = { chem:'Chem', phy:'Phy', bio:'Bio', math:'Math' };
+  const FULL  = { chem:'CHEMISTRY', phy:'PHYSICS', bio:'BIOLOGY', math:'MATHEMATICS' };
+  const _safe = (o, p, d=0) => { try { return p.split('.').reduce((x,k)=> (x && x[k]!=null? x[k]:undefined), o) ?? d; } catch { return d; } };
+
+  // Valid exams in configured order
+  const valid = (stu.exams || []).filter(ex => (_safe(ex,'maxTotal',0) > 0));
+  const byOrder = [...valid].sort((a,b) => examOrder.indexOf(a.exam) - examOrder.indexOf(b.exam));
+
+  // Exam-wise score + % + rank
+  const examRowsData = byOrder.map(ex => {
+    const subPct = {}, subScore = {}, subMax = {};
+    let tScore=0, tMax=0;
+    SUBJECTS.forEach(s => {
+      const sc = _safe(ex, `scores.${s}`, _safe(ex, s, 0));
+      const mx = _safe(ex, `maxScores.${s}`, _safe(ex, `max${s.charAt(0).toUpperCase()}${s.slice(1)}`, 0));
+      subScore[s] = sc; subMax[s] = mx; subPct[s] = mx>0 ? (sc/mx*100) : 0;
+      tScore += sc; tMax += mx;
+    });
+    const overallPct = tMax>0 ? +(tScore/tMax*100).toFixed(2) : 0;
+
+    const cohort = sampleData.filter(d => d.exam === ex.exam && d.maxTotal>0);
+    const sorted = cohort.map(d => ({ roll:d.roll, percent:(d.percent!=null? d.percent : (d.maxTotal>0? (d.total/d.maxTotal*100):0)) }))
+                         .sort((a,b)=> b.percent - a.percent);
+    const idx = sorted.findIndex(e => e.roll === stu.roll);
+    const rank = idx >= 0 ? (idx+1) : '-';
+
+    return { exam: ex.exam, subPct, subScore, subMax, overallPct, totalScore:tScore, totalMax:tMax, rank };
+  });
+
+  // Subject cumulatives
+  const subjAgg = SUBJECTS.reduce((acc,s)=>{
+    let sc=0,mx=0,best={exam:'-',pct:-Infinity},worst={exam:'-',pct:Infinity};
+    byOrder.forEach(ex=>{
+      const c=_safe(ex,`scores.${s}`,_safe(ex,s,0)); const M=_safe(ex,`maxScores.${s}`,_safe(ex,`max${s.charAt(0).toUpperCase()}${s.slice(1)}`,0));
+      if(M>0){ sc+=c; mx+=M; const p=(c/M*100); if(p>best.pct) best={exam:ex.exam,pct:p}; if(p<worst.pct) worst={exam:ex.exam,pct:p}; }
+    });
+    acc[s]={ total:sc, max:mx, avgPct: mx>0? +(sc/mx*100).toFixed(2):0,
+             best:{exam:best.exam,pct:isFinite(best.pct)? +best.pct.toFixed(2):0},
+             worst:{exam:worst.exam,pct:isFinite(worst.pct)? +worst.pct.toFixed(2):0} };
+    return acc;
+  },{});
+
+  // Overall + trend/consistency
+  const overall = Object.values(subjAgg).reduce((o,v)=>({score:o.score+v.total,max:o.max+v.max}),{score:0,max:0});
+  const overallPct = overall.max>0? +(overall.score/overall.max*100).toFixed(2):0;
+  const last3 = examRowsData.slice(-3);
+  const trend = last3.length>=2 ? +(last3[last3.length-1].overallPct - last3[0].overallPct).toFixed(2) : 0;
+  const trendWord = trend>0 ? 'Upward' : trend<0 ? 'Downward' : 'Stable';
+  const trendArrow = trend>0 ? '▲' : trend<0 ? '▼' : '■';
+  const mean = examRowsData.length? examRowsData.reduce((a,x)=>a+x.overallPct,0)/examRowsData.length : 0;
+  const variance = examRowsData.length? examRowsData.reduce((a,x)=>a+Math.pow(x.overallPct-mean,2),0)/examRowsData.length : 0;
+  const stdOverall = +Math.sqrt(variance).toFixed(2);
+  const subjectAvgs = SUBJECTS.map(s=>subjAgg[s].avgPct);
+  const meanS = subjectAvgs.length? subjectAvgs.reduce((a,x)=>a+x,0)/subjectAvgs.length:0;
+  const varS = subjectAvgs.length? subjectAvgs.reduce((a,x)=>a+Math.pow(x-meanS,2),0)/subjectAvgs.length:0;
+  const stdSubjects = +Math.sqrt(varS).toFixed(2);
+  const latest = examRowsData[examRowsData.length-1] || { exam:'-', overallPct:0 };
+
+  // Subject cards
+  const subjectsGrid = SUBJECTS.map(s=>{
+    const a = subjAgg[s];
+    return `
+      <div class="stat-card">
+        <h3><i class="fas fa-${s==='chem'?'flask':s==='phy'?'atom':s==='bio'?'dna':'calculator'}"></i> ${FULL[s]}</h3>
+        <p class="value">${a.avgPct}%</p>
+        <p class="sub-value">Score/Max: ${a.total}/${a.max}</p>
+        <p class="mini">Best: ${a.best.exam} • ${a.best.pct}%</p>
+        <p class="mini">Scope: ${a.worst.exam} • ${a.worst.pct}%</p>
+      </div>
+    `;
+  }).join('');
+
+  // Exam rows: score|% pills
+  const examRowsHTML = examRowsData.map(r => {
+    const overallCls = r.overallPct>=60?'pill-green': r.overallPct>=40?'pill-amber':'pill-red';
+    return `
+      <tr>
+        <td><strong>${r.exam}</strong></td>
+        ${SUBJECTS.map(s=> {
+          const pct = r.subPct[s], score = r.subScore[s];
+          const cls = pct>=60?'pill-green': pct>=40?'pill-amber':'pill-red';
+          return `<td class="num"><span class="score-strong">${score}</span> | <span class="pill ${cls}">${pct.toFixed(2)}%</span></td>`;
+        }).join('')}
+        <td class="num"><span class="score-strong">${r.totalScore}</span> | <span class="pill ${overallCls}">${r.overallPct}%</span></td>
+        <td class="num"><span class="rank-pill">#${r.rank}</span></td>
+      </tr>
+    `;
+  }).join('') || `<tr><td colspan="7" class="empty">No qualified assessments.</td></tr>`;
+
+  // Metric pill classes for Consistency & Trend
+  const sigmaClass   = stdOverall  <= 7 ? 'metric-green' : stdOverall  <= 12 ? 'metric-amber' : 'metric-red';
+  const spreadClass  = stdSubjects <= 8 ? 'metric-green' : stdSubjects <= 12 ? 'metric-amber' : 'metric-red';
+  const trendClass   = trend > 0 ? 'metric-green' : trend < 0 ? 'metric-red' : 'metric-blue';
+  const last3HTML    = last3.length ? last3.map(x=>`<span class="metric-chip">${x.overallPct.toFixed(2)}%</span>`).join('<span class="sp">•</span>') : '-';
+
+  const currentDate = new Date().toLocaleDateString('en-IN', { year:'numeric', month:'long', day:'numeric' });
+
+  return `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Progress Report — ${stu.name} (${stu.roll})</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+@media print { @page { size: A4 portrait; margin: 10mm } }
+*{ -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important }
+body{font-family:'Segoe UI',sans-serif;margin:0;padding:15px;background:#fff;color:#1a1a1a}
+
+/* Header */
+.print-header{text-align:center;background:linear-gradient(135deg,#2563eb 0%,#7c3aed 50%,#ec4899 100%);padding:20px;border-radius:10px;margin-bottom:20px;position:relative;overflow:hidden}
+.print-header::before{content:'';position:absolute;top:-50%;right:-10%;width:250px;height:250px;background:rgba(255,255,255,0.1);border-radius:50%}
+.print-header img{max-width:120px;margin-bottom:8px;position:relative;z-index:2}
+.print-header h1{font-size:20pt;font-weight:800;color:#fff!important;margin:6px 0 4px;position:relative;z-index: 2;text-shadow: 2px 2px 4px rgba(0,0,0,0.2);}
+.print-header p{font-size:9pt;color:#fff!important;margin:2px 0;font-weight:500;position:relative;z-index: 2;}
+
+/* Identity banner */
+.identity-card{display:flex;gap:16px;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:2px solid #c7d2fe;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.id-left{min-width:0}
+.student-name{font-size:22pt;font-weight:800;letter-spacing:.2px;color:#1f2937;line-height:1.1}
+.student-roll{font-size:10pt;color:#475569;margin-top:4px}
+.chips{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:#e2e8f0;color:#334155;border:1px solid #cbd5e1;border-radius:999px;padding:2px 8px;font-size:8pt;font-weight:600}
+.id-kpis{display:grid;grid-template-columns:repeat(4,auto);gap:10px;align-items:stretch}
+.kpi{background:#ffffff;border:2px solid #e5e7eb;border-radius:10px;padding:8px 10px;min-width:70px;text-align:center}
+.kpi-label{font-size:8pt;color:#6b7280;text-transform:uppercase;letter-spacing:.3px}
+.kpi-value{font-size:14pt;font-weight:800;color:#1f2937;line-height:1.1}
+.kpi.trend .kpi-value.positive{color:#065f46}
+.kpi.trend .kpi-value.negative{color:#991b1b}
+
+/* Sections/cards */
+.section{margin-bottom:12px;page-break-inside:avoid}
+.section-title{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff!important;padding:8px 12px;border-radius:6px;margin-bottom:6px;font-size:11pt;font-weight:700;display:flex;align-items:center;gap:6px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}
+.stat-card{background:linear-gradient(135deg,#f0f4ff,#e0e7ff);padding:12px;border-radius:8px;text-align:center;border:2px solid #cbd5e1}
+.stat-card h3{margin:0 0 6px;font-size:9pt;color:#475569;text-transform:uppercase;font-weight:600}
+.stat-card .value{font-size:18pt;font-weight:700;color:#2563eb}
+.stat-card .sub-value{font-size:7pt;color:#64748b;margin-top:3px}
+.stat-card .mini{font-size:7pt;color:#475569;margin:2px 0}
+
+/* Identity banner: two-column split (left info, right KPIs) */
+.identity-card{
+  display:grid;
+  grid-template-columns: 1.6fr 1fr;   /* left wider for name/meta, right for KPIs */
+  column-gap:16px;
+  align-items:stretch;
+  background:linear-gradient(135deg,#eef2ff,#f5f3ff);
+  border:2px solid #c7d2fe;
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:10px;
+}
+.id-left{ min-width:0; }
+
+/* Slightly smaller name for better balance */
+.student-name{
+  font-size:18pt;          /* was ~19–22pt */
+  font-weight:800;
+  letter-spacing:.2px;
+  color:#1f2937;
+  line-height:1.1;
+}
+.student-roll{ font-size:10pt; color:#475569; margin-top:4px; }
+.chips{ margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; }
+.chip{
+  background:#e2e8f0; color:#334155; border:1px solid #cbd5e1;
+  border-radius:999px; padding:2px 8px; font-size:8pt; font-weight:600;
+}
+
+/* KPI block: fixed 2×2 grid on the right – stays beside the name */
+.id-kpis{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(120px,1fr));
+  grid-auto-rows:auto;
+  gap:10px;
+  align-content:start;
+  justify-items:stretch;
+  /* lock a sensible min width so it doesn't wrap under the name */
+  min-width:260px;
+}
+
+/* KPI cards */
+.kpi{
+  background:#ffffff;
+  border:2px solid #e5e7eb;
+  border-radius:10px;
+  padding:10px 12px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.kpi-label{
+  font-size:8pt; color:#6b7280; text-transform:uppercase; letter-spacing:.3px;
+}
+.kpi-value{
+  font-size:14pt; font-weight:800; color:#1f2937; line-height:1.1;
+}
+.kpi.trend .kpi-value.positive{ color:#065f46; }
+.kpi.trend .kpi-value.negative{ color:#991b1b; }
+
+/* Print and very narrow safety: keep side-by-side unless extremely tight */
+@media print {
+  .identity-card{ grid-template-columns: 1.6fr 1fr; }
+}
+@media screen and (max-width: 820px){
+  .identity-card{ grid-template-columns: 1fr; }   /* only collapse on very small screens */
+  .id-kpis{ min-width:0; grid-template-columns:repeat(2,1fr); }
+}
+
+
+/* Tables */
+table{width:100%;border-collapse:separate;border-spacing:0;border-radius:6px;overflow:hidden;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);table-layout:fixed}
+th{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff!important;padding:6px 5px;text-align:left;font-weight:700;font-size:7pt;text-transform:uppercase;letter-spacing:.2px;white-space:nowrap}
+td{padding:5px;border-bottom:1px solid #e5e7eb;font-size:7.2pt;color:#1f2937;background:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tr:nth-child(even) td{background:#f9fafb!important}
+tr:last-child td{border-bottom:none}
+.col-exam{width:12ch}
+.col-sub{width:12ch}
+.col-overall{width:12ch}
+.col-rank{width:7ch}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.empty{text-align:center;color:#6b7280;padding:10px 0}
+
+/* Emphasis pills for timeline */
+.score-strong{font-weight:800;color:#111827}
+.pill{display:inline-block;padding:1px 6px;border-radius:999px;border:1px solid transparent;font-weight:700;font-size:6.8pt}
+.pill-green{background:#d1fae5;color:#065f46;border-color:#10b981}
+.pill-amber{background:#fef3c7;color:#92400e;border-color:#f59e0b}
+.pill-red{background:#fee2e2;color:#991b1b;border-color:#ef4444}
+.rank-pill{display:inline-block;background:#e0e7ff;color:#1e3a8a;border:1px solid #93c5fd;border-radius:999px;padding:1px 6px;font-weight:800}
+
+/* NEW: Metric pills for Consistency & Trend */
+.metric-pill{display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid transparent;font-weight:800;font-size:8pt}
+.metric-green{background:#d1fae5;color:#065f46;border-color:#10b981}
+.metric-amber{background:#fef3c7;color:#92400e;border-color:#f59e0b}
+.metric-red{background:#fee2e2;color:#991b1b;border-color:#ef4444}
+.metric-blue{background:#e0f2fe;color:#075985;border-color:#7dd3fc}
+.metric-chip{display:inline-block;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;border-radius:999px;padding:2px 8px;font-weight:700;font-size:7.2pt}
+.sp{padding:0 6px;color:#94a3b8}
+
+/* Footer */
+.print-footer { -webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;text-align:center;margin-top: 20px;padding-top: 10px;border-top: 3px solid #3b82f6;color: #6b7280 !important;font-size: 8pt}
+@media (max-width: 600px) {
+.print-header img { width: 70px}
+.print-header h1 { font-size: 16pt}
+}
+</style></head><body>
+
+
+<div class="print-header">
+  <img src="logo2.png" onerror="this.style.display='none'">
+  <h1>PROGRESS REPORT</h1>
+  <p>CRISPR Repeater's Batch 2025–26</p>
+  <p><strong>Progress Tracking Report</strong></p>
+</div>
+
+<!-- Identity banner -->
+<div class="identity-card">
+  <div class="id-left">
+    <div class="student-name">${stu.name}</div>
+    <div class="student-roll">Roll: ${stu.roll}</div>
+    <div class="chips">
+      <span class="chip">Progress Tracking</span>
+      <span class="chip">Generated: ${currentDate}</span>
+      <span class="chip">Assessments: ${byOrder.length}</span>
+    </div>
+  </div>
+  <div class="id-kpis">
+    <div class="kpi">
+      <div class="kpi-label">Overall</div>
+      <div class="kpi-value">${overallPct}%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Latest</div>
+      <div class="kpi-value" title="${(examRowsData[examRowsData.length-1]||{}).exam || '-'}">${(examRowsData[examRowsData.length-1]||{overallPct:0}).overallPct}%</div>
+    </div>
+    <div class="kpi trend">
+      <div class="kpi-label">Trend (L3)</div>
+      <div class="kpi-value ${trend>0?'positive':trend<0?'negative':''}">${trendArrow} ${trend>=0?'+':''}${trend}%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Consistency</div>
+      <div class="kpi-value" title="Std Dev Overall %">σ ${stdOverall}</div>
+    </div>
+  </div>
+</div>
+
+<!-- Subject Averages -->
+<div class="section">
+  <div class="section-title"><i class="fas fa-flask"></i> Subject Averages</div>
+  <div class="stats-grid">${subjectsGrid}</div>
+</div>
+
+<!-- Exam Timeline -->
+<div class="section">
+  <div class="section-title"><i class="fas fa-timeline"></i> Exam Timeline</div>
+  <table>
+    <colgroup>
+      <col class="col-exam">
+      ${SUBJECTS.map(()=>'<col class="col-sub">').join('')}
+      <col class="col-overall">
+      <col class="col-rank">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Exam</th>
+        ${SUBJECTS.map(s=>`<th title="${FULL[s]}">${SHORT[s]} score|%</th>`).join('')}
+        <th>Overall score|%</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody>${examRowsHTML}</tbody>
+  </table>
+</div>
+
+<!-- Consistency & Trend with metric pills -->
+<div class="section">
+  <div class="section-title"><i class="fas fa-chart-line"></i> Consistency & Trend</div>
+  <table>
+    <colgroup><col style="width:30ch"><col style="width:auto"></colgroup>
+    <tbody>
+      <tr>
+        <td>Overall Consistency (Std Dev of Overall %)</td>
+        <td class="num"><span class="metric-pill ${sigmaClass}">σ ${stdOverall}</span></td>
+      </tr>
+      <tr>
+        <td>Subject Spread (Std Dev of Subject Averages)</td>
+        <td class="num"><span class="metric-pill ${spreadClass}">σ ${stdSubjects}</span></td>
+      </tr>
+      <tr>
+        <td>Last 3 Overall %</td>
+        <td class="num">${last3HTML}</td>
+      </tr>
+      <tr>
+        <td>Direction</td>
+        <td class="num"><span class="metric-pill ${trendClass}">${trendArrow} ${trend>=0?'+':''}${trend}% (${trendWord})</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="print-footer">
+    <p><strong>CRISPR • Repeater's Batch 2025–26</strong></p>
+    <p>This is an automated report generated by the Student Performance Tracking System</p>
+    <p>Generated on ${currentDate} • For queries, contact the academic administration</p>
+</div>
+
+
+</body></html>`;
+}
+
+
 // Footer functionality
 function updateFooterStats() {
     try {
@@ -3241,7 +4845,7 @@ function updateFooterStats() {
         }
         
         // Update exam count  
-        const examCount = getUniqueExams ? getUniqueExams().length : 9;
+        const examCount = getUniqueExams ? getUniqueExams().length : 10;
         const footerExamElement = document.getElementById('footerExamCount');
         if (footerExamElement) {
             footerExamElement.textContent = `${examCount} Exams`;
@@ -3279,6 +4883,415 @@ function refreshAllData() {
     }, 1000);
 }
 
+/* ========================================
+   EXAM RANKLIST - THEME COLOR WRAPPER (PRINT-SAFE)
+   Adds theme picker + colored header/footer
+   Keeps existing table layout/styles intact
+   FIXED: Colors now print correctly (not white)
+   ======================================== */
+
+(function() {
+  // Store original openPrintWindow
+  const originalOpenPrintWindow = window.openPrintWindow;
+  
+  // Override to inject theme picker
+  window.openPrintWindow = function(title, content) {
+    // Show theme modal instead of printing directly
+    showThemePickerModal(title, content);
+  };
+
+  // Theme modal HTML (lightweight, no conflicts)
+  function showThemePickerModal(title, tableHtml) {
+    // Remove old modal if exists
+    let modal = document.getElementById('ranklistThemePickerModal');
+    if (modal) modal.remove();
+
+    // Create modal
+    modal = document.createElement('div');
+    modal.id = 'ranklistThemePickerModal';
+    modal.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+      justify-content: center; z-index: 10000; font-family: 'Segoe UI', sans-serif;
+    `;
+    modal.innerHTML = `
+      <div style="background: white; border-radius: 12px; width: 90%; max-width: 520px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); overflow: hidden;">
+        <div style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="margin: 0; font-size: 18px; font-weight: 700;"><i class="fas fa-palette"></i> Select Print Theme</h3>
+          <button onclick="document.getElementById('ranklistThemePickerModal').remove()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer; line-height: 1;">&times;</button>
+        </div>
+        <div style="padding: 20px;">
+          <p style="margin: 0 0 16px; color: #374151; font-size: 14px;">Choose color theme (table layout unchanged):</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+            ${['classic', 'minimal', 'sunset', 'azure', 'emerald'].map((theme, i) => `
+              <label style="display: flex; align-items: center; gap: 8px; padding: 12px; border: 2px solid ${i === 0 ? '#4f46e5' : '#d1d5db'}; border-radius: 8px; cursor: pointer; background: ${i === 0 ? '#f0f4ff' : 'white'}; transition: all 0.2s;">
+                <input type="radio" name="rankTheme" value="${theme}" ${i === 0 ? 'checked' : ''} style="margin: 0; width: 18px; height: 18px; cursor: pointer;">
+                <span style="font-weight: 600; color: #111827; font-size: 14px;">${theme.charAt(0).toUpperCase() + theme.slice(1)}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+        <div style="padding: 16px; background: #f9fafb; display: flex; justify-content: flex-end; gap: 12px;">
+          <button onclick="document.getElementById('ranklistThemePickerModal').remove()" style="padding: 10px 20px; border: none; border-radius: 6px; background: #e5e7eb; color: #374151; cursor: pointer; font-weight: 500; font-size: 14px;">Cancel</button>
+          <button id="confirmRanklistPrint" style="padding: 10px 20px; border: none; border-radius: 6px; background: #10b981; color: white; cursor: pointer; font-weight: 500; font-size: 14px;">
+            <i class="fas fa-print"></i> Print
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Handle print confirmation
+    document.getElementById('confirmRanklistPrint').onclick = () => {
+      const selectedTheme = document.querySelector('input[name="rankTheme"]:checked').value || 'classic';
+      modal.remove();
+      printWithTheme(title, tableHtml, selectedTheme);
+    };
+  }
+
+  // Theme colors (only these are applied; everything else from your CSS)
+  function getThemeColors(theme) {
+    const themes = {
+      classic: {
+        headerBg: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%)',
+        headerBlob: 'rgba(255,255,255,0.1)',
+        theadBg: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        theadColor: 'white',
+        rowEven: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        rowOdd: 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)',
+        borderColor: '#cbd5e1',
+        footerBorder: '#3b82f6',
+        footerText: '#6b7280'
+      },
+      minimal: {
+        headerBg: 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #f8fafc 100%)',
+        headerBlob: 'rgba(0,0,0,0.05)',
+        theadBg: 'linear-gradient(135deg, #475569, #334155)',
+        theadColor: 'white',
+        rowEven: '#f8fafc',
+        rowOdd: '#ffffff',
+        borderColor: '#e5e7eb',
+        footerBorder: '#cbd5e1',
+        footerText: '#6b7280'
+      },
+      sunset: {
+        headerBg: 'linear-gradient(135deg, #f97316 0%, #ec4899 50%, #8b5cf6 100%)',
+        headerBlob: 'rgba(255,255,255,0.1)',
+        theadBg: 'linear-gradient(135deg, #fb7185, #f97316)',
+        theadColor: 'white',
+        rowEven: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)',
+        rowOdd: '#ffffff',
+        borderColor: '#fed7aa',
+        footerBorder: '#fb923c',
+        footerText: '#7c2d12'
+      },
+      azure: {
+        headerBg: 'linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%)',
+        headerBlob: 'rgba(255,255,255,0.1)',
+        theadBg: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+        theadColor: 'white',
+        rowEven: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+        rowOdd: '#ffffff',
+        borderColor: '#bfdbfe',
+        footerBorder: '#3b82f6',
+        footerText: '#1e3a8a'
+      },
+      emerald: {
+        headerBg: 'linear-gradient(135deg, #16a34a 0%, #10b981 50%, #34d399 100%)',
+        headerBlob: 'rgba(255,255,255,0.1)',
+        theadBg: 'linear-gradient(135deg, #10b981, #059669)',
+        theadColor: 'white',
+        rowEven: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+        rowOdd: '#ffffff',
+        borderColor: '#bbf7d0',
+        footerBorder: '#10b981',
+        footerText: '#065f46'
+      }
+    };
+    return themes[theme] || themes.classic;
+  }
+
+  // Build print doc with theme colors injected (PRINT-SAFE)
+  function printWithTheme(title, tableHtml, theme) {
+    const colors = getThemeColors(theme);
+
+    // Your existing mobile-optimized styles + theme color overrides + PRINT FIX
+    const printStyles = `
+      <style>
+        /* CRITICAL: Force print backgrounds globally */
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
+
+        @media print {
+          body { visibility: hidden; }
+          .print-content, .print-content * { visibility: visible; }
+          .print-content { position: absolute; left: 0; top: 0; width: 100%; }
+          
+          /* Extra enforcement for print backgrounds */
+          .print-header,
+          .print-header::before,
+          .enhanced-table thead tr,
+          .enhanced-table tbody tr,
+          .enhanced-table tbody td,
+          .print-footer {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+        }
+
+        /* === NEW HEADER STYLES === */
+        .print-header {
+          text-align: center;
+          background: ${colors.headerBg} !important;
+          padding: 20px;
+          border-radius: 10px;
+          margin-bottom: 20px;
+          position: relative;
+          overflow: hidden;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .print-header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          right: -10%;
+          width: 250px;
+          height: 250px;
+          background: ${colors.headerBlob} !important;
+          border-radius: 50%;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .print-header img {
+          max-width: 120px;
+          margin-bottom: 8px;
+          position: relative;
+          z-index: 2;
+        }
+        .print-header h1 {
+          font-size: 20pt;
+          font-weight: 800;
+          color: white !important;
+          margin: 6px 0 4px;
+          position: relative;
+          z-index: 2;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .print-header p {
+          font-size: 9pt;
+          color: white !important;
+          margin: 2px 0;
+          font-weight: 500;
+          position: relative;
+          z-index: 2;
+        }
+
+        /* === THEME COLOR OVERRIDES for existing table === */
+        .enhanced-table thead tr {
+          background: ${colors.theadBg} !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table thead th {
+          color: ${colors.theadColor} !important;
+        }
+        .enhanced-table tbody tr:nth-child(even) {
+          background: ${colors.rowEven} !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table tbody tr:nth-child(odd) {
+          background: ${colors.rowOdd} !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table tbody tr:hover {
+          background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
+        }
+        .enhanced-table tbody td {
+          border-left: 3px solid ${colors.borderColor} !important;
+        }
+
+        /* === NEW FOOTER STYLES === */
+        .print-footer {
+          text-align: center;
+          margin-top: 20px;
+          padding-top: 10px;
+          border-top: 3px solid ${colors.footerBorder};
+          color: ${colors.footerText} !important;
+          font-size: 8pt;
+        }
+
+        /* Keep ALL your existing table styles (spacing, fonts, transforms, etc.) */
+        body { 
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+          width: 97%; 
+          margin: 20px auto; 
+          background: white; 
+          color: black; 
+        }
+        .enhanced-table { 
+          width: 100%; 
+          border-collapse: separate; 
+          border-spacing: 0 4px; 
+          font-size: 10pt; 
+          margin-top: 15px; 
+        }
+        .enhanced-table thead th { 
+          padding: 12px 8px; 
+          font-weight: 700; 
+          text-align: center; 
+          border: none; 
+          font-size: 10pt; 
+          text-transform: uppercase; 
+          letter-spacing: 0.5px; 
+          transform: skew(2deg); 
+        }
+        .enhanced-table tbody tr { 
+          transform: skew(-1deg); 
+          transition: all 0.3s ease; 
+          border-radius: 8px; 
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+          margin-bottom: 2px; 
+        }
+        .enhanced-table tbody td { 
+          padding: 10px 8px; 
+          border: none; 
+          transform: skew(1deg); 
+        }
+        .enhanced-table tbody td:nth-child(1) { 
+          text-align: center; 
+          font-weight: 700; 
+          color: #1e40af !important; 
+          background: rgba(59, 130, 246, 0.1) !important; 
+          border-left: 3px solid #3b82f6 !important; 
+          font-size: 11pt; 
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table tbody td:nth-child(2) { 
+          text-align: center; 
+          font-weight: 600; 
+          color: #374151 !important; 
+        }
+        .enhanced-table tbody td:nth-child(3) { 
+          text-align: left; 
+          font-weight: 600; 
+          color: #1f2937 !important; 
+          padding-left: 12px; 
+        }
+        .enhanced-table tbody td:nth-child(4), 
+        .enhanced-table tbody td:nth-child(5), 
+        .enhanced-table tbody td:nth-child(6), 
+        .enhanced-table tbody td:nth-child(7) { 
+          text-align: center; 
+          color: #4b5563 !important; 
+          font-weight: 500; 
+        }
+        .enhanced-table tbody td:nth-child(8) { 
+          text-align: center; 
+          font-weight: 700; 
+          color: #059669 !important; 
+          background: rgba(16, 185, 129, 0.1) !important; 
+          border-left: 3px solid #10b981 !important; 
+          font-size: 11pt; 
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table tbody td:nth-child(9) { 
+          text-align: center; 
+          font-weight: 700; 
+          color: #dc2626 !important; 
+          background: rgba(239, 68, 68, 0.1) !important; 
+          border-left: 3px solid #ef4444 !important; 
+          font-size: 11pt; 
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table tbody tr:nth-child(1) td:nth-child(1) { 
+          background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%) !important; 
+          color: #92400e !important; 
+          border-left: 4px solid #f59e0b !important; 
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table tbody tr:nth-child(2) td:nth-child(1) { 
+          background: linear-gradient(135deg, #c0c0c0 0%, #e5e7eb 100%) !important; 
+          color: #374151 !important; 
+          border-left: 4px solid #6b7280 !important; 
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .enhanced-table tbody tr:nth-child(3) td:nth-child(1) { 
+          background: linear-gradient(135deg, #cd7f32 0%, #f97316 100%) !important; 
+          color: #ffffff !important; 
+          border-left: 4px solid #ea580c !important; 
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        
+        @media (max-width: 600px) {
+          .enhanced-table { font-size: 9pt; }
+          .enhanced-table th, .enhanced-table td { padding: 6px 4px; }
+          .print-header img { width: 70px; }
+          .print-header h1 { font-size: 16pt; }
+        }
+      </style>
+    `;
+
+    const printDoc = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${title}</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        ${printStyles}
+      </head>
+      <body>
+        <div class="print-content">
+          <div class="print-header">
+            <img src="logo2.png" onerror="this.style.display='none'" alt="Logo">
+            <h1>${title}</h1>
+            <p>CRISPR Repeater's Batch 2025–26</p>
+            <p><strong>Exam Ranklist</strong></p>
+          </div>
+          ${tableHtml}
+        <div class="print-footer">
+            <p><strong>CRISPR • Repeater's Batch 2025–26</strong></p>
+            <p>This is an automated report generated by the Student Performance Tracking System</p>
+            <p>Generated on ${currentDate} • For queries, contact the academic administration</p>
+        </div>
+
+      </body>
+      </html>
+    `;
+
+    // Open print window (your existing flow)
+    const printWindow = window.open('', '', 'width=800,height=600,scrollbars=yes');
+    if (!printWindow) {
+      alert('Please allow popups and try again.');
+      return;
+    }
+    printWindow.document.write(printDoc);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => { 
+      try { 
+        printWindow.print(); 
+      } catch(e) { 
+        console.log('Auto-print failed:', e); 
+        alert('Please use the print button (Ctrl+P / Cmd+P) in the opened window.');
+      } 
+    }, 1000);
+  }
+})();
+
 // Export all data function
 function exportAllData() {
     alert('Exporting all data... This feature will be implemented soon!');
@@ -3301,6 +5314,4 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
-
-
 
