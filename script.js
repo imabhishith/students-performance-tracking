@@ -4699,10 +4699,10 @@ td{padding:5px;border-bottom:1px solid #e5e7eb;font-size:7.2pt;color:#1f2937;bac
 tr:nth-child(even) td{background:#f9fafb!important}
 tr:last-child td{border-bottom:none}
 .col-exam{width:10ch}
-.col-sub{width:12ch}
+.col-sub{width:10ch}
 .col-overall{width:12ch}
-.col-rank{width:7ch}
-.num{text-align:right;font-variant-numeric:tabular-nums}
+.col-rank{width:5ch}
+.num{text-align:center;font-variant-numeric:tabular-nums}
 .empty{text-align:center;color:#6b7280;padding:10px 0}
 
 /* Emphasis pills for timeline */
@@ -5314,6 +5314,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
 
 
