@@ -4702,7 +4702,7 @@ tr:last-child td{border-bottom:none}
 .col-sub{width:10ch}
 .col-overall{width:12ch}
 .col-rank{width:5ch}
-.num{text-align:center;font-variant-numeric:tabular-nums}
+.num{text-align:right;font-variant-numeric:tabular-nums}
 .empty{text-align:center;color:#6b7280;padding:10px 0}
 
 /* Emphasis pills for timeline */
@@ -5314,6 +5314,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
 
 
