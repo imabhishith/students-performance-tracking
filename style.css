@@ -2669,6 +2669,36 @@ body {
     color: #9C27B0;
 }
 
+/* Class performance summary */
+.print-option-card:nth-child(5):hover {
+    border-color: #26A69A;
+    background: linear-gradient(135deg, var(--color-bg), rgba(38, 166, 154, 0.1));
+}
+
+.print-option-card:nth-child(5) .option-icon {
+    color: #26A69A;
+}
+
+/* Subject specific reports */
+.print-option-card:nth-child(6):hover {
+    border-color: #FF8F00;
+    background: linear-gradient(135deg, var(--color-bg), rgba(255, 143, 0, 0.1));
+}
+
+.print-option-card:nth-child(6) .option-icon {
+    color: #FF8F00;
+}
+
+/* Progress tracking reports */
+.print-option-card:nth-child(7):hover {
+    border-color: #3F51B5;
+    background: linear-gradient(135deg, var(--color-bg), rgba(63, 81, 181, 0.1));
+}
+
+.print-option-card:nth-child(7) .option-icon {
+    color: #3F51B5;
+}
+
 /* Enhanced Icon Styling */
 .option-icon {
     font-size: 2.5rem;
@@ -3197,7 +3227,7 @@ body {
 /* Print Filter and Exam Selection Modals - Matching Existing Design System */
 
 /* Print Filter Dialog Styles */
-#printFilterDialog.modal-overlay {
+#printFilterDialog.modal-overlay,#subjectSpecificModal.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -3212,20 +3242,20 @@ body {
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-#printFilterDialog .modal-container {
+#printFilterDialog .modal-container,#subjectSpecificModal .modal-container {
   background: var(--color-surface);
   border: 1px solid var(--color-card-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
   max-width: 500px;
   width: 90vw;
-  max-height: 85vh;
+  max-height: 100vh;
   overflow: hidden;
   animation: slideInUp var(--duration-normal) var(--ease-standard);
   position: relative;
 }
 
-#printFilterDialog .modal-header {
+#printFilterDialog .modal-header,#subjectSpecificModal .modal-header {
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
   color: var(--color-btn-primary-text);
   padding: var(--space-24);
@@ -3237,7 +3267,7 @@ body {
   overflow: hidden;
 }
 
-#printFilterDialog .modal-header::before {
+#printFilterDialog .modal-header::before,#subjectSpecificModal .modal-header::before {
   content: '';
   position: absolute;
   top: 0;
@@ -3248,11 +3278,11 @@ body {
   transition: left var(--duration-slow) var(--ease-standard);
 }
 
-#printFilterDialog .modal-header:hover::before {
+#printFilterDialog .modal-header:hover::before,#subjectSpecificModal .modal-header:hover::before {
   left: 100%;
 }
 
-#printFilterDialog .modal-header h3 {
+#printFilterDialog .modal-header h3,#subjectSpecificModal .modal-header h3 {
   margin: 0;
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
@@ -3262,7 +3292,7 @@ body {
   gap: var(--space-12);
 }
 
-#printFilterDialog .modal-close {
+#printFilterDialog .modal-close, #subjectSpecificModal .modal-close {
   background: none;
   border: none;
   color: var(--color-btn-primary-text);
@@ -3278,17 +3308,17 @@ body {
   min-height: 40px;
 }
 
-#printFilterDialog .modal-close:hover {
+#printFilterDialog .modal-close:hover,  #subjectSpecificModal .modal-close:hover {
   background: rgba(var(--color-btn-primary-text-rgb), 0.2);
   transform: scale(1.1);
 }
 
-#printFilterDialog .modal-content {
+#printFilterDialog .modal-content,   #subjectSpecificModal .modal-content {
   padding: var(--space-32);
   background: var(--color-surface);
 }
 
-#printFilterDialog .modal-content p {
+#printFilterDialog .modal-content p, #subjectSpecificModal .modal-content p {
   margin: 0 0 var(--space-24);
   color: var(--color-text);
   font-size: var(--font-size-base);
@@ -3565,7 +3595,8 @@ body {
 
 /* Modal Footer */
 #printFilterDialog .modal-footer,
-#examSelectionDialog .modal-footer {
+#examSelectionDialog .modal-footer,
+#subjectSpecificModal .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: var(--space-12);
@@ -3648,20 +3679,23 @@ body {
 /* Mobile responsiveness using existing breakpoints */
 @media (max-width: 768px) {
   #printFilterDialog .modal-container,
-  #examSelectionDialog .modal-container {
+  #examSelectionDialog .modal-container,
+  #subjectSpecificModal .modal-container{
     width: 95vw;
     margin: var(--space-16);
     max-height: 90vh;
   }
 
   #printFilterDialog .modal-content,
-  #examSelectionDialog .modal-content {
+  #examSelectionDialog .modal-content,
+  #subjectSpecificModal .modal-content {
     padding: var(--space-24) var(--space-16);
     max-height: 60vh;
   }
 
   #printFilterDialog .modal-footer,
-  #examSelectionDialog .modal-footer {
+  #examSelectionDialog .modal-footer,
+  #subjectSpecificModal .modal-footer {
     flex-direction: column;
     gap: var(--space-12);
     padding: var(--space-20);
@@ -3687,18 +3721,21 @@ body {
 
 /* Dark mode support using existing system */
 [data-color-scheme="dark"] #printFilterDialog .modal-container,
-[data-color-scheme="dark"] #examSelectionDialog .modal-container {
+[data-color-scheme="dark"] #examSelectionDialog .modal-container, 
+[data-color-scheme="dark"] #subjectSpecificModal .modal-container{
   background: var(--color-surface);
   border-color: var(--color-card-border);
 }
 
 [data-color-scheme="dark"] #printFilterDialog .modal-content,
-[data-color-scheme="dark"] #examSelectionDialog .modal-content {
+[data-color-scheme="dark"] #examSelectionDialog .modal-content,
+[data-color-scheme="dark"] #subjectSpecificModal .modal-content {
   background: var(--color-surface);
 }
 
 [data-color-scheme="dark"] #printFilterDialog .modal-footer,
-[data-color-scheme="dark"] #examSelectionDialog .modal-footer {
+[data-color-scheme="dark"] #examSelectionDialog .modal-footer,
+[data-color-scheme="dark"] #subjectSpecificModal .modal-footer{
   background: var(--color-bg-2);
 }
 
@@ -4191,5 +4228,275 @@ body {
     
     .footer-btn::before {
         display: none;
+    }
+}
+
+/* ==========================================
+   ENHANCED STUDENT PROFILE PRINT STYLES
+   ========================================== */
+
+@media print {
+    /* Hide everything except print content */
+    body > *:not(.student-profile-print) {
+        display: none !important;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color-scheme: exact;
+    }
+    
+    /* Show and style the print content */
+    .student-profile-print {
+        display: block !important;
+        visibility: visible !important;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white;
+        color: black;
+    }
+    
+    /* Professional Header with Gradient */
+    .student-profile-print .print-header {
+        text-align: center;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%);
+        padding: 30px 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        position: relative;
+        overflow: hidden;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .print-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 250px;
+        height: 250px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+    }
+    
+    .student-profile-print .print-header img {
+        max-width: 150px;
+        height: auto;
+        margin-bottom: 12px;
+        filter: brightness(0) invert(1);
+        position: relative;
+        z-index: 2;
+    }
+    
+    .student-profile-print .print-header h1 {
+        font-size: 24pt;
+        font-weight: 800;
+        color: white !important;
+        margin: 10px 0 6px 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 2;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .print-header p {
+        font-size: 11pt;
+        color: white !important;
+        margin: 4px 0;
+        font-weight: 500;
+        position: relative;
+        z-index: 2;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* Profile Sections */
+    .student-profile-print .profile-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        border: 2px solid #e0e7ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 18px;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .profile-section h3 {
+        font-size: 14pt;
+        font-weight: 700;
+        color: #1e40af !important;
+        margin: 0 0 14px 0;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #3b82f6;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .profile-section h3::before {
+        content: '';
+        width: 4px;
+        height: 20px;
+        background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+        border-radius: 2px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .profile-section p {
+        font-size: 10pt;
+        line-height: 1.6;
+        margin: 6px 0;
+        color: #374151 !important;
+    }
+    
+    .student-profile-print .profile-section strong {
+        color: #1f2937 !important;
+        font-weight: 600;
+        display: inline-block;
+        min-width: 140px;
+    }
+    
+    /* Performance Summary Card */
+    .student-profile-print .performance-summary {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        border-left: 4px solid #10b981;
+        padding: 16px;
+        border-radius: 6px;
+        margin: 12px 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .performance-summary p {
+        margin: 8px 0;
+        font-size: 10pt;
+    }
+    
+    .student-profile-print .performance-summary strong {
+        color: #047857 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* Tables */
+    .student-profile-print table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+    
+    .student-profile-print table thead {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print table th {
+        padding: 10px 8px;
+        text-align: left;
+        font-weight: 700;
+        font-size: 9pt;
+        color: white !important;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border: none;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print table td {
+        padding: 9px 8px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 9pt;
+        color: #374151 !important;
+        background: white;
+    }
+    
+    .student-profile-print table tbody tr:nth-child(odd) td {
+        background: #f9fafb !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    /* Subject Highlights */
+    .student-profile-print span[style*="green"] {
+        background: #d1fae5 !important;
+        color: #047857 !important;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: 600;
+        display: inline-block;
+        border: 1px solid #10b981;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print span[style*="red"] {
+        background: #fee2e2 !important;
+        color: #dc2626 !important;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: 600;
+        display: inline-block;
+        border: 1px solid #ef4444;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* Recommendations Section */
+    .student-profile-print .profile-section:last-of-type {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 2px solid #fbbf24;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .profile-section:last-of-type h3 {
+        color: #92400e !important;
+        border-bottom-color: #f59e0b;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .student-profile-print .profile-section:last-of-type p {
+        color: #78350f !important;
+        font-weight: 500;
+    }
+    
+    /* Print Footer */
+    .student-profile-print .print-footer {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 2px solid #e5e7eb;
+        font-size: 8pt;
+        color: #6b7280 !important;
+    }
+    
+    /* Force color printing */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-scheme: exact !important;
     }
 }
