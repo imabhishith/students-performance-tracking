@@ -4258,12 +4258,11 @@ tr:last-child td { border-bottom: none }
 /* Column widths: uniform subject % columns, tighter Roll and Score/Max */
 .col-rank { width: 6ch }
 .col-roll { width: 6ch; text-align:center}       /* decreased from 10ch */
-.col-name { width: auto }
+.col-name { width: auto; text-align:center }
 .col-sub { width: 7ch; text-align:center}
 .col-total { width: 10ch; text-align:center}      /* decreased from 16ch */
 .col-overall { width: 9ch; text-align:center}
-.col-exam { width: 12ch }
-
+.col-exam { width: 12ch; text-align:center}
 /* Alignment helpers */
 .text-center { text-align: center }
 .num { text-align: right; font-variant-numeric: tabular-nums }
@@ -4312,10 +4311,10 @@ tr:last-child td { border-bottom: none }
     <thead>
       <tr>
         <th class="col-rank text-center">Rank</th>
-        <th class="col-roll">Roll</th>
+        <th class="col-roll text-center">Roll</th>
         <th class="col-name">Name</th>
-        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
-        <th class="col-overall">Overall %</th>
+        ${subjects.map(s => `<th class="col-sub text-center" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
+        <th class="col-overall text-center">Overall %</th>
       </tr>
     </thead>
     <tbody>${topRows}</tbody>
@@ -4329,10 +4328,10 @@ tr:last-child td { border-bottom: none }
     ${makeColgroupBottom()}
     <thead>
       <tr>
-        <th class="col-roll">Roll</th>
+        <th class="col-roll text-center">Roll</th>
         <th class="col-name">Name</th>
-        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
-        <th class="col-overall">Overall %</th>
+        ${subjects.map(s => `<th class="col-sub text-center" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
+        <th class="col-overall text-center">Overall %</th>
       </tr>
     </thead>
     <tbody>${bottomRows}</tbody>
@@ -4347,11 +4346,11 @@ tr:last-child td { border-bottom: none }
     <thead>
       <tr>
         <th class="col-rank text-center">Rank</th>
-        <th class="col-roll">Roll</th>
+        <th class="col-roll text-center">Roll</th>
         <th class="col-name">Name</th>
-        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
-        <th class="col-total">Score/Max</th>
-        <th class="col-overall">Overall %</th>
+        ${subjects.map(s => `<th class="col-sub text-center" title="${subjectNames[s]}">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} %</th>`).join('')}
+        <th class="col-total text-center">Score/Max</th>
+        <th class="col-overall text-center">Overall %</th>
       </tr>
     </thead>
     <tbody>${allRows}</tbody>
@@ -4366,8 +4365,8 @@ tr:last-child td { border-bottom: none }
     <thead>
       <tr>
         <th class="col-exam">Exam</th>
-        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]} Avg">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} Avg %</th>`).join('')}
-        ${subjects.map(s => `<th class="col-sub" title="${subjectNames[s]} High">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} High</th>`).join('')}
+        ${subjects.map(s => `<th class="col-sub text-center" title="${subjectNames[s]} Avg">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} Avg %</th>`).join('')}
+        ${subjects.map(s => `<th class="col-sub text-center" title="${subjectNames[s]} High">${({chem:'Chem',phy:'Phys',bio:'Bio',math:'Math'})[s]} High</th>`).join('')}
       </tr>
     </thead>
     <tbody>${examRows}</tbody>
@@ -5314,6 +5313,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
 
 
