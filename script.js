@@ -3110,7 +3110,7 @@ function printStudentProfileReport(student) {
         <div class="performance-summary">
           <p><strong>Name:</strong> ${student.name}</p>
           <p><strong>Roll Number:</strong> ${student.roll}</p>
-          <p><strong>Total Exams Attempted:</strong> ${totalExams}</p>
+          <p><strong>Exams Attempted:</strong> ${totalExams}</p>
           <p><strong>Overall Percentage:</strong> ${averagePercent.toFixed(2)}%</p>
           <p><strong>Total Score:</strong> ${totalScore} / ${maxPossibleScore}</p>
           <p><strong>Average Score:</strong> ${(totalScore / Math.max(totalExams, 1)).toFixed(2)}</p>
@@ -4256,13 +4256,13 @@ tr:nth-child(even) td { background: #f9fafb !important }
 tr:last-child td { border-bottom: none }
 
 /* Column widths: uniform subject % columns, tighter Roll and Score/Max */
-.col-rank { width: 7ch }
-.col-roll { width: 8ch }        /* decreased from 10ch */
+.col-rank { width: 6ch }
+.col-roll { width: 6ch; text-align:center}       /* decreased from 10ch */
 .col-name { width: auto }
-.col-sub { width: 7ch }
-.col-total { width: 12ch }      /* decreased from 16ch */
-.col-overall { width: 9ch }
-.col-exam { width: 14ch }
+.col-sub { width: 7ch; text-align:center}
+.col-total { width: 10ch; text-align:center}      /* decreased from 16ch */
+.col-overall { width: 9ch; text-align:center}
+.col-exam { width: 12ch }
 
 /* Alignment helpers */
 .text-center { text-align: center }
@@ -5314,6 +5314,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
 
 
