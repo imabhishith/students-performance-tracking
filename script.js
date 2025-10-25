@@ -393,7 +393,7 @@ const sampleData = [
   {"roll":"CYL17","name":"KARTHIK SHINOJ","exam":"WE 9","chem":21,"phy":2,"bio":40,"math":0,"total":63,"percent":45.00,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
   {"roll":"CYL18","name":"KAVERY VISWANATHAN","exam":"WE 9","chem":31,"phy":19,"bio":40,"math":4,"total":94,"percent":67.14,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
   {"roll":"CYL19","name":"MIDHUN P","exam":"WE 9","chem":17,"phy":-1,"bio":40,"math":4,"total":60,"percent":42.86,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
-  {"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 9","chem":31,"phy":5,"bio":25,"math":-3,"total":41.43,"percent":48.33,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
+  {"roll":"CYL20","name":"MUHAMMED AFRAJ LATHEEF","exam":"WE 9","chem":31,"phy":5,"bio":25,"math":-3,"total":58,"percent":41.43,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
   {"roll":"CYL22","name":"NIDHA T P","exam":"WE 9","chem":25,"phy":28,"bio":40,"math":0,"total":93,"percent":66.43,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
   {"roll":"CYL23","name":"NIMITHA K J","exam":"WE 9","chem":27,"phy":13,"bio":40,"math":0,"total":80,"percent":57.14,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
   {"roll":"CYL24","name":"NIVEDITHA P RAVI","exam":"WE 9","chem":13,"phy":13,"bio":35,"math":15,"total":76,"percent":54.29,"maxTotal":140,"maxChem":40,"maxPhy":40,"maxBio":40,"maxMath":20},
@@ -5352,6 +5352,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePrintExport();
   }, 1000);
 });
+
 
 
 
